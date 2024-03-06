@@ -1,0 +1,215 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Shop | eCommerce</title>
+  <meta name="description" content>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/css/slicknav.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/progressbar_barfiller.css">
+  <link rel="stylesheet" href="assets/css/lightslider.min.css">
+  <link rel="stylesheet" href="assets/css/price_rangs.css">
+  <link rel="stylesheet" href="assets/css/gijgo.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/animated-headline.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/themify-icons.css">
+  <link rel="stylesheet" href="assets/css/slick.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="preloader-inner position-relative">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img pere-text">
+          <img src="assets/img/logo/loder.png" alt>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <main class="login-bg">
+
+    <div class="register-form-area">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-6 col-lg-8">
+            <div class="register-form text-center">
+
+              <div class="register-heading">
+                <span>Sign Up</span>
+                <p>Create your account to get full access</p>
+              </div>
+              <form id="signupForm"  enctype="application/x-www-form-urlencoded" action="/otpPage">
+                <div class="input-box">
+                  <div class="single-input-fields">
+                    <label>Full name</label>
+                    <input type="text" placeholder="Enter full name" name="name" id="fname">
+                  </div>
+                  <div class="single-input-fields">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter email address" name="email" id="femail">
+                  </div>
+                  <div class="single-input-fields">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter Password" name="password1" id="fpass">
+                  </div>
+                  <button class="submit-btn3" type="submit" id="signupButton">Sign Up</button>
+                </div>
+              </form>
+
+
+              <div class="register-footer">
+                <p> Already have an account? <a href="/"> Login</a> here</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+
+
+
+  <script>
+
+
+    // Add a submit event listener to the form
+    document.getElementById('signupButton').addEventListener('click', async function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+
+      // Get user-entered values
+      var name = document.getElementById('fname').value;
+      var email = document.getElementById('femail').value;
+      var password1 = document.getElementById('fpass').value;
+   
+
+      const formData = {
+        name,
+        email,
+        password1
+      }
+        // Send form data to the server using fetch or another AJAX method
+        const response = await fetch('/register', {
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData),
+        }).then(response=>response.json())
+        .then((data)=>{
+          if(!data.success){
+            console.error("Data is Failed to submit");
+            
+            
+          }else{
+            console.log("data getting successfully");
+            window.location.href = '/otp-page'
+          }
+       
+
+        })
+      .catch(error=>{
+        console.error(error);
+
+      })
+    })
+    //     const data = await response.json(); // assuming the server returns JSON
+
+    //     // Check the server response and show the appropriate SweetAlert
+    //     if (data.status === 'success') {
+    //       Swal.fire({
+    //         title: 'Success!',
+    //         text: 'Account created successfully.',
+    //         icon: 'success',
+    //       }).then(() => {
+    //         // Redirect or perform any other action after success
+    //         window.location.href = '/home';
+    //       });
+    //     }else{
+    //       Swal.fire({
+    //         title: 'Error!',
+    //         text: data.error,
+    //         icon: 'error',
+    //       });
+
+    //     }
+    //   } catch (error) {
+    //     console.error('Error occurred during form submission:', error);
+    //   }
+    // });
+  </script>
+
+
+
+
+
+  <!-- Include SweetAlert from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+  <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+  <script src="./assets/js/popper.min.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+
+  <script src="./assets/js/owl.carousel.min.js"></script>
+  <script src="./assets/js/slick.min.js"></script>
+  <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+  <script src="./assets/js/wow.min.js"></script>
+  <script src="./assets/js/animated.headline.js"></script>
+  <script src="./assets/js/jquery.magnific-popup.js"></script>
+  <script src="./assets/js/gijgo.min.js"></script>
+  <script src="./assets/js/lightslider.min.js"></script>
+  <script src="./assets/js/price_rangs.js"></script>
+
+  <script src="./assets/js/jquery.nice-select.min.js"></script>
+  <script src="./assets/js/jquery.sticky.js"></script>
+  <script src="./assets/js/jquery.barfiller.js"></script>
+
+  <script src="./assets/js/jquery.counterup.min.js"></script>
+  <script src="./assets/js/waypoints.min.js"></script>
+  <script src="./assets/js/jquery.countdown.min.js"></script>
+  <script src="./assets/js/hover-direction-snake.min.js"></script>
+
+  <script src="./assets/js/contact.js"></script>
+  <script src="./assets/js/jquery.form.js"></script>
+  <script src="./assets/js/jquery.validate.min.js"></script>
+  <script src="./assets/js/mail-script.js"></script>
+  <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+  <script src="./assets/js/plugins.js"></script>
+  <script src="./assets/js/main.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317"
+    integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
+    data-cf-beacon='{"rayId":"8544213fded729f3","b":1,"version":"2024.2.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

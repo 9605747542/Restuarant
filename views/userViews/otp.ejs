@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome CDN  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+
+  <!-- CSS -->
+  <!-- <link rel="stylesheet" href="style1.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/css/slicknav.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<link rel="stylesheet" href="assets/css/progressbar_barfiller.css">
+<link rel="stylesheet" href="assets/css/lightslider.min.css">
+<link rel="stylesheet" href="assets/css/price_rangs.css">
+<link rel="stylesheet" href="assets/css/gijgo.css">
+<link rel="stylesheet" href="assets/css/animate.min.css">
+<link rel="stylesheet" href="assets/css/animated-headline.css">
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets/css/slick.css">
+<link rel="stylesheet" href="assets/css/nice-select.css">
+<link rel="stylesheet" href="assets/css/style.css">  -->
+
+  <title>Shop | eCommerce</title>
+
+
+  <!-- //akshay styling  -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    form {
+      max-width: 400px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .otp-field {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .space {
+      margin-right: 15px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .resend {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 20px;
+      color: #555;
+    }
+
+    #resendLink {
+      color: #007bff;
+      cursor: pointer;
+    }
+
+    #resendLink:hover {
+      text-decoration: underline;
+      color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h4>Verify</h4>
+    <p>Your code was sent to you via email</p>
+  </div>
+  <form id="formId">
+    <h1>Enter OTP</h1>
+    <div class="otp-field" name="otp" id="otpId">
+
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input class="space" type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+
+    </div>
+    <button class="btn mb-3" type="submit">Verify</button>
+  </form>
+
+  <form id="resend-Form">
+    <div>
+
+      <p class="resend text mb-0">
+        Didn't receive code? <a id="resendLink" onclick="resendOTP()">Request again</a>
+      </p>
+    </div>
+  </form>
+</body>
+
+<script>
+  document.getElementById('formId').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    var otpInputs = document.getElementById("otpId").getElementsByTagName("input");
+    console.log(otpInputs);
+    // Concatenate the values of all input elements
+    let otpValue = "";
+    for (var i = 0; i < otpInputs.length; i++) {
+      otpValue += otpInputs[i].value;
+ 
+  
+    }
+    console.log(otpValue);
+ 
+    const formdata3 = {
+        
+      otp: otpValue,
+    }
+    console.log(formdata3);
+     fetch('/signup-otp', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formdata3)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success===false) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'You  entered OTP is not Correct.',
+            icon: 'error',
+          })
+
+        } else {
+        
+          window.location.href = '/home';
+
+        }
+      }).catch(error => {
+        console.error('Error during OTP verification:', error);
+      
+
+      })
+  })
+ 
+
+
+  
+
+
+
+
+
+
+
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+</html>
