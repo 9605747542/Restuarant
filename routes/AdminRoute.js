@@ -6,6 +6,7 @@ const userCategory=require('../controllers/AdminControllers/categoryController')
 const userproduct=require('../controllers/AdminControllers/productController');
 const upload=require('../multer');
 const productdb=require('../models/AdminModels/ProductSchema');
+const isAdminLogged = require('../middleware/adminMiddle')
 
 
 
@@ -23,20 +24,25 @@ AdminRouter.get('/adminuserunblock/:id',showusercontroller.unblockuser);
 
 
 //Admin Side Category
-AdminRouter.get('/getcategory',userCategory.getcategory)
-AdminRouter.post('/postcategory',userCategory.postcategory)
-AdminRouter.get('/editcategory',userCategory.geteditcategory);
-AdminRouter.post('/posteditcategory',userCategory.posteditcategory);
-AdminRouter.get('/deletecategory',userCategory.getdeletecategory);
-AdminRouter.post('/postdeletecategory',userCategory.postdeletecategory);
+AdminRouter.get('/getcategory',isAdminLogged,userCategory.getcategory)
+AdminRouter.post('/postcategory',isAdminLogged,userCategory.postcategory)
+AdminRouter.get('/editcategory',isAdminLogged,userCategory.geteditcategory);
+AdminRouter.post('/posteditcategory',isAdminLogged,userCategory.posteditcategory);
+AdminRouter.get('/deletecategory',isAdminLogged,userCategory.getdeletecategory);
+AdminRouter.post('/postdeletecategory',isAdminLogged,userCategory.postdeletecategory);
 
 
 
 //Admin Side Product
-AdminRouter.get('/getproduct',getproductlist);
-AdminRouter.get('/getaddproduct',userproduct.getaddproduct);
-AdminRouter.post('/postaddproduct',upload.array('image', 5),userproduct.postaddproduct);
-AdminRouter.get('/editadminproduct',userproduct.geteditproduct);
+AdminRouter.get('/getproduct',isAdminLogged,getproductlist);
+AdminRouter.get('/getaddproduct',isAdminLogged,userproduct.getaddproduct);
+AdminRouter.post('/postaddproduct',isAdminLogged,upload.array('image', 5),userproduct.postaddproduct);
+AdminRouter.get('/editadminproduct',isAdminLogged,userproduct.geteditproduct);
+AdminRouter.post('/posteditproduct',isAdminLogged,userproduct.posteditproduct);
+AdminRouter.post('/removeproductimage',isAdminLogged,userproduct.removeproductimage);
+AdminRouter.get('/deleteadminproduct/:id', isAdminLogged,userproduct.postdeleteproduct);
+
+
 
 
 
@@ -46,7 +52,6 @@ async function getproductlist(req,res,next){
     if(req.session.admin){
         try{
         const data= await productdb.find();
-        console.log(data);
         res.render('Adminviews/productdetails',{data});
         }catch (error) {
             console.log(error);
@@ -58,10 +63,6 @@ async function getproductlist(req,res,next){
     }
 
 }
-
-
-
-
 
 async function getadminlogin(req,res,next){
     if(!req.session.admin){

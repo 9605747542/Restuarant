@@ -29,7 +29,7 @@
 <body>
 
     
-<div id="preloader-active">
+<!-- <div id="preloader-active">
 <div class="preloader d-flex align-items-center justify-content-center">
 <div class="preloader-inner position-relative">
 <div class="preloader-circle"></div>
@@ -38,7 +38,7 @@
 </div>
 </div>
 </div>
-</div>
+</div> -->
 
 <main class="login-bg">
 
@@ -65,7 +65,7 @@
 <div class="single-input-fields login-check">
 <input type="checkbox" id="fruit1" name="keep-log">
 <label for="fruit1">Keep me logged in</label>
-<a href="#" class="f-right">Forgot Password?</a>
+<a href="/forgotpassword" class="f-right">Forgot Password?</a>
 </div>
 </div>
 
@@ -109,7 +109,7 @@
     
       var email = document.getElementById('email1').value;
       var password1 = document.getElementById('pass1').value;
-   
+      console.log(password1);
 
       const formData1 = {
         
@@ -131,14 +131,9 @@
 
         // Check the server response and show the appropriate SweetAlert
         if (data.success===true) {
-          Swal.fire({
-            title: 'Success!',
-            text: 'You can entered the home.',
-            icon: 'success',
-          }).then(() => {
             // Redirect or perform any other action after success
             window.location.href = '/home';
-          });
+          // });
         } else if(data.success === false){
           Swal.fire({
             title: 'Error!',

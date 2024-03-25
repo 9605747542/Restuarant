@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Address Page</title>
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+  }
+
+  .address-box {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .address-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .add-address {
+    text-align: center;
+    padding: 20px;
+    background-color: #FFAC5C;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .add-address:hover {
+    background-color:#FF7F00;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .add-address i {
+    margin-right: 5px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333333;
+  }
+
+  h3 {
+    margin: 0;
+    color: #007bff;
+  }
+
+  p {
+    margin-top: 5px;
+    color: #666666;
+  }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <h2>Your Addresses</h2>
+  <div class="address-box">
+    <form>
+    <%data.forEach(function(add, index){ %>
+      <h3>Address <%= index + 1 %></h3>
+      <p><%=add.streetaddress%></p>
+      <p><%=add.city%></p>
+      <p><%=add.zipcode%></p>
+      <p><%=add.state%></p>
+      <p><%=add.House_name%></p>
+      <p><%=add.landmark%></p>
+      <a href="/geteditaddress/<%= add._id %>" class="btn btn-primary">Edit Address</a>
+      <a href="/deleteaddress" class="btn btn-primary">Delete Address</a>
+    <% }); %>
+
+   
+  </form>
+    </div>
+    
+
+  <!-- Add more address boxes as needed -->
+
+  <div class="add-address" onclick="window.location.href='/addaddress'">
+    <i class="fas fa-plus-circle"></i>
+    <h3>Add New Address</h3>
+    <p>Click here to add a new address</p>
+  </div>
+</div>
+
+
+
+</body>
+</html>

@@ -126,15 +126,17 @@
     }
   </style>
 </head>
-
 <body>
-  <div>
-    <h4>Verify</h4>
-    <p>Your code was sent to you via email</p>
-  </div>
-  <form id="formId">
-    <h1>Enter OTP</h1>
-    <div class="otp-field" name="otp" id="otpId">
+  <div class="container">
+    <div class="verify">
+      <h4>Verify</h4>
+      <p>Your code was sent to you via email</p>
+     
+    </div>
+    <div class="form-container">
+      <form id="formId">
+        <h1>Enter OTP</h1>
+    <div class="otp-field" style="display: flex;" name="otp" id="otpId">
 
       <input type="text" maxlength="1" />
       <input type="text" maxlength="1" />
@@ -144,22 +146,57 @@
       <input type="text" maxlength="1" />
 
     </div>
-    <button class="btn mb-3" type="submit">Verify</button>
-  </form>
-
-  <form id="resend-Form">
-    <div>
-
-      <p class="resend text mb-0">
-        Didn't receive code? <a id="resendLink" onclick="resendOTP()">Request again</a>
-      </p>
+    <div id="timer" class="text-center text-danger mt-3 mb-3"></div>
+    <!-- <div class="text-right p-t-8 p-b-31">
+     <a href="/resend-otp">Request again</a> 
+       </div>  -->
+     
+        <button class="btn mb-3" type="submit">Verify</button>
+      </form>
     </div>
-  </form>
+  </div>
 </body>
 
+
+
 <script>
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+const timerElement = document.getElementById('timer');
+	  let seconds = 30;
+	
+	  function updateTimer() {
+		timerElement.innerText = `Resend OTP in ${seconds} seconds`;
+	  }
+	
+	  function startTimer() {
+		updateTimer();
+		const timerInterval = setInterval(function () {
+		  seconds--;
+		  updateTimer();
+	
+		  if (seconds === 0) {
+			clearInterval(timerInterval);
+			timerElement.innerHTML = '<a id="resendLink" onclick="resendOTP()">Request again</a>';
+		  }
+		}, 1000);
+	  }
+	
+	  // Start the timer when the page loads
+	  startTimer();
+  })
+    
   document.getElementById('formId').addEventListener('submit', async function (event) {
     event.preventDefault();
+
+
+
+    
+    
+    
+    
     var otpInputs = document.getElementById("otpId").getElementsByTagName("input");
     console.log(otpInputs);
     // Concatenate the values of all input elements
@@ -194,7 +231,7 @@
 
         } else {
         
-          window.location.href = '/home';
+          window.location.href = '/';
 
         }
       }).catch(error => {

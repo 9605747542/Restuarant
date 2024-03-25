@@ -3,7 +3,7 @@ const Swal = require('sweetalert2');
 const session=require('express-session');
 const admin=require('../../models/AdminModels/AdminloginSchema');
 const adminlogin={};
-
+const isAdminLogged=require('../../middleware/adminMiddle');
 
 // adminlogin.adminregister=async(req, res) => {
 //     try {
@@ -65,12 +65,14 @@ adminlogin.adminlogout=async(req,res)=>{
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
-        }
-        // Redirect to the login page after logout
+            console.log("haii");
+        }else{
+                  // Redirect to the login page after logout
         res.redirect('/adminlogin');
+        console.log("haii");
+
+        }
+  
     });
 }
-
-
-
 module.exports=adminlogin;

@@ -1,0 +1,188 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Shop | eCommerce</title>
+  <meta name="description" content>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/assets/css/slicknav.css">
+  <link rel="stylesheet" href="/assets/css/flaticon.css">
+  <link rel="stylesheet" href="/assets/css/progressbar_barfiller.css">
+  <link rel="stylesheet" href="/assets/css/lightslider.min.css">
+  <link rel="stylesheet" href="/assets/css/price_rangs.css">
+  <link rel="stylesheet" href="/assets/css/gijgo.css">
+  <link rel="stylesheet" href="/assets/css/animate.min.css">
+  <link rel="stylesheet" href="/assets/css/animated-headline.css">
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/themify-icons.css">
+  <link rel="stylesheet" href="/assets/css/slick.css">
+  <link rel="stylesheet" href="/assets/css/nice-select.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+
+
+  <!-- <div id="preloader-active">
+<div class="preloader d-flex align-items-center justify-content-center">
+<div class="preloader-inner position-relative">
+<div class="preloader-circle"></div>
+<div class="preloader-img pere-text">
+<img src="assets/img/logo/loder.png" alt>
+</div>
+</div>
+</div>
+</div> -->
+
+  <main class="login-bg">
+
+    <div class="login-form-area">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 col-lg-8">
+            <div class="login-form">
+
+              <div class="login-heading">
+                <span>Login</span>
+                <p>Enter Login details to get access</p>
+              </div>
+              <!-- <form onsubmit="submitforpassword()"> -->
+              <form id="passwordForm">
+                <div class="input-box">
+                  <div class="single-input-fields">
+                    <label id="email">
+                      <!-- <center>Username or Email Address <%=email%>
+                      </center> -->
+                    </label>
+                  </div>
+                  <div class="single-input-fields"><br><br>
+                    <label> Write New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                  </div>
+
+
+                </div>
+
+
+                <div class="login-footer">
+
+                  <button class="submit-btn3" type="submit">New Password</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+
+  </main>
+  <script>
+
+
+
+
+
+    function extractEmailFromURL() {
+      var currentURL = window.location.href;
+      var emailMatch = currentURL.split("/resetuser/")[1];
+      return emailMatch;
+    }
+
+    document.getElementById("passwordForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const newpassword = document.getElementById('newPassword').value;
+
+      console.log(newpassword);
+      var extractedEmail = extractEmailFromURL();
+      console.log("hii its ok", extractedEmail);
+
+      if (extractedEmail) {
+        // Make a request to your backend with the extracted email
+        fetch('/submitpassword', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+
+          },
+          body: JSON.stringify({extractedEmail, newpassword}),
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success === false) {
+              Swal.fire({
+                title: 'Error!',
+                text: data.message,
+                icon: 'error',
+              })
+
+            } else {
+
+              window.location.href = '/';
+
+            }
+          }).catch(error => {
+            console.error('Error during OTP verification:', error);
+          })
+      }
+
+    })
+
+
+  </script>
+
+
+
+
+
+  <!-- Include SweetAlert from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+  <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script> -->
+  <script src="./assets/js/popper.min.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+
+  <script src="/assets/js/owl.carousel.min.js"></script>
+  <script src="/assets/js/slick.min.js"></script>
+  <script src="/assets/js/jquery.slicknav.min.js"></script>
+
+  <script src="/assets/js/wow.min.js"></script>
+  <script src="/assets/js/animated.headline.js"></script>
+  <script src="/assets/js/jquery.magnific-popup.js"></script>
+  <script src="/assets/js/gijgo.min.js"></script>
+  <script src="/assets/js/lightslider.min.js"></script>
+  <script src="/assets/js/price_rangs.js"></script>
+
+  <script src="/assets/js/jquery.nice-select.min.js"></script>
+  <script src="/assets/js/jquery.sticky.js"></script>
+  <script src="/assets/js/jquery.barfiller.js"></script>
+
+  <script src="/assets/js/jquery.counterup.min.js"></script>
+  <script src="/assets/js/waypoints.min.js"></script>
+  <script src="/assets/js/jquery.countdown.min.js"></script>
+  <script src="/assets/js/hover-direction-snake.min.js"></script>
+
+  <script src="/assets/js/contact.js"></script>
+  <script src="/assets/js/jquery.form.js"></script>
+  <script src="/assets/js/jquery.validate.min.js"></script>
+  <script src="/assets/js/mail-script.js"></script>
+  <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+
+  <script src="/assets/js/plugins.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317"
+    integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
+    data-cf-beacon='{"rayId":"85441fafed4329f3","b":1,"version":"2024.2.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

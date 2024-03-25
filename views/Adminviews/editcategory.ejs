@@ -21,7 +21,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Title -->
-	<title>Davur : Restaurant Admin Dashboard + FrontEnd</title>
+	<title>PLAZA PLATE</title>
 
 
 	<link rel="icon" type="image/png" sizes="16x16" href="admin-assets/images/favicon.png">
@@ -59,18 +59,20 @@
             Nav header start
         ***********************************-->
 		<div class="nav-header">
-			<a href="index.html" class="brand-logo">
-				<img class="logo-abbr" src="admin-assets/images/logo.png" alt="">
-				<img class="logo-compact" src="admin-assets/images/logo-text.png" alt="">
-				<img class="brand-title" src="admin-assets/images/logo-text.png" alt="">
-			</a>
+            <a href="/dashboard" class="brand-logo">
+                <img class="logo-abbr" src="admin-assets/images/mainlogo.png" alt="">
+                <!-- <img class="logo-compact" src="admin-assets/images/logo-text.png" alt="">
+                <img class="brand-title" src="admin-assets/images/logo-text.png" alt=""> -->
+				<h3 class="placeholder-heading" data-placeholder="Plaza Plate" >Plaza Plate</h3>
 
-			<div class="nav-control">
-				<div class="hamburger">
-					<span class="line"></span><span class="line"></span><span class="line"></span>
-				</div>
-			</div>
-		</div>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
 		<!--**********************************
             Nav header end
         ***********************************-->
@@ -78,7 +80,7 @@
 		<!--**********************************
             Chat box start
         ***********************************-->
-		<div class="chatbox">
+		<!-- <div class="chatbox">
 			<div class="chatbox-close"></div>
 			<div class="custom-tab-1">
 				<ul class="nav nav-tabs">
@@ -686,13 +688,13 @@
 														class="fas fa-pencil-alt"></i></a>
 												<a href="#" class="btn btn-danger btn-xs sharp"><i
 														class="fa fa-trash"></i></a>
-											</div>
-										</div>
+											</div> -->
+										<!-- </div>
 									</li>
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -706,7 +708,7 @@
 		<!--**********************************
             Header start
         ***********************************-->
-		<div class="header">
+		<!-- <div class="header">
 			<div class="header-content">
 				<nav class="navbar navbar-expand">
 					<div class="collapse navbar-collapse justify-content-between">
@@ -886,7 +888,7 @@
 					</div>
 				</nav>
 			</div>
-		</div>
+		</div> -->
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -897,7 +899,7 @@
 		<div class="deznav">
 			<div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
-					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-networking"></i>
 							<span class="nav-text">Dashboard</span>
 						</a>
@@ -976,7 +978,7 @@
 							<li><a href="https://davur.dexignzone.com/websitetemplate/xhtml/blog-list.html"
 									target="_blank">Contact Us</a></li>
 						</ul>
-					</li>
+					</li> -->
 					<li><a class="has-arrow ai-icon" href="getUser" aria-expanded="false">
 							<i class="fa-solid fa-gear"></i>
 							<span class="nav-text">User-Details</span>
@@ -996,7 +998,7 @@
 					</a>
 				   
 				</li>
-					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-internet"></i>
 							<span class="nav-text">Bootstrap</span>
 						</a>
@@ -1086,11 +1088,11 @@
 							</li>
 							<li><a href="./page-lock-screen.html">Lock Screen</a></li>
 						</ul>
-					</li>
+					</li> -->
 
 				</ul>
 
-				<div class="add-menu-sidebar">
+				<!-- <div class="add-menu-sidebar">
 					<img src="admin-assets/images/icon1.png" alt="">
 					<p>Organize your menus through button bellow</p>
 					<a href="javascript:void(0);" class="btn bg-white text-black">+ Add Menus</a>
@@ -1098,7 +1100,7 @@
 				<div class="copyright">
 					<p><strong>Davur - Restaurant Admin Dashboard</strong> ©2023 All Rights Reserved</p>
 					<p>Made with <span class="heart"></span> by DexignZone</p>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!--**********************************
@@ -1137,7 +1139,7 @@
 
 												<div class="mb-3">
 													<label class="form-label">categoryName</label>
-													<input type="text" class="form-control" placeholder="<%=currentcategory.categoryName%>" id="categoryname" name="categoryname">
+													<input type="text" class="form-control"  id="categoryname" name="categoryname" value="<%=currentcategory.categoryName%>">
 
 												</div>
 												<div class="mb-3">
@@ -1193,10 +1195,13 @@
 																	<%=catdata[i].categoryName%>
 																</td>
 																<td class="text-end">
-																	<a href="/getcategory">Add</a>
+																	<a href="/getcategory?id=<%=catdata[i]._id%>">Add</a>
 																	<span>|</span>
 
-																	<a href="/deletecategory">delete</a>
+																	<a href="/deletecategory?id=<%=catdata[i]._id%>">delete</a>
+																	<span>|</span>
+
+																	<a href="/editcategory?id=<%=catdata[i]._id %>">Edit</a>
 																	<span>|</span>
 																</td>
 
@@ -1266,7 +1271,6 @@
 
 			// Get the value of the 'id' parameter
 			const idValue = urlParams.get('id');
-			console.log("sexrtfvyuh");
 			console.log(idValue);
 
 			const categoryname = document.getElementById('categoryname').value;
@@ -1284,24 +1288,24 @@
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify(formData)// Assuming categoryname is an object
+					body: JSON.stringify(formData)
 				});
 
 				const data = await response.json();
+				console.log(data);
 
-				if (data.status==='success') {
+				if (data.success===true) {
 					Swal.fire({
             title: 'Success!',
-            text: 'update successfully.',
+            text: data.message,
             icon: 'success',
-          })
-		  window.location.href='/getcategory'
-					
+			})
+			window.location.href='/getcategory';
 				} else {
 					console.log(data.error);
 					Swal.fire({
             title: 'Error!',
-            text: 'error occur.',
+            text: data.message,
             icon: 'error',
           })
 				}
@@ -1309,7 +1313,6 @@
 				console.log(error);
 			}
 		});
-
 
 
 	</script>

@@ -33,7 +33,7 @@ userControllers.blockuser = async (req, res) => {
         if (user) {
           user.isBlocked = true;
           await user.save();
-        res.redirect('/getUser')
+        return res.redirect('/getUser')
         }
   
       
@@ -55,7 +55,7 @@ userControllers.blockuser = async (req, res) => {
         if (user) {
           user.isBlocked = false;
           await user.save();
-          res.redirect('/getUser')
+          return res.redirect('/getUser')
         }
       
     } catch (error) {

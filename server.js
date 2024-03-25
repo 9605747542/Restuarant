@@ -1,5 +1,4 @@
 const express=require('express');
-// const fileUpload = require('express-fileupload');
 const app=express();
 const path=require('path');
 const nocache=require('nocache');
@@ -11,6 +10,7 @@ const crypto=require('crypto');
 const MongoDB=require('./models/database')
 const Swal = require('sweetalert2');
 const upload=require('./multer'); 
+const dotenv=require('dotenv');
 
 // app.use(upload);
 // console.log(typeof upload);
@@ -21,7 +21,7 @@ const upload=require('./multer');
 
 
 //to set port dynamically from environment file
-require("dotenv").config();
+dotenv.config();
 
 app.use(nocache());
 
@@ -59,7 +59,8 @@ MongoDB();
 
 
 
-const port=process.env.PORT||3005;
+const port=process.env.PORT;
+
 app.listen(port,()=>{
     console.log("Port Connected SuccessFully!!");
 })

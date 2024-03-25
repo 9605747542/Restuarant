@@ -59,25 +59,25 @@
 <div class="main-menu  d-none d-lg-block">
 <nav>
 <ul id="navigation">
-<li><a href="index.html">Home</a></li>
-<li><a href="product.html">Product</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="#">Page</a>
-<ul class="submenu">
+<li><a href="/home">Home</a></li>
+<li><a href="/getuserproduct">Product</a></li>
+<!-- <li><a href="about.html">About</a></li>
+<li><a href="#">Page</a> -->
+<!-- <ul class="submenu">
 <li><a href="login.html">Login</a></li>
 <li><a href="card.html">Card</a></li>
 <li><a href="categories.html">Categories</a></li>
 <li><a href="checkout.html">Checkout</a></li>
-<li><a href="product_details.html">Product Details</a></li>
-</ul>
-</li>
-<li><a href="blog.html">Blog</a>
-<ul class="submenu">
+<li><a href="product_details.html">Product Details</a></li> -->
+
+<!-- </li> -->
+<!-- <li><a href="blog.html">Blog</a> -->
+<!-- <ul class="submenu">
 <li><a href="blog.html">Blog</a></li>
 <li><a href="blog_details.html">Blog Details</a></li>
 <li><a href="elements.html">Elements</a></li>
-</ul>
-</li>
+</ul> -->
+<!-- </li> -->
 <li><a href="contact.html">Contact</a></li>
 </ul>
 </nav>
@@ -152,7 +152,7 @@
 <div id="vertical">
   <% image.forEach(function(img) { %>
     <div data-thumb="<%= img %>">
-        <img src="<%= img %>" class="w-100" alt="Image">
+        <img src="<%= img %>" class="w-100" alt="Image" >
     </div>
 <% }); %>
 
@@ -176,7 +176,7 @@
 <ul class="list">
 <li>
 <a class="active" href="#">
-<span>Category</span> : Household</a>
+<span>Category</span> :<%=data.category%></a>
 </li>
 <li>
   <a class="active" href="#">

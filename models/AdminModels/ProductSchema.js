@@ -23,7 +23,21 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+  unlist:{
+    type:Boolean,
+    default:false
+  },
+  category:{
+    type:String,
+    required:true
+  },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0, // Assuming new products start with no stock
+    min: [0, 'Stock cannot be negative.'] // Prevents stock from being negative
+  }
+}, { timestamps: true }); 
 
 const Product = mongoose.model('Products', productSchema);
 

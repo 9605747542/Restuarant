@@ -54,21 +54,25 @@
                 <span>Sign Up</span>
                 <p>Create your account to get full access</p>
               </div>
-              <form id="signupForm"  enctype="application/x-www-form-urlencoded" action="/otpPage">
+              <form  method="POST"  action="/register1">
                 <div class="input-box">
                   <div class="single-input-fields">
                     <label>Full name</label>
-                    <input type="text" placeholder="Enter full name" name="name" id="fname">
+                    <input type="text" placeholder="Enter full name" name="name" id="fname" required>
                   </div>
                   <div class="single-input-fields">
                     <label>Email Address</label>
-                    <input type="email" placeholder="Enter email address" name="email" id="femail">
+                    <input type="email" placeholder="Enter email address" name="email" id="femail" required>
                   </div>
                   <div class="single-input-fields">
                     <label>Password</label>
-                    <input type="password" placeholder="Enter Password" name="password1" id="fpass">
+                    <input type="password" placeholder="Enter Password" name="password1" id="fpass" required>
                   </div>
-                  <button class="submit-btn3" type="submit" id="signupButton">Sign Up</button>
+                  <div class="single-input-fields">
+                    <label>Confirm Password</label>
+                    <input type="password" placeholder="Enter Password" name="password2" id="cpass" required>
+                  </div>
+                  <button class="submit-btn3" type="submit" id="signupButton" >Sign Up</button>
                 </div>
               </form>
 
@@ -90,48 +94,121 @@
 
   <script>
 
+    async function validate() {
+     
+  var name = document.getElementById('fname').value;
+  var email = document.getElementById('femail').value;
+  var password1 = document.getElementById('fpass').value;
+  var password2=document.getElementById('cpass').value;
+ console.log(name,email,password1,password2);
+  if (name.trim() === '') {
+    Swal.fire({
+      title: "Error!",
+      text: "Write Your Correct name",
+      icon: "error"
+    });
+    return false // Prevent form submission
+  } else if (email.trim() === '') {
+    Swal.fire({
+      title: "Error!",
+      text: "Write Your Proper email",
+      icon: "error"
+    });
+    return false // Prevent form submission
+  } else if (password1.trim() === '') {
+    Swal.fire({
+      title: "Error!",
+      text: "Write the proper password",
+      icon: "error"
+    });
+    return false // Prevent form submission
+  }else if (password2.trim() === '') {
+    Swal.fire({
+      title: "Error!",
+      text: "Write the proper  confirm password",
+      icon: "error"
+    });
+    return false // Prevent form submission
+  }
+  else if (password1!==password2) {
+    Swal.fire({
+      title: "Error!",
+      text: "Passwords are not match",
+      icon: "error"
+    });
+    return false // Prevent form submission
+  }
+  else if (password1.length < 8) { // Add a condition to check if password is too short
+    Swal.fire({
+        title: "Error!",
+        text: "Password must be at least 8 characters long",
+        icon: "error"
+    });
+    return false
+} else if (!/\d/.test(password1)) { // Add a condition to check if password contains at least one digit
+    Swal.fire({
+        title: "Error!",
+        text: "Password must contain at least one digit",
+        icon: "error"
+    });
+    return false
+} 
+  // If all validations pass, return true to allow form submission
+ return true;
+}
+   
 
     // Add a submit event listener to the form
     document.getElementById('signupButton').addEventListener('click', async function (event) {
-      event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent the default form submission
 
+    // Call the validate function and store the result in a variable
+    let isValid = await validate();
+    console.log(isValid);
 
-      // Get user-entered values
-      var name = document.getElementById('fname').value;
-      var email = document.getElementById('femail').value;
-      var password1 = document.getElementById('fpass').value;
-   
+    // Check if validation succeeded
+    if (isValid) {
+        // Get user-entered values
+        var name = document.getElementById('fname').value;
+        var email = document.getElementById('femail').value;
+        var password1 = document.getElementById('fpass').value;
 
-      const formData = {
-        name,
-        email,
-        password1
-      }
-        // Send form data to the server using fetch or another AJAX method
-        const response = await fetch('/register', {
-          method: 'POST',
-          headers:{
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData),
-        }).then(response=>response.json())
-        .then((data)=>{
-          if(!data.success){
-            console.error("Data is Failed to submit");
-            
-            
-          }else{
-            console.log("data getting successfully");
-            window.location.href = '/otp-page'
-          }
-       
+        const formData = {
+            name,
+            email,
+            password1
+        };
+        console.log(formData);
+        try {
+            // Send form data to the server using fetch or another AJAX method
+            const response = await fetch('/register1', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            });
 
-        })
-      .catch(error=>{
-        console.error(error);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                if (!data.success) {
+                    console.error("Data failed to submit");
+                } else {
+                    console.log("Data submitted successfully");
+                    window.location.href = '/otp-page';
+                }
+            } else {
+                console.error("Server responded with error:", response.status);
+            }
+        } catch (error) {
+            console.error('Error occurred during form submission:', error);
+        }
+    } else {
+        console.log("Form validation failed");
+    }
+});
 
-      })
-    })
     //     const data = await response.json(); // assuming the server returns JSON
 
     //     // Check the server response and show the appropriate SweetAlert

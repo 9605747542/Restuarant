@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Address Details</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 100px;
+    margin-left: 400px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color:#FFAC5C ;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    padding-top: 20px; /* Adjusted padding-top */
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  #savebtn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFAC5C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+
+  #savebtn:hover {
+    background-color: #FF7F00;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <form>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          Address Details
+        </div>
+        <div class="card-body">
+         
+          <div class="form-group">
+            <label for="streetAddress">Street Address</label>
+            <input type="text" class="form-control" id="streetAddress" placeholder="Enter street address">
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="Enter city">
+          </div>
+          <div class="form-group">
+            <label for="zipcode">Zipcode</label>
+            <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode">
+          </div>
+          <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" class="form-control" id="state" placeholder="Enter state">
+          </div>
+          <div class="form-group">
+            <label for="houseName">House Name</label>
+            <input type="text" class="form-control" id="houseName" placeholder="Enter house name">
+          </div>
+          <div class="form-group">
+            <label for="landmark">Landmark</label>
+            <input type="text" class="form-control" id="landmark" placeholder="Enter landmark">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <button id="savebtn">Save Changes</button>
+    </div>
+  </div>
+</form>
+</div>
+
+<script>
+document.getElementById('savebtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const streetaddress = document.getElementById('streetAddress').value;
+    console.log(streetAddress);
+    const city = document.getElementById('city').value;
+    console.log(city);
+    const zipcode = document.getElementById('zipcode').value;
+    const state = document.getElementById('state').value;
+    const House_name = document.getElementById('houseName').value;
+    const landmark = document.getElementById('landmark').value;
+
+    if (streetAddress === '' || city === '' || zipcode === '' || state === '' || houseName === '' || landmark === '') {
+        Swal.fire({
+            title: 'Error!',
+            text: "Please Enter the required fields",
+            icon: 'error' // Corrected property name
+        })
+    } else {
+        const formData = {
+            streetaddress,
+            city,
+            zipcode,
+            state,
+            House_name,
+            landmark
+        };
+
+        try {
+            const response = await fetch('/postuserprofile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (data.message === "Address saved successfully") {
+                Swal.fire({
+					title:'Success!',
+					text:data.message,
+					icons:'success'
+				})
+            } else {
+                window.location.href = '/clickproduct';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error gracefully, e.g., display error message to the user
+        }
+    }
+});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

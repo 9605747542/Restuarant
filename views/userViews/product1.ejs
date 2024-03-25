@@ -18,7 +18,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!-- Title -->
-	<title>Davur : Restaurant Admin Dashboard + FrontEnd</title>
+	<title>Plaza Plate</title>
     
 	<!-- Favicon icon -->
     <link rel="icon" type="image/png" href="shopProducts/images/favicon.png">
@@ -67,7 +67,7 @@
 					<!-- Extra Nav -->
 					<div class="extra-nav">
 						<div class="extra-cell">
-							<h6 class="phone"><span><i class="fa-solid fa-phone"></i></span>(+91) 987 654 3210</h6>	
+							<!-- <h6 class="phone"><span><i class="fa-solid fa-phone"></i></span>(+91) 987 654 3210</h6>	 -->
 							<a class="btn btn-primary btn-lg" href="contact-us.html">Cantact US</a>
 						</div>
 					</div>
@@ -78,9 +78,9 @@
 							<a href="index.html" class="logo-dark"><img src="shopProducts/images/logo.png" alt=""></a>
 						</div>
 						<ul class="nav navbar-nav navbar navbar-left">	
-							<li><a href="index.html">Home</a></li>
-							<li><a href="about-us.html">About Us</a></li>
-							<li class="sub-menu-down"><a href="javascript:void(0);">Shop</a>
+							<li><a href="/home">Home</a></li>
+							<!-- <li><a href="about-us.html">About Us</a></li>
+							<li class="sub-menu-down"><a href="javascript:void(0);">Shop</a> -->
 								<!-- <ul class="sub-menu">
 									<li><a href="shop-grid-view.html">Shop Grid</a></li>					
 									<li><a href="shop-detail.html">Shop Detail</a></li>			
@@ -90,15 +90,15 @@
 									<li><a href="shop-login.html">Login</a></li>		
 									<li><a href="shop-registration.html">Registration</a></li>
 								</ul> -->
-							</li>
-							<li class="sub-menu-down"><a href="javascript:void(0);">Blog</a>
+							<!-- </li> -->
+							<!-- <li class="sub-menu-down"><a href="javascript:void(0);">Blog</a> -->
 								<!-- <ul class="sub-menu">
 									<li><a href="blog-list.html">Blog List</a></li>
 									<li><a href="blog-grid.html">Blog Grid</a></li>
 									<li><a href="blog-details.html">Blog Details</a></li>
 								</ul> -->
-							</li>
-							<li><a href="contact-us.html">Contact Us</a></li>
+							<!-- </li> -->
+							<!-- <li><a href="contact-us.html">Contact Us</a></li> -->
 						</ul>
 					</div>
 				</div>
@@ -120,7 +120,7 @@
 					<nav aria-label="breadcrumb" class="breadcrumb-row">
 						<ul class="breadcrumb">
 							<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Shop Grid View</li>
+							<li class="breadcrumb-item active" aria-current="page">Shop Use</li>
 						</ul>
 					</nav>
 					<!-- Breadcrumb Row End -->
@@ -132,8 +132,9 @@
 		<section class="content-inner">
 			<div class="container">
 				<div class="row">
+	
 					<%for (let i=0;i< data.length;i++) {%>
-						
+						<% if(data[i].unlist === false){ %>
 					<div class="col-xl-3 col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
 						
 						<div class="product-bx wow fadeInUp">
@@ -161,7 +162,7 @@
 				
 
 					</div>
-				<% } %>
+				<% }} %>
 					
 				</div>
 				<div class="row">
