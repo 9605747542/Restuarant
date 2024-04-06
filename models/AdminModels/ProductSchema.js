@@ -1,11 +1,11 @@
 // productModel.js
 const mongoose = require('mongoose');
+const Schema=mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
   productName: {
     type: String,
-    required: true,
-    unique:true
+    required: true
   },
   price: {
     type: Number,
@@ -28,17 +28,17 @@ const productSchema = new mongoose.Schema({
     default:false
   },
   category:{
-    type:String,
-    required:true
+    type:Schema.Types.ObjectId,
+    ref:'categorys'
   },
   stock: {
-    type: Number,
+    type: Number, 
     required: true,
     default: 0, // Assuming new products start with no stock
     min: [0, 'Stock cannot be negative.'] // Prevents stock from being negative
   }
 }, { timestamps: true }); 
 
-const Product = mongoose.model('Products', productSchema);
+const Product = mongoose.model('products', productSchema);
 
 module.exports = Product;

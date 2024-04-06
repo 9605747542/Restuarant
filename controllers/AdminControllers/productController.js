@@ -19,60 +19,7 @@ userproduct.getaddproduct=async(req,res)=>{
        
   
 }
-// userproduct.postaddproduct=(multer1.array('file', 5)),async(req,res)=>{
-//     if(req.session.admin){
 
-    
-//         const images = req.files.map((file) => file.path);
-//     console.log(images);
-
- 
-
-//         // const randomInteger = Math.floor(Math.random() * 20000001);
-//         const imgDirectory=path.join('pulbic','admin-assets','product-img');
-
-
-//         const imgFilename="cropped"+randomInteger+".jpg";
-//         const imgpath=path.join(imgDirectory,imgFilename);
-        
-//     //     console.log("imgpath:"+imgpath);
-//     //     const croppedImage = await sharp(file.path)
-//     //     .resize({
-//     //         width: 300, 
-//     //         height: 300, 
-//     //         fit: "cover",
-//     //     })
-//     //     .toFile(imgpath);
-    
-//     // if (croppedImage) {
-//     //     imageData.push(imgFilename);
-//     // }
-    
-//     //         }
-    
-
-    
-//     const{foodname,foodprice,foodpmasala,description}=req.body;
-//     const product1=new productModel({
-//        image:images,productName:foodname,price:foodprice,priceInMasala:foodpmasala,description:description
-
-//     })
-//     console.log(product1);
-//     if(product1){
-//         await product1.save();
-//         res.json({success:true});
-
-//     }else{
-//         res.json({success:false});
-//     }
-// }else{
-//     res.redirect('/adminlogin');
-// }
-   
-
-
-
-// }
 
 
 userproduct.postaddproduct = async (req, res) => {
@@ -88,97 +35,74 @@ userproduct.postaddproduct = async (req, res) => {
             let imagePaths = [];
 
             
-              for (const image of images) {
-                let imagePath = "/admin-assets/product-img/" + image.filename;
-                    console.log('imagename:', image.filename);
-                    imagePaths.push(imagePath);
-                //     const croppedImagePath = imagePath.replace('.', '-cropped.'); // Appending '-cropped' to the filename
-                // console.log("Cropped Images:",croppedImagePath);
+            const fs = require('fs');
 
-
-
-                // try {
-                //     await sharp(image.buffer)
-                //         .resize({ width: 200, height: 200 })
-                //         .toFile(croppedImagePath);
-            
-                //     console.log('Image cropped and saved successfully:', croppedImagePath);
-                //     imagePaths.push(croppedImagePath);
-
-                    // if (!image.buffer || image.buffer.length === 0) {
-                    //     throw new Error("Image buffer is empty or undefined.");
-                    // }
-
-                    // const extension = path.extname(image.filename); // Get the file extension
-                    // const filenameWithoutExtension = path.basename(image.filename, extension); // Get the filename without extension
-                    // const croppedImagePath = `/admin-assets/product-img/${filenameWithoutExtension}-cropped${extension}`;
-        
-                    // console.log('Image Name:', image.filename);
-                    // console.log('Cropped Image Path:', croppedImagePath);
-                    // try {
-                    //     console.log('Image Buffer Length:', image.buffer.length);
-                    //     const imageResizeResult = await sharp(image.buffer)
-                    //         .resize({ width: 200, height: 200 })
-                    //         .toFile(croppedImagePath);
-                    
-                    //     if (!imageResizeResult) {
-                    //         console.error('Error: Image resize operation returned null or undefined.');
-                    //         return res.status(500).json({ error: 'Image resize operation failed' });
-                    //     }
-                    
-                    //     console.log('Image cropped and saved successfully:', croppedImagePath);
-                    //     imagePaths.push(croppedImagePath);
-                    // } catch (error) {
-                    //     console.error('Error cropping and saving image:', error);
-                    //     return res.status(500).json({ error: 'Error cropping and saving image' });
-                    // }
-                    
-                // } catch (error) {
-                //     console.error('Error cropping image:', error);
-                //     // Handle error appropriately, e.g., return a 500 response
-                //     return res.status(500).json({ error: "Error cropping image" });
-                // }
-            }
+            for (const image of images) {
                 
-              
+                    const imagePath = "/admin-assets/product-img/" + image.filename;
+                    console.log('imagename:', image.filename);
+            
+                    
+                    // Check if file exists
+                   
+            
+                    imagePaths.push(imagePath);
+            }
+            
+                  
 
             const { productName, price, priceInMasala, description,category,stock} = req.body;
-            console.log(stock);
-
+            console.log('blaa');
+            console.log(category);
+          
+           
+            const data=await categorys.findOne({categoryName:category});
+            if(!data){
+                return res.status(400).json({success:false,message: "Category not found" });
+            }
+            else{
+               
+            
+            
             const product1 = new productModel({
                 image: imagePaths, // Assuming imagePaths is an array of file paths
                 productName,
                 price,
                 priceInMasala,
                 description,
-                category,
+                category:data._id,
                 stock
             });
+        
 
             console.log(product1);
 
 
-            const data=await productModel.find();
+            // const data=await productModel.find();
           
 
-            const productNamesArray = data.map(product => product.productName);
+            // const productNamesArray = data.map(product => product.productName);
+            // console.log(productNamesArray);
 
 
-            if(productNamesArray.includes(product1.productName)){
-                res.json({ success: false, message: 'Duplicate ProductName' });
+            // if(productNamesArray.includes(product1.productName)){
+            //     res.json({ success: false, message: 'Duplicate ProductName' });
 
-            }
+            // }
 
-            else if (product1) {
+           if (product1) {
                 await product1.save();
-                res.redirect('/getproduct')
+               res.redirect('/getproduct');
+
             } else {
-                res.json({ success: false });
+                res.json({ success: false ,message:'Product details is not saved '});
             }
-        } catch (error) {
+        } 
+    }catch (error) {
             console.error('Error adding product:', error);
             res.status(500).json({ success: false, message: 'Internal server error' });
         }
+    
    
 };
 
@@ -190,41 +114,102 @@ userproduct.geteditproduct=async(req,res)=>{
   const data= await productModel.findById(id)
 
 
+
+
     res.render('Adminviews/editproduct',{data});
 }
 
 
-userproduct.posteditproduct=async(req,res)=>{
-    try{
-    const productId=req.body.id;
-    const {productName,price,priceInMasala,description}=req.body;
-    console.log(productId);
+// userproduct.posteditproduct=async(req,res)=>{
+//     try{
+//     const productId=req.body.id;
+//     const {productName,price,priceInMasala,description,stock}=req.body;
+//     console.log(productId);
+//     if(req.files){
+//     const  image1=req.files;
+//     console.log(image1);
+//     // image1.mv("/admin-assets/product-img/".jpg)
+// }
+
 
         
 
     
-    const existingProduct = await productModel.findById(productId);
+//     const existingProduct = await productModel.findById(productId);
 
-    if (existingProduct) {
-        // Update the category's name
+//     if (existingProduct) {
+//         // Update the category's name
+//         existingProduct.productName = productName;
+//         existingProduct.price = price;
+//         existingProduct.priceInMasala = priceInMasala;
+//         existingProduct.description = description;
+//         existingProduct.stock=stock
+
+//         await existingProduct.save();
+//         console.log('Product updated:', productName);
+//         return res.json({ success: true, message: "Product updated successfully" });
+//     } else {
+//         console.log("Product not found");
+//         return res.status(404).json({ success: false, message: 'Product not found' });
+//     }
+// } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ success: false, message: "Internal Server Error" });
+// }
+
+// }
+
+
+userproduct.posteditproduct = async (req, res) => {
+    try {
+        const productId = req.body.id;
+        const { productName, price, priceInMasala, description, stock } = req.body;
+        console.log(productId);
+
+        const existingProduct = await productModel.findById(productId);
+
+        if (!existingProduct) {
+            console.log("Product not found");
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        // Assuming a new image was uploaded
+        if (req.files && req.files.image) {
+            const image = req.files.image;
+            // Generate a new filename or use the existing logic from your upload middleware
+            const newImageName = `${Date.now()}-${image.originalname}`;
+            const newPath = `/admin-assets/product-img/${newImageName}`;
+
+            // Optionally delete the old image from the server
+            const fs = require('fs');
+            const oldPath = existingProduct.imagePath; // Ensure this path is correct
+            if (fs.existsSync(oldPath)) {
+                fs.unlinkSync(oldPath);
+            }
+
+            // Move the new image to the desired location
+            await image.mv(newPath);
+
+            // Update the product's image path
+            existingProduct.imagePath = newPath;
+        }
+
+        // Update other product details
         existingProduct.productName = productName;
         existingProduct.price = price;
         existingProduct.priceInMasala = priceInMasala;
         existingProduct.description = description;
+        existingProduct.stock = stock;
 
         await existingProduct.save();
         console.log('Product updated:', productName);
         return res.json({ success: true, message: "Product updated successfully" });
-    } else {
-        console.log("Product not found");
-        return res.status(404).json({ success: false, message: 'Product not found' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-} catch (error) {
-    console.log(error);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
-}
+};
 
-}
 
 
 

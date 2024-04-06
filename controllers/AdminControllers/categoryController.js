@@ -45,12 +45,7 @@ userCatagory.postcategory = async (req, res) => {
         const categoryname = req.body.categorytype;
         console.log(categoryname);
 
-        const categoryPattern = /^[a-zA-Z0-9_]+$/;
-
-        // Check if the category name matches the regex pattern
-        if (!categoryPattern.test(categoryname)) {
-            return res.status(400).json({ success: false, message: "Invalid category name. It must contain only alphanumeric characters and underscores." });
-        }
+       
 
         // Check if the category already exists in the database (case-insensitive)
         const existingCategory = await categorys.findOne({ categoryName: { $regex: new RegExp('^' + categoryname + '$', 'i') } });
@@ -94,6 +89,8 @@ userCatagory.geteditcategory=async(req,res)=>{
    
         try{
             const Id=req.query.id;
+            req.session.category_id=Id;
+            console.log(req.session.category_id);
             console.log("id from back in  edit case:",Id);
             
             const currentcategory=await categorys.findById(Id)

@@ -83,13 +83,15 @@
     <%data.forEach(function(add, index){ %>
       <h3>Address <%= index + 1 %></h3>
       <p><%=add.streetaddress%></p>
+      <p><%=add.phone%></p>
       <p><%=add.city%></p>
       <p><%=add.zipcode%></p>
       <p><%=add.state%></p>
       <p><%=add.House_name%></p>
       <p><%=add.landmark%></p>
       <a href="/geteditaddress/<%= add._id %>" class="btn btn-primary">Edit Address</a>
-      <a href="/deleteaddress" class="btn btn-primary">Delete Address</a>
+      <button onclick="postdltaddress('<%= add._id %>')" class="btn btn-primary">Delete Address</button>
+
     <% }); %>
 
    
@@ -105,7 +107,40 @@
     <p>Click here to add a new address</p>
   </div>
 </div>
+<script>
+  async function postdltaddress(addressid){
+    console.log(addressid);
+    const response=await fetch('/postdltaddress',{
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json'
+			},
+			body:JSON.stringify({addressid})
+		})
+		const data=response.json();
+		if(data.success===true){
+      Swal.fire({
+            title: 'Success!',
+            text: data.message,
+            icon: success // Corrected property name
+        })
 
+		
+			
+		}else{
+			  Swal.fire({
+            title: 'Error!',
+            text: data.message,
+            icon: 'error' // Corrected property name
+        })
+		}
+		
+		
+
+  }
+  
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

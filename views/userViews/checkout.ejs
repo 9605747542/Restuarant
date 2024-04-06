@@ -25,19 +25,34 @@
 <link rel="stylesheet" href="assets/css/slick.css">
 <link rel="stylesheet" href="assets/css/nice-select.css">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+    .address-details {
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: top;
+        cursor: pointer;
+    }
+
+    .address-details.selected {
+        border-color: blue; /* Change border color when selected */
+    }
+
+    .address-details h3 {
+        margin-top: 0;
+    }
+
+    .address-info {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+</style>
+
 </head>
+
 <body>
 
-<div id="preloader-active">
-<div class="preloader d-flex align-items-center justify-content-center">
-<div class="preloader-inner position-relative">
-<div class="preloader-circle"></div>
-<div class="preloader-img pere-text">
-<img src="assets/img/logo/loder.png" alt>
-</div>
-</div>
-</div>
-</div>
+
+
 
 <header>
 
@@ -147,7 +162,7 @@
 <div class="check_title">
 <h2>
 Returning Customer?
-<a href="login.html">Click here to login</a>
+<a href="/">Click here to login</a>
 </h2>
 </div>
 <p>
@@ -166,9 +181,9 @@ Billing & Shipping section.
 </div>
 <div class="col-md-12 form-group d-flex flex-wrap">
 <a href="login.html" value="submit" class="btn"> log in</a>
-<div class="checkout-cap ml-5">
+<div class="checkout-cap ml-5" >
 <input type="checkbox" id="fruit01" name="keep-log">
-<label for="fruit01">Create an account?</label>
+<a href="/register1"><label for="fruit01" style="color: black;">Create an account?</label></a>
 </div>
 </div>
 </form>
@@ -188,134 +203,159 @@ Billing & Shipping section.
 <h3>Billing Details</h3>
 <form class="row contact_form" action="#" method="post" novalidate="novalidate">
 <div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="first" name="name" />
-<span class="placeholder" data-placeholder="First name"></span>
+<input type="text" class="form-control" id="first" name="name" placeholder="First name" />
+
 </div>
 <div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="last" name="name" />
-<span class="placeholder" data-placeholder="Last name"></span>
+<input type="text" class="form-control" id="street" name="name" />
+<span class="placeholder" data-placeholder="Street Address"></span>
 </div>
 <div class="col-md-12 form-group">
-<input type="text" class="form-control" id="company" name="company" placeholder="Company name" />
+<input type="text" class="form-control" id="state" name="state" placeholder="State" />
 </div>
 <div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="number" name="number" />
-<span class="placeholder" data-placeholder="Phone number"></span>
+<input type="text" class="form-control" id="number" name="number" placeholder="Phone number"/>
+
 </div>
 <div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="email" name="compemailany" />
-<span class="placeholder" data-placeholder="Email Address"></span>
+<input type="text" class="form-control" id="email" name="email" placeholder="Email Address"/>
+
 </div>
 <div class="col-md-12 form-group p_star">
-<select class="country_select">
-<option value="1">Country</option>
-<option value="2">Country</option>
-<option value="4">Country</option>
-</select>
+<input type="text" class="form-control" id="housename" name="housename" placeholder="House_name"/>
+
 </div>
 <div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="add1" name="add1" />
-<span class="placeholder" data-placeholder="Address line 01"></span>
+<input type="text" class="form-control" id="landmark" name="lankmark" placeholder="Landmark" />
+
 </div>
+
 <div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="add2" name="add2" />
-<span class="placeholder" data-placeholder="Address line 02"></span>
-</div>
-<div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="city" name="city" />
-<span class="placeholder" data-placeholder="Town/City"></span>
-</div>
-<div class="col-md-12 form-group p_star">
-<select class="country_select">
-<option value="1">District</option>
-<option value="2">District</option>
-<option value="4">District</option>
-</select>
+<input type="text" class="form-control" id="city" name="city" placeholder="Town/City" />
+
 </div>
 <div class="col-md-12 form-group">
-<input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" />
+<input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Postcode/ZIP" />
 </div>
 <div class="col-md-12 form-group">
 <div class="checkout-cap">
-<input type="checkbox" id="fruit1" name="keep-log">
-<label for="fruit1">Create an account?</label>
+    <button style="border: none;" id="submit-btn"><a class="btn w-20">Submit</a></button>
 </div>
-</div>
-<div class="col-md-12 form-group">
-<div class="creat_account">
-<h3>Shipping Details</h3>
-<div class="checkout-cap">
-<input type="checkbox" id="f-option3" name="selector" />
-<label for="f-option3">Ship to a different address?</label>
-</div>
-</div>
-<textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
 </div>
 </form>
+<div class="col-md-12 form-group">
+<div class="creat_account">
+<h3>Address Details</h3>
+
+<div class="container">
+    <h2>Your Addresses</h2>
+    <div class="address-box">
+        <form id="addressForm">
+            <% data.forEach(function(add, index) { %>
+            <div class="address-details">
+                <h3>Address <%= index + 1 %></h3>
+                <div class="address-info">
+                    <p><strong>Street Address:</strong> <%= add.streetaddress %></p>
+                    <p><strong>Phone:</strong> <%= add.phone %></p>
+                    <p><strong>City:</strong> <%= add.city %></p>
+                    <p><strong>Zip Code:</strong> <%= add.zipcode %></p>
+                    <p><strong>State:</strong> <%= add.state %></p>
+                    <p><strong>House Name:</strong> <%= add.House_name %></p>
+                    <p><strong>Landmark:</strong> <%= add.landmark %></p>
+                </div>
+                <input type="radio" name="address" value="<%= index %>" id="address<%= index %> required">
+                <label for="address<%= index %>">Select Address <%= index + 1 %></label>
+            </div>
+            <% }); %>
+        </form>
+    </div>
+</div>
+
+
+
+</div>
+
+</div>
+
 </div>
 <div class="col-lg-4">
 <div class="order_box">
 <h2>Your Order</h2>
+
+    
 <ul class="list">
-<li>
-<a href="#">Product<span>Total</span>
-</a>
-</li>
-<li>
-<a href="#">Fresh Blackberry
-<span class="middle">x 02</span>
-<span class="last">$720.00</span>
-</a>
-</li>
-<li>
-<a href="#">Fresh Tomatoes
-<span class="middle">x 02</span>
-<span class="last">$720.00</span>
-</a>
-</li>
-<li>
-<a href="#">Fresh Brocoli
-<span class="middle">x 02</span>
-<span class="last">$720.00</span>
-</a>
-</li>
-</ul>
-<ul class="list list_2">
-<li>
-<a href="#">Subtotal <span>$2160.00</span></a>
-</li>
-<li>
-<a href="#">Shipping
+    <li>
+        <a href="#">Product<span>Total</span>
+        </a>
+     </li>
+     <% products.forEach(product1 => { %>
+        <li class="product-item">
+            <a href="#" style="color: black;">
+                <%= product1.productName %>
+                <span class="middle" id="quantity<%=product1._id %>">x <%= product1.quantity %></span>
+                <span id="price<%= product1._id %>" class="last"><%= product1.price * product1.quantity %></span>
+            </a>
+            <!-- Subtotal -->
+           
+        </li>
+        <% }) %>
+    
+<a href="#" style="color: black;">Shipping
 <span>Flat rate: $50.00</span>
 </a>
 </li>
 <li>
-<a href="#">Total<span>$2210.00</span>
+   
+<a href="#">Total
+    <% var total = 0; %>
+    <% products.forEach(product1 => { %>
+            <% total = product1.total; %>
+        <% }) %>
+    <span id="total"><%=total + 50%></span>
+  
+    
 </a>
 </li>
+
 </ul>
+</li>
+
+
+
 <div class="payment_item">
-<div class="radion_btn">
-<input type="radio" id="f-option5" name="selector" />
-<label for="f-option5">Check payments</label>
-<div class="check"></div>
+    <div class="radion_btn">
+        <input type="radio" id="f-option5" name="selector" />
+        <label for="f-option5">Check payments</label>
+        <div class="check"></div>
+    </div>
+    <p> Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
 </div>
-<p> Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
+<div class="payment_item">
+    <div class="radion_btn">
+        <input type="radio" id="f-option7" name="selector" />
+        <label for="f-option7">Cash On Delivery</label>
+        <div class="check"></div>
+    </div>
+    <p> Please pay cash on delivery to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
 </div>
 <div class="payment_item active">
-<div class="radion_btn">
-<input type="radio" id="f-option6" name="selector" />
-<label for="f-option6">Paypal </label>
-<img src="assets/img/gallery/card.jpg" alt />
-<div class="check"></div>
+    <div class="radion_btn">
+        <input type="radio" id="f-option6" name="selector" />
+        <label for="f-option6">Paypal </label>
+        <img src="assets/img/gallery/card.jpg" alt />
+        <div class="check"></div>
+    </div>
+    <p> Please proceed to Paypal for payment. </p>
 </div>
-<p> Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
-</div>
+
 <div class="creat_account checkout-cap">
 <input type="checkbox" id="f-option8" name="selector" />
 <label for="f-option8">I’ve read and accept the <a href="#">terms & conditions*</a> </label>
 </div>
-<a class="btn w-100" href="#">Proceed to Paypal</a>
+<button id="codButton" class="btn w-20" style="border: none;">
+    Proceed to Cash on Delivery
+</button>
+
 </div>
 </div>
 </div>
@@ -465,8 +505,151 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <div id="back-top">
 <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 </div>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Document loaded. Processing products...");
+    document.querySelectorAll('.product-item').forEach((product, index) => {
+        console.log(`Processing product #${index + 1}`);
+        let spanMiddle = product.querySelector('span.middle');
+        console.log('Span with class "middle":', spanMiddle);
+        if (spanMiddle) {
+            let productId = spanMiddle.id.replace('quantity', '');
+            console.log('Product ID:', productId);
+            let quantityText = document.getElementById('quantity' + productId).textContent;
+            let quantity = parseInt(quantityText.split('x')[1].trim(), 10);
+            console.log(`Product ID: ${productId}, Quantity: ${quantity}`);
+          
+        } else {
+            console.log('Span with class "middle" not found for product:', product);
+        }
+    });
+
+   
+  
+
+const codButton = document.getElementById('codButton');
+    if (codButton) {
+        codButton.onclick = redirectToCashOnDelivery;
+    }
+
+    async function redirectToCashOnDelivery() {
+   
 
 
+     const response=await fetch( `/postorderconformdetails`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+    })
+    const data = await response.json();
+    console.log(data);
+    
+            if (data.success===true) {
+                window.location.href='/getorder-conform'
+               
+            } else {
+                Swal.fire({
+					title:'Error!',
+					text:data.message,
+					icons:'error'
+				})
+               
+            }
+       
+}
+
+
+
+
+  
+  
+ 
+    
+    console.log("Wait");
+    // Add event listener to the parent element of address details
+    document.querySelector('.address-box').addEventListener('click', function(event) {
+        // Check if the clicked element has the class 'address-details'
+        if (event.target.classList.contains('address-details')) {
+            // If so, call the selectAddress function with the clicked element
+            selectAddress(event.target);
+        }
+    });
+});
+
+function selectAddress(addressElement) {
+    // Toggle the 'selected' class for the clicked address box
+    console.log("blaa");
+    addressElement.classList.toggle('selected');
+}
+
+
+document.getElementById('submit-btn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const streetaddress = document.getElementById('street').value;
+    console.log(streetaddress);
+    const city = document.getElementById('city').value;
+    console.log(city);
+    const zipcode = document.getElementById('zipcode').value;
+    const state = document.getElementById('state').value;
+    const House_name = document.getElementById('housename').value;
+    const landmark = document.getElementById('landmark').value;
+    const phone=document.getElementById('number').value;
+
+
+    if (streetaddress === '' || city === '' || zipcode === '' || state === '' || House_name === '' || landmark === '' || phone === '') {
+        Swal.fire({
+            title: 'Error!',
+            text: "Please Enter the required fields",
+            icon: 'error' // Corrected property name
+        })
+    } else {
+        const formData = {
+            streetaddress,
+            city,
+            zipcode,
+            state,
+            House_name,
+            landmark,
+            phone
+        };
+
+        try {
+            const response = await fetch('/post-userddress-checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (data.message === "Address saved successfully") {
+                Swal.fire({
+					title:'Success!',
+					text:data.message,
+					icons:'success'
+				})
+            } else {
+                Swal.fire({
+					title:'Error!',
+					text:data.message,
+					icons:'error'
+				})
+              
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error gracefully, e.g., display error message to the user
+        }
+    }
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="./assets/js/popper.min.js"></script>

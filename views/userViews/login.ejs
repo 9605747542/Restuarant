@@ -119,7 +119,7 @@
 
       try {
         // Send form data to the server using fetch or another AJAX method
-        const response = await fetch('/submit1', {
+        const response = await fetch(`/submit1/${email}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -225,6 +225,14 @@
 											<input type="text" class="form-control" id="priceinmasala" name="priceInMasala" value="<%=data.priceInMasala%>">
 										</div>
 										<div class="mb-3 pb-3">
+											<label for="stock" class="form-label font-w600">Stock</label>
+											<input type="number" class="form-control" id="stocks" name="stock" value="<%=data.stock%>"">
+
+										</div>
+
+	
+										
+										<div class="mb-3 pb-3">
 											<label for="description" class="form-label font-w600">Item description</label>
 											<textarea class="form-control" id="description" name="description" rows="5" required><%=data.description%></textarea>
 										</div>
@@ -235,15 +243,12 @@
 					</div>
 					<div class="col-xl-2 col-md-12" style="margin-left: 450px;">
 						<% data.image.forEach((image, index) => { %>
+							<span id="indexValue" style="display: none;"><%= index %></span>
 							<div id="imageContainer_<%= index %>">
 								<div class="previewContainer">
-									<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview">
-									<h6>Image reviews</h6>
-									<!-- <a href="/removeproductimage">
-										<button>Remove Image</button>
-									</a> -->
-									<!-- <label for="file_input" style="cursor: pointer;">Choose Image</label>
-									<input type="file" id="file_input" class="file_input" style="display: none;" onchange="chooseImage(event)"> -->
+									<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview" id="galleryInput">
+									<input type="file" onchange="imagechange(event)" >
+	
 								</div>
 							</div>
 						<% }) %>
@@ -300,6 +305,10 @@
     <!-- Required vendors -->
 	<script>
 
+		async function imagechange(event){
+			document.getElementById('galleryInput').src=URL.createObjectURL(event.target.files[0])
+		}
+
 		document.getElementById('editproduct').addEventListener('submit',async function(event){
 			event.preventDefault();
 
@@ -318,6 +327,10 @@
 			const price=document.getElementById('price').value;
 			const priceinmasala=document.getElementById('priceinmasala').value;
 			const description=document.getElementById('description').value;
+			const stock=document.getElementById('stocks').value;
+			console.log(stock);
+			
+		
 	
 
 			const formData={
@@ -325,7 +338,10 @@
 				productName:productname,
 				price:price,
 				priceInMasala:priceinmasala,
-				description:description
+				description:description,
+				stock:stock
+
+			
 
 			}
 			try{

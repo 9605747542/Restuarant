@@ -2406,7 +2406,8 @@ li {
     padding-right: 15px;
     color: #1e2147;
     font-size: 16px;
-    padding-top: 6px
+    padding-top: 6px;
+    width:30px;
 }
 
 @media (max-width: 575px) {
@@ -2420,14 +2421,15 @@ li {
 }
 
 .count-job .select-cat .nice-select {
-    width: 111px;
+    width: 200px;
     height: 35px;
     background: #fff;
-    padding: 10px 12px;
+    padding: 10px 18px;
     color: #5d5d5d;
-    border: 1px solid #ededed;
-    border-radius: 0px;
-    line-height: 15px
+    border: 2px solid #ededed;
+    border-radius: 17px;
+    line-height: 16px;
+    margin-left: 30px;
 }
 
 @media (max-width: 575px) {

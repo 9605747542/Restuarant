@@ -7,9 +7,32 @@ userprofile.getuserprofile=async (req,res)=>{
    
     res.render('userViews/userprofile',{data,useraddress});
 
+
+
 }
-userprofile.postuserprofile=async(req,res)=>{
-    const {streetaddress,city,zipcode,state,House_name,landmark}=req.body;
+userprofile.postuserprofile = async (req, res) => {
+  console.log("blaa");
+  const { name, email } = req.body;
+  const id = req.session.userid;
+  console.log(id);
+  try {
+      const user = await userdb.findById(id);
+      if (user) {
+          user.name = name; 
+          user.email = email;
+          await user.save(); 
+          return res.json({ success: true, message: "Successfully Updated!" }); 
+      } else {
+          return res.status(404).json({ success: false, message: "User not found" }); 
+      }
+  } catch (error) {
+      console.error("Error while updating user profile:", error);
+      return res.status(500).json({ success: false, message: "Failed to update user profile" });
+  }
+}
+
+userprofile.postuseraddress=async(req,res)=>{
+    const {streetaddress,phone,city,zipcode,state,House_name,landmark}=req.body;
     const userid=req.session.userid;
     console.log(userid);
     try{
@@ -23,7 +46,8 @@ userprofile.postuserprofile=async(req,res)=>{
                     zipcode,
                     state,
                     House_name,
-                    landmark
+                    landmark,
+                    phone
                 },
               },
             })
@@ -45,6 +69,10 @@ userprofile.getalladdress=async(req,res)=>{
 }
 userprofile.addaddress=async (req,res)=>{
     res.render('Userviews/addaddress')
+}
+userprofile.getchangepasswordpage=async(req,res)=>{
+  const email=req.params.email;
+  res.render('userViews/changepassword',{email})
 }
 
 
@@ -71,8 +99,8 @@ userprofile.geteditaddress=async(req,res)=>{
 }
 
 userprofile.posteditaddress=async(req,res)=>{
-    const {streetaddress,city,zipcode,state,House_name,landmark}=req.body;
-    console.log(streetaddress);
+    const {streetaddress,phone,city,zipcode,state,House_name,landmark}=req.body;
+   
     const userid=req.session.userid;
     console.log("Hai Welcome to ooty nice to meet you");
     try {
@@ -87,13 +115,14 @@ userprofile.posteditaddress=async(req,res)=>{
               city,
               zipcode,
               House_name,
+              phone
            
             }
           }
         },
         { new: true } // This option returns the modified document
       );
-      console.log("eeeeeeeee");
+      
     
       if (!userAdr) {
         return res.json({ success: false, message: 'User not found' });
@@ -105,5 +134,30 @@ userprofile.posteditaddress=async(req,res)=>{
       res.status(500).json({ success: false, message: "Failed to save address" });
     }
     
+}
+userprofile.deleteaddress=async(req,res)=>{
+  const id=req.body.addressid;
+  console.log(id);
+  try{
+
+  
+  const result=await userdb.findByIdAndUpdate(
+    req.session.userid,
+      {$pull:{address:{_id:id}}
+    },{new:true}
+  );
+  if(result){
+    res.json({success:true,message:"SuccessFully deleted"})
+  }else{
+    res.json({success:false,message:"Can't deleted"})
+    
+  }
+}catch{
+  console.error("Error while saving address:", error);
+  res.status(500).json({ success: false, message: "Failed to save address" });
+}
+ 
+
+
 }
 module.exports=userprofile;

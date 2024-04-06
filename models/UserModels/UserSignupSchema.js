@@ -4,11 +4,7 @@ const userSignup={
         type:String,
     required:true
 },
-lname:{
-    type:String,
-   
 
-},
 email:{
     type:String,
     required:true,
@@ -27,8 +23,6 @@ address: {
         city: String,
         zipcode: String,
         state: String,
-        addressline1: String,
-        addressline2: String,
         House_name: String,
         landmark: String
 }]},
@@ -38,5 +32,5 @@ isBlocked:{
     default:false,
 }
 }
-const User=mongoose.model('user',userSignup)
+const User=mongoose.model('users',userSignup)
 module.exports=User;

@@ -4,9 +4,11 @@ const adminlogin=require('../controllers/AdminControllers/adminlogin')
 const showusercontroller=require('../controllers/AdminControllers/showuserController')
 const userCategory=require('../controllers/AdminControllers/categoryController')
 const userproduct=require('../controllers/AdminControllers/productController');
+const userorders=require('../controllers/AdminControllers/userorderController')
 const upload=require('../multer');
 const productdb=require('../models/AdminModels/ProductSchema');
-const isAdminLogged = require('../middleware/adminMiddle')
+const isAdminLogged = require('../middleware/adminMiddle');
+const userorder = require('../controllers/AdminControllers/userorderController');
 
 
 
@@ -46,6 +48,10 @@ AdminRouter.get('/deleteadminproduct/:id', isAdminLogged,userproduct.postdeletep
 
 
 
+
+AdminRouter.get('/getorders',isAdminLogged,userorders.getuserorderpage);
+AdminRouter.get('/editorder',isAdminLogged,userorders.geteditorder);
+AdminRouter.post('/updateOrder',isAdminLogged,userorders.postorder)
 
 
 async function getproductlist(req,res,next){

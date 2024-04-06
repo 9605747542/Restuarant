@@ -67,6 +67,10 @@
                     <label> Write New Password</label>
                     <input type="password" id="newPassword" name="newPassword" required>
                   </div>
+                  <div class="single-input-fields"><br><br>
+                    <label>Confirm Password</label>
+                    <input type="password" id="conPassword" name="conPassword" required>
+                  </div>
 
 
                 </div>
@@ -86,7 +90,26 @@
   </main>
   <script>
 
-
+async function validate() {
+  const newpassword = document.getElementById('newPassword').value;
+      const conformpassword = document.getElementById('conPassword').value;
+      if(newpassword!==conformpassword){
+        Swal.fire({
+                title: 'Error!',
+                text: "Passwords are not Match",
+                icon: 'error',
+              })
+              return false;
+      }  else if (newpassword.length < 8) {
+    Swal.fire({
+        title: "Error!",
+        text: "Password must be at least 8 characters long",
+        icon: "error"
+    });
+    return false
+  }
+  return true;
+}
 
 
 
@@ -96,14 +119,21 @@
       return emailMatch;
     }
 
-    document.getElementById("passwordForm").addEventListener("submit", (e) => {
+    document.getElementById("passwordForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const newpassword = document.getElementById('newPassword').value;
-
+      const conformpassword = document.getElementById('conPassword').value;
+      let isValid = await validate();
+    console.log(isValid);
+     
+     
+   
+      if(isValid){
       console.log(newpassword);
       var extractedEmail = extractEmailFromURL();
       console.log("hii its ok", extractedEmail);
+
 
       if (extractedEmail) {
         // Make a request to your backend with the extracted email
@@ -129,10 +159,12 @@
               window.location.href = '/';
 
             }
+          
           }).catch(error => {
             console.error('Error during OTP verification:', error);
           })
       }
+    }
 
     })
 

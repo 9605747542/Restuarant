@@ -89,6 +89,10 @@
             <input type="text" class="form-control" id="streetAddress" value="<%=data.streetaddress%>">
           </div>
           <div class="form-group">
+            <label for="city">Phone no</label>
+            <input type="text" class="form-control" id="phone" value="<%=data.phone%>">
+          </div>
+          <div class="form-group">
             <label for="city">City</label>
             <input type="text" class="form-control" id="city" value="<%=data.city%>">
           </div>
@@ -135,6 +139,7 @@
     const state = document.getElementById('state').value;
     const House_name = document.getElementById('houseName').value;
     const landmark = document.getElementById('landmark').value;
+    const phone = document.getElementById('phone').value;
 
 
         const formData = {
@@ -143,7 +148,8 @@
             zipcode,
             state,
             House_name,
-            landmark
+            landmark,
+            phone
         };
 
         try {

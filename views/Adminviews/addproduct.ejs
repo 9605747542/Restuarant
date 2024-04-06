@@ -395,10 +395,12 @@
 										<div class="mb-3 pb-3">
 											<label for="category" class="form-label font-w600">Select Category</label>
 											<select class="form-select" id="category" name="category">
+												<option value="">Select Category</option>
 												<% for(let i = 0; i < data.length; i++) { %>
 													<option value="<%= data[i].categoryName %>"><%= data[i].categoryName %></option>
 												<% } %>
 											</select>
+
 										</div>
 										
 
@@ -551,20 +553,25 @@
 			}else{
 				Swal.fire({
             title: 'Error!',
-            text: data.error,
+            text: data.message,
             icon: 'error',
           })
 			}
-			if(data.message==="Duplicate ProductName"){
-				Swal.fire({
-            title: 'Error!',
-            text: data.error,
-            icon: 'error',
-          })
+		// 	if(data.message==="Duplicate ProductName"){
+		// 		Swal.fire({
+        //     title: 'Error!',
+        //     text: data.error,
+        //     icon: 'error',
+        //   })
 
-			}
+		// 	}
 
 			}catch{
+				Swal.fire({
+            title: 'Error!',
+            text: data.message,
+            icon: 'error',
+          })
 
 				console.log("Error Ocuurs while doing product case");
 			}

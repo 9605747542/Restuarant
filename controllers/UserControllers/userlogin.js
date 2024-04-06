@@ -182,16 +182,17 @@ userlogin.checkLogin=async(req,res)=>{
        console.log(emailMatch);
        console.log(passwordMatch);
        if(passwordMatch && emailMatch){
-        console.log("hi");
+       
 
         //here i am creating a session for storing the id of that particular user
         req.session.userid=user1._id.toString();
         console.log(req.session.userid);
            //session starting from here
         req.session.Usersession=true;
-         // go to front-end (Sweet alert)
+          return res.json({success:true})
+         
        
-         return res.json({success:true})
+        
        
          
         
@@ -339,11 +340,7 @@ userlogin.showHome=async(req,res)=>{
   
     try{
       const data= await productdb.find();
-      
-      
-
-    
-
+      console.log(data);
         res.render('userViews/index',{data});
       
 
@@ -376,6 +373,10 @@ userlogin.userlogout=async(req,res)=>{
   req.session.Usersession=false;
   res.redirect('/')
 }
+
+
+
+
 
 
 
