@@ -1,7 +1,7 @@
 const productdb=require('../../models/AdminModels/ProductSchema')
 const cartdb=require('../../models/UserModels/usercartSchema');
 const userdb = require('../../models/UserModels/UserSignupSchema');
-const Category=require('../../models/AdminModels/categorySchema')
+const Categorydb=require('../../models/AdminModels/categorySchema')
 
 const userproduct={};
 userproduct.getproductpage=async(req,res)=>{
@@ -11,7 +11,10 @@ userproduct.getproductpage=async(req,res)=>{
         const user=await userdb.findById(id);
         
       
-            const data=await productdb.find();
+        const data = await productdb.find();
+        const category=await Categorydb.find();
+       
+        
            
             const carts = await cartdb.find({userid:id});
             let count=0;
@@ -23,7 +26,7 @@ userproduct.getproductpage=async(req,res)=>{
      
           console.log(count);
        
-            res.render('Userviews/orginalproduct',{data,count,user,results: []});
+            res.render('Userviews/orginalproduct',{category,data,count,user,results: []});
 
     }catch{
         console.error('Error occurs during product');
@@ -35,7 +38,7 @@ userproduct.getproductpage=async(req,res)=>{
         console.log(query);
     try {
         const data = await productdb.find({
-            productName: { $regex: new RegExp(query, 'i') } // Case-insensitive search on 'productName' field
+            productName: { $regex: new RegExp(query, 'i') } 
         });
         
         console.log("Dataaaaaa",data);
@@ -49,13 +52,49 @@ userproduct.getproductpage=async(req,res)=>{
      }))
    
      const user=await userdb.findById(id);
+     const category=await Categorydb.find()
         // res.redirect(`/getuserproduct?data=${JSON.stringify(data)}`);
-        res.render('userViews/orginalproduct',{data,count,user})
+       
+      
+        res.render('userViews/orginalproduct',{category,data,count,user})
     } catch (err) {
         console.error('Error searching collection:', err);
         res.status(500).send('Internal Server Error');
     }
 }
+
+
+userproduct.categoryfilter=async(req,res)=>{
+    try{
+  const categoryname=req.query.category;
+  const data=await Categorydb.findOne({categoryName:categoryname}).populate('products')
+  console.log(data);
+  const id=req.session.userid;
+  const carts = await cartdb.find({userid:id});
+  let count=0;
+carts.forEach((cart=>{
+  cart.products.forEach((product=>{
+      count+=product.quantity;
+  }))
+}))
+
+const user=await userdb.findById(id);
+const category=await Categorydb.find()
+res.render('userViews/orginalproduct',{category,data,count,user})
+} catch (err) {
+    console.error('Error searching collection:', err);
+    res.status(500).send('Internal Server Error');
+}
+}
+
+
+
+
+
+
+
+
+
 
 
 userproduct.sortproducts=async(req,res)=>{
@@ -105,7 +144,8 @@ console.log(sortBy);
     
      console.log("userid",id);
      const user=await userdb.findById(id);
-        res.render('userViews/orginalproduct',{data,count,user})
+     const category=await Categorydb.find();
+        res.render('userViews/orginalproduct',{category,data,count,user})
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');

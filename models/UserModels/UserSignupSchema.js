@@ -16,7 +16,7 @@ password1:{
 },
 address: {
     type: [{
-        fname: String,
+       
         phone: Number,
         email: String,
         streetaddress: String,

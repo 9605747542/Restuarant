@@ -11,24 +11,7 @@
     integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
     crossorigin="anonymous" />
 
-  <!-- CSS -->
-  <!-- <link rel="stylesheet" href="style1.css">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/slicknav.css">
-<link rel="stylesheet" href="assets/css/flaticon.css">
-<link rel="stylesheet" href="assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="assets/css/lightslider.min.css">
-<link rel="stylesheet" href="assets/css/price_rangs.css">
-<link rel="stylesheet" href="assets/css/gijgo.css">
-<link rel="stylesheet" href="assets/css/animate.min.css">
-<link rel="stylesheet" href="assets/css/animated-headline.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/css/themify-icons.css">
-<link rel="stylesheet" href="assets/css/slick.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/style.css">  -->
+
 
   <title>Shop | eCommerce</title>
 
@@ -147,9 +130,7 @@
 
     </div>
     <div id="timer" class="text-center text-danger mt-3 mb-3"></div>
-    <!-- <div class="text-right p-t-8 p-b-31">
-     <a href="/resend-otp">Request again</a> 
-       </div>  -->
+
      
         <button class="btn mb-3" type="submit">Verify</button>
       </form>
@@ -161,41 +142,81 @@
 
 <script>
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     let seconds = 10;
+//     let timerInterval;
+
+//     function updateTimer() {
+//         const timerElement = document.getElementById('timer');
+//         timerElement.innerText = `Resend OTP in ${seconds} seconds`;
+//     }
+
+//     function startTimer() {
+//         updateTimer();
+//         clearInterval(timerInterval); // Clear any existing intervals
+//         timerInterval = setInterval(function () {
+//             seconds--;
+//             updateTimer();
+
+//             if (seconds === 0) {
+//                 clearInterval(timerInterval);
+//                 const timerElement = document.getElementById('timer');
+//                 timerElement.innerHTML = '<a id="resendLink" onclick="resendOTP()">Request again</a>';
+//             }
+//         }, 1000);
+//     }
+
+//     // Call startTimer when DOM content is loaded
+//     startTimer();
+
+//     // Resend OTP function
+//     async function resendOTP() {
+//       console.log("Haiii");
+//         seconds = 10; // Reset the timer to 10 seconds
+//         startTimer(); // Update the timer display
+//     }
+// });
 
 
-document.addEventListener('DOMContentLoaded', function () {
-const timerElement = document.getElementById('timer');
-	  let seconds = 30;
-	
-	  function updateTimer() {
-		timerElement.innerText = `Resend OTP in ${seconds} seconds`;
-	  }
-	
-	  function startTimer() {
-		updateTimer();
-		const timerInterval = setInterval(function () {
-		  seconds--;
-		  updateTimer();
-	
-		  if (seconds === 0) {
-			clearInterval(timerInterval);
-			timerElement.innerHTML = '<a id="resendLink" onclick="resendOTP()">Request again</a>';
-		  }
-		}, 1000);
-	  }
-	
-	  // Start the timer when the page loads
-	  startTimer();
-  })
+let seconds = 30;
+let timerInterval;
+
+function updateTimer() {
+    const timerElement = document.getElementById('timer');
+    timerElement.innerText = `Resend OTP in ${seconds} seconds`;
+}
+
+function startTimer() {
+    updateTimer();
+    clearInterval(timerInterval); // Clear any existing intervals
+    timerInterval = setInterval(function () {
+        seconds--;
+        updateTimer();
+
+        if (seconds === 0) {
+            clearInterval(timerInterval);
+            const timerElement = document.getElementById('timer');
+            timerElement.innerHTML = '<a id="resendLink" onclick="resendOTP()">Request again</a>';
+        }
+    }, 1000);
+}
+
+// Resend OTP function
+async function resendOTP() {
+    console.log("Haiii");
+    seconds = 30; // Reset the timer to 10 seconds
+    startTimer(); // Update the timer display
+}
+
+// Call startTimer when DOM content is loaded
+document.addEventListener('DOMContentLoaded', startTimer);
+
+
+
+
     
   document.getElementById('formId').addEventListener('submit', async function (event) {
     event.preventDefault();
-
-
-
-    
-    
-    
     
     var otpInputs = document.getElementById("otpId").getElementsByTagName("input");
     console.log(otpInputs);
@@ -240,16 +261,6 @@ const timerElement = document.getElementById('timer');
 
       })
   })
- 
-
-
-  
-
-
-
-
-
-
 
 </script>
 

@@ -5,6 +5,7 @@ const usercheckout={};
 usercheckout.getcheckoutpage = async (req, res) => {
     try {
         const userid = req.session.userid;
+        req.session.checkout=true;
         
         // Find user by id
         const user = await Userdb.findById(userid);
@@ -31,7 +32,11 @@ usercheckout.getcheckoutpage = async (req, res) => {
         });
         
         // Render checkout page with user address and cart products
-        res.render('userViews/checkout', { data, products});
+        if(cart.products.length !== 0){
+            res.render('userViews/checkout', { data, products})
+        }else{
+            res.redirect('/usercart')
+        }
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Internal Server Error");

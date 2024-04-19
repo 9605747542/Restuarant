@@ -349,11 +349,10 @@
 		<div class="content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
+					<form enctype="multipart/form-data" action="/postaddproduct" method="post" >
 					<div class="col-xl-2 col-md-12">
-						<!-- <a href="front-food-items.html" class="back-btn d-block mb-sm-5 mb-3">
-							<i class="fa fa-arrow-left"></i>Back
-						</a> -->
-						<form enctype="multipart/form-data" action="/postaddproduct" method="post" >
+						
+						
 							<div class="row">
 								<div class="col-xl-12 col-sm-6">
 									<div class="upload-item-box">
@@ -383,10 +382,6 @@
 											<input type="number" class="form-control" id="price" name="price" placeholder="Cheese burger"required>
 										</div>
 										<div class="mb-3 pb-3">
-											<label for="priceinmasala" class="form-label font-w600">Food Price In Masala</label>
-											<input type="number" class="form-control" id="priceinmasala" name="priceInMasala" placeholder="9896">
-										</div>
-										<div class="mb-3 pb-3">
 											<label for="stock" class="form-label font-w600">Stock</label>
 											<input type="number" class="form-control" id="stocks" name="stock" placeholder="23">
 
@@ -413,6 +408,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-xl-2 col-md-12" >
 						<div id="imageContainer" >
 							
@@ -423,21 +419,26 @@
 						</div>
 					</div>
 
-					
-				</div>
 
+					
+
+					
 			
+
+					<div class="card-footer">
+						<button class="btn btn-primary btn-block rounded" onclick="validate()" type="submit">Upload Items</button>
+					</div>
+					</form> 
 			
-		
-				<!-- Move the card-footer and button outside the col-xl-10 div -->
-				<div class="card-footer">
-					<button class="btn btn-primary btn-block rounded" onclick="validate()" type="submit">Upload Items</button>
 				</div>
-				</form> <!-- Close the form here -->
+				
+				
+			
+				
 			</div>
 			
 		</div>
-		</div>
+		
 		
 		
         <!--**********************************
@@ -476,8 +477,8 @@
     <!-- Required vendors -->
 	<script>
 		 document.getElementById('image').addEventListener('change', function (event) {
-            const imagePreviewContainer = document.getElementById('previewContainer');
-            const fileInput = event.target;
+             const imagePreviewContainer = document.getElementById('previewContainer');
+             const fileInput = event.target;
 
             if (fileInput.files && fileInput.files.length > 0) {
 				for (let i = 0; i < fileInput.files.length; i++) {
@@ -485,102 +486,92 @@
 				const imagePreviewContainer = document.createElement('div');
                     imagePreviewContainer.classList.add('imagePreview');
 
-                reader.onload = function (e) {
-                    imagePreviewContainer.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
-                    imagePreviewContainer.style.display = 'block';
-                };
+               reader.onload = function (e) {
+                   imagePreviewContainer.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
+                     imagePreviewContainer.style.display = 'block';
+                 };
 
-                reader.readAsDataURL(fileInput.files[i]);
-				previewContainer.appendChild(imagePreviewContainer);
-            }
-		}
+                 reader.readAsDataURL(fileInput.files[i]);
+		 		previewContainer.appendChild(imagePreviewContainer);
+             }
+		 }
         });
-
-
-
-
-		 async function validate(){
-			try{
-			const productName=document.getElementById('productname').value;
-			const price=document.getElementById('price').value;
-			const priceInMasala=document.getElementById('priceinmasala').value;
-			const description=document.getElementById('description').value;
-			const stock=document.getElementById('stocks').value;
-			console.log(stock);
-			const category=document.getElementById('category').value;
-		
-				if(productName === '' || price === '' || priceInMasala==='' || stock=== '' || description ===' '){
-				Swal.fire({
-					title:'Error!',
-					text:"Please Enter the required fields",
-					icons:'error'
-				})
-			}
-
-			}catch{
-				console.error("Validate Function is not working");
-			}
-			const formdata={
-				productName,
-				price,
-				priceInMasala,
-				description,
-				stock,
-				category
-			}
-			console.log(formdata.stock);
-			
 	
-			try{
-				const response=fetch('/postaddproduct',{
-				method:'post',
+
+
+
+	
+
+
+
+
+
+
+		async function validate() {
+    
+        const productName = document.getElementById('productname').value;
+        console.log(productName);
+        const price = document.getElementById('price').value;
+        const description = document.getElementById('description').value;
+        const stock = document.getElementById('stocks').value;
+        console.log(stock);
+        const category = document.getElementById('category').value;
+
+        if (productName === '' || price === '' || priceInMasala === '' || stock === '' || description === '' || category==='') {
+            Swal.fire({
+                title: 'Error!',
+                text: "Please Enter the required fields",
+                icon: 'error'
+            });
+            return;
+        }
+		try {
+
+        const formdata = {
+            productName,
+            price,
+            description,
+            stock,
+            category
+        };
+        console.log(formdata.stock);
+
+        const response = await fetch('/postaddproduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formdata)
+        });
+            const data = await response.json();
+			console.log(data);
+            if (data.success === true) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: data.message,
+                    icon: 'success'
+                });
 				
-				body:JSON.stringify(formdata)
-
-			})
-			if(response.ok){
-
-			
-			const data= await response.json()
-			}
-			if(data.success===true){
-				Swal.fire({
-            title: 'Success!',
-            text: 'update successfully.',
-            icon: 'success',
-          })
-				
-			}else{
-				Swal.fire({
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.message,
+                    icon: 'error'
+                });
+            }
+        
+    } catch (error) {
+        Swal.fire({
             title: 'Error!',
-            text: data.message,
-            icon: 'error',
-          })
-			}
-		// 	if(data.message==="Duplicate ProductName"){
-		// 		Swal.fire({
-        //     title: 'Error!',
-        //     text: data.error,
-        //     icon: 'error',
-        //   })
-
-		// 	}
-
-			}catch{
-				Swal.fire({
-            title: 'Error!',
-            text: data.message,
-            icon: 'error',
-          })
-
-				console.log("Error Ocuurs while doing product case");
-			}
-		
-			
-		
-	}
+            text: 'An error occurred while processing the request.',
+            icon: 'error'
+        });
+        console.error("An error occurred while processing the request:", error);
+    }
+}
 
 	</script>
+
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="admin-assets/vendor/global/global.min.js"></script>

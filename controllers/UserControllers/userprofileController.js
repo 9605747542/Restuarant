@@ -64,7 +64,8 @@ userprofile.getalladdress=async(req,res)=>{
     const userid=req.session.userid;
     const result=await userdb.findById(userid);
     const data=result.address;
-    // console.log(data);
+
+    console.log("Every address",data);
     res.render('Userviews/showalladdress',{data});
 }
 userprofile.addaddress=async (req,res)=>{

@@ -8,18 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="site.webmanifest">
 <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-<style>
-  /* Style for the increment and decrement buttons */
-  .input-number-decrement-btn:hover, .input-number-increment-btn:hover {
-    opacity: 0.8;
-}
 
-.input-number {
-    outline: none;
-}
-
-
-</style>
 
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
@@ -37,6 +26,56 @@
 <link rel="stylesheet" href="/assets/css/slick.css">
 <link rel="stylesheet" href="/assets/css/nice-select.css">
 <link rel="stylesheet" href="/assets/css/style.css">
+
+ 
+<style>
+  /* Style for the increment and decrement buttons */
+  .input-number-decrement-btn:hover, .input-number-increment-btn:hover {
+    opacity: 0.8;
+}
+
+.input-number {
+    outline: none;
+}
+.custom-btn-success {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-btn-success:hover {
+    background-color: #45a049; /* Darker Green */
+}
+.custom-btn-danger {
+    background-color: #ff6347; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-btn-danger:hover {
+    background-color: #ff483d; /* Darker Red */
+}
+
+
+
+
+
+</style>
+
 </head>
 <body>
 
@@ -59,56 +98,7 @@
 </div>
 
 <div class="main-menu  d-none d-lg-block">
-<nav>
-<ul id="navigation">
-<li><a href="index.html">Home</a></li>
-<li><a href="product.html">Product</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="#">Page</a>
-<ul class="submenu">
-<li><a href="login.html">Login</a></li>
-<li><a href="card.html">Card</a></li>
-<li><a href="categories.html">Categories</a></li>
-<li><a href="checkout.html">Checkout</a></li>
-<li><a href="product_details.html">Product Details</a></li>
-</ul>
-</li>
-<li><a href="blog.html">Blog</a>
-<ul class="submenu">
-<li><a href="blog.html">Blog</a></li>
-<li><a href="blog_details.html">Blog Details</a></li>
-<li><a href="elements.html">Elements</a></li>
-</ul>
-</li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class="header-right1 d-flex align-items-center">
-<div class="search">
-<ul class="d-flex align-items-center">
-<li>
 
-<form action="#" class="form-box f-right ">
-<input type="text" name="Search" placeholder="Search products">
-<div class="search-icon">
-<i class="ti-search"></i>
-</div>
-</form>
-</li>
-<li>
-<a href="login.html" class="account-btn" target="_blank">My Account</a>
-</li>
-<li>
-<div class="card-stor">
-<img src="assets/img/icon/card.svg" alt>
-<span>0</span>
-</div>
-</li>
-</ul>
-</div>
-</div>
 
 <div class="col-12">
 <div class="mobile_menu d-block d-lg-none"></div>
@@ -182,7 +172,7 @@
     <div class="product_count" style="display: flex; align-items: center; gap: 5px;">
         <button class="input-number-decrement-btn" onclick="changeQuantity('<%= datas[i]._id %>', -1)" style="background-color: #ff4d4d; color: white; border: none; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 5px;" id="decrement<%= datas[i]._id %>">-</button>
         
-        <input class="input-number" id="quantity<%=datas[i]._id%>" type="text" value="<%=datas[i].quantity%>" min="0" max="10" style="width: 50px; height: 30px; text-align: center; font-size: 14px; border: 1px solid #ccc; border-radius: 5px;">
+        <input class="input-number" id="quantity<%=datas[i]._id%>" type="text" value="<%=datas[i].quantity%>" min="1" max="10" style="width: 50px; height: 30px; text-align: center; font-size: 14px; border: 1px solid #ccc; border-radius: 5px;">
 
     
         <button class="input-number-increment-btn" onclick="changeQuantity('<%= datas[i]._id %>', 1)" style="background-color: #4CAF50; color: white; border: none; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 5px;" id="increment<%= datas[i]._id %>">+</button>
@@ -231,7 +221,7 @@
 </table>
 <div class="checkout_btn_inner float-right">
 <a class="btn" href="/getuserproduct">Continue Shopping</a>
-<a class="btn checkout_btn" href="/getcheckout">Proceed to checkout</a>
+<button class="btn checkout_btn" id="proceed-btn" style="color: white;">Proceed to checkout</button>
 </div>
 </div>
 </div>
@@ -381,33 +371,102 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 </div>
 <script>
+
+
+
+
+
   document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.product').forEach(product => {
         console.log("blaaa909");
+
         let productId = product.querySelector('input[type="text"]').id.replace('quantity', '');
         let quantity = parseInt(document.getElementById('quantity' + productId).value);
         console.log("blaaa");
         updateSubtotal(productId, quantity);
+
+
+
+        const proceedButton = document.getElementById('proceed-btn');
+    proceedButton.addEventListener('click', function() {
+        Swal.fire({
+            title: 'Continue with Checkout',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes continue',
+            cancelButtonText: 'Cancel',
+        
+            
+            customClass: {  // Custom class for styling if needed
+                popup: 'my-popup'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+               window.location.href='/getcheckout';
+            }
+        });
     });
 });
+    });
 
 
 
  async function changeQuantity(productId, change) {
     console.log(productId);
     let quantityInput = document.getElementById('quantity' + productId);
-    let newQuantity = parseInt(quantityInput.value) + change;
-   let total = document.getElementById('total').innerText;
-    console.log(total);
-    if (newQuantity >= 0) { // Ensure the quantity never goes below 0
-        quantityInput.value = newQuantity;
-        const formData={
-            quantity:newQuantity,
-            proId:productId,
-            total:total
-        }
+    console.log(quantityInput.value);
+    let newQuantity = parseInt(quantityInput.value) + change ;
+    console.log("new",newQuantity);
+   let total = document.getElementById('subtotal'+productId).innerText;
+   console.log(total);
+    
+ 
+        
        
         const response= await fetch('/changequantity',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify( {quantity:newQuantity,productId:productId})
+
+        })
+        const data= await response.json();
+        console.log("data from backend",data.success);
+        if(data.success===true){
+              
+            console.log("Quantity updated successfully");
+            updateSubtotal(productId, newQuantity);
+        }else{
+          swal.fire({
+            title: "Error",
+            text: data.message,
+            icon: "error"
+          });
+         
+            
+        }
+
+
+
+         
+    
+}
+
+ async function updateSubtotal(productId, quantity) {
+    console.log("hello");
+    let price = parseFloat(document.getElementById('price' + productId).innerText);
+    let subtotal = quantity * price;
+    console.log();
+    document.getElementById('subtotal' + productId).innerText = subtotal.toFixed(2);
+  const formData={
+    subtotal:subtotal,
+    proId:productId,
+  }
+
+    const response= await fetch('/changetotal',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -418,8 +477,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         const data= await response.json();
         console.log("data from backend",data);
         if(data.success===true){
-            console.log("Quantity updated successfully");
-            updateSubtotal(productId, newQuantity);
+            console.log("subtotal updated successfully");
+            updateTotal(); 
         }else{
             console.log("error");
             
@@ -427,17 +486,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 
-         // Update this product's subtotal
+   
     }
-}
 
-function updateSubtotal(productId, quantity) {
-    console.log("hello");
-    let price = parseFloat(document.getElementById('price' + productId).innerText);
-    let subtotal = quantity * price;
-    document.getElementById('subtotal' + productId).innerText = subtotal.toFixed(2);
-    updateTotal(); // Update the total whenever any subtotal changes
-}
+
 
 function updateTotal() {
     let total = 0;
@@ -454,13 +506,36 @@ function updateTotal() {
 //for remove cart item
 function removeItem(itemId) {
   const row = document.querySelector(`tr[data-id="${itemId}"]`);
-  fetch(`/removeitemfromcart/${itemId}`, {
+  const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'custom-btn-success',
+    cancelButton: 'custom-btn-danger'
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel!",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    fetch(`/removeitemfromcart/${itemId}`, {
         method: 'DELETE',
       })
       .then(response => {
         if (response.ok) {
           // Remove the row from the table
           row.remove();
+          updateTotal();
 
         } else {
           console.error('Failed to remove item from cart');
@@ -469,20 +544,21 @@ function removeItem(itemId) {
       .catch(error => {
         console.error('Error removing item from cart:', error);
       });
-    }
-
-
- 
-  
-
-
-
-
-
-
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "Cancelled",
+      text: "Your imaginary file is safe :)",
+      icon: "error"
+    });
+  }
+});
+}
 
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="./assets/js/popper.min.js"></script>

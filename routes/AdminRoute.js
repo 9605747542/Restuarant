@@ -20,9 +20,9 @@ AdminRouter.get('/logout',adminlogin.adminlogout);
 
 
 //Admin Side Userdetails
-AdminRouter.get('/getUser',showusercontroller.getUserdata);
-AdminRouter.get('/adminuserblock/:id',showusercontroller.blockuser);
-AdminRouter.get('/adminuserunblock/:id',showusercontroller.unblockuser);
+AdminRouter.get('/getUser',isAdminLogged,showusercontroller.getUserdata);
+AdminRouter.get('/adminuserblock/:id',isAdminLogged,showusercontroller.blockuser);
+AdminRouter.get('/adminuserunblock/:id',isAdminLogged,showusercontroller.unblockuser);
 
 
 //Admin Side Category
@@ -40,7 +40,7 @@ AdminRouter.get('/getproduct',isAdminLogged,getproductlist);
 AdminRouter.get('/getaddproduct',isAdminLogged,userproduct.getaddproduct);
 AdminRouter.post('/postaddproduct',isAdminLogged,upload.array('image', 5),userproduct.postaddproduct);
 AdminRouter.get('/editadminproduct',isAdminLogged,userproduct.geteditproduct);
-AdminRouter.post('/posteditproduct',isAdminLogged,userproduct.posteditproduct);
+AdminRouter.post('/posteditproduct',isAdminLogged, upload.array('productImages', 5),userproduct.posteditproduct);
 AdminRouter.post('/removeproductimage',isAdminLogged,userproduct.removeproductimage);
 AdminRouter.get('/deleteadminproduct/:id', isAdminLogged,userproduct.postdeleteproduct);
 
@@ -51,7 +51,8 @@ AdminRouter.get('/deleteadminproduct/:id', isAdminLogged,userproduct.postdeletep
 
 AdminRouter.get('/getorders',isAdminLogged,userorders.getuserorderpage);
 AdminRouter.get('/editorder',isAdminLogged,userorders.geteditorder);
-AdminRouter.post('/updateOrder',isAdminLogged,userorders.postorder)
+AdminRouter.post('/updateorder/:id',isAdminLogged,userorders.posteditorder);
+AdminRouter.post('/cancelOrder/:id',isAdminLogged,userorders.cancelorder);
 
 
 async function getproductlist(req,res,next){

@@ -1,112 +1,4 @@
-<!doctype html>
-<html class="no-js" lang="zxx">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Shop | eCommerce</title>
-<meta name="description" content>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="site.webmanifest">
-<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/slicknav.css">
-<link rel="stylesheet" href="assets/css/flaticon.css">
-<link rel="stylesheet" href="assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="assets/css/lightslider.min.css">
-<link rel="stylesheet" href="assets/css/price_rangs.css">
-<link rel="stylesheet" href="assets/css/gijgo.css">
-<link rel="stylesheet" href="assets/css/animate.min.css">
-<link rel="stylesheet" href="assets/css/animated-headline.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/css/themify-icons.css">
-<link rel="stylesheet" href="assets/css/slick.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-
-
-
-<header>
-
-<div class="header-area">
-<div class="main-header header-sticky">
-<div class="container-fluid">
-<div class="row menu-wrapper align-items-center justify-content-between">
-<div class="header-left d-flex align-items-center">
-
-<div class="logo">
-<a href="index.html"><img src="assets/img/logo/logo.png" alt></a>
-</div>
-
-<div class="logo2">
-<a href="index.html"><img src="assets/img/logo/logo2.png" alt></a>
-</div>
-
-<div class="main-menu  d-none d-lg-block">
-<nav>
-<ul id="navigation">
-<li><a href="index.html">Home</a></li>
-<li><a href="product.html">Product</a></li>
-<li><a href="about.html">About</a></li>
-<li><a href="#">Page</a>
-<ul class="submenu">
-<li><a href="login.html">Login</a></li>
-<li><a href="card.html">Card</a></li>
-<li><a href="categories.html">Categories</a></li>
-<li><a href="checkout.html">Checkout</a></li>
-<li><a href="product_details.html">Product Details</a></li>
-</ul>
-</li>
-<li><a href="blog.html">Blog</a>
-<ul class="submenu">
-<li><a href="blog.html">Blog</a></li>
-<li><a href="blog_details.html">Blog Details</a></li>
-<li><a href="elements.html">Elements</a></li>
-</ul>
-</li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class="header-right1 d-flex align-items-center">
-<div class="search">
-<ul class="d-flex align-items-center">
-<li>
-
-<form action="#" class="form-box f-right ">
-<input type="text" name="Search" placeholder="Search products">
-<div class="search-icon">
-<i class="ti-search"></i>
-</div>
-</form>
-</li>
-<li>
-<a href="login.html" class="account-btn" target="_blank">My Account</a>
-</li>
-<li>
-<div class="card-stor">
-<img src="assets/img/icon/card.svg" alt>
-<span>0</span>
-</div>
-</li>
-</ul>
-</div>
-</div>
-
-<div class="col-12">
-<div class="mobile_menu d-block d-lg-none"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</header>
+<%-include('header')%>
 <main>
 
 <div class="slider-area ">
@@ -116,11 +8,11 @@
 <div class="row">
 <div class="col-xl-6 col-lg-8 col-md-8">
 <div class="hero__caption hero__caption2">
-<h1 data-animation="fadeInUp" data-delay=".4s">Cart List</h1>
+<h1 data-animation="fadeInUp" data-delay=".4s">ORDER DETAILS</h1>
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-<li class="breadcrumb-item"><a href="#">Cart List</a></li>
+<li class="breadcrumb-item"><a href="#">Order Details</a></li>
 </ol>
 </nav>
 </div>
@@ -139,84 +31,70 @@
   <div class="payment border-top mt-3 mb-3 border-bottom table-responsive" >
 
     <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>ORDER DATE</th>
+                <th>ORDER NO</th>
+                <th>PAYMENT</th>
+                <th>NO OF PRODUCTS</th>
+                <th>TOTAL AMOUNT</th>
+                <th class="text-end">ACTION</th>
+            </tr>
+        </thead>
         
         <tbody>
+            <% for (let i = latestOrder.length - 1; i >= 0; i--) { %>
+               
+            
+               
+                           
+            
             <tr>
                 <td>
                     <div class="py-2">
-
-                        <span class="d-block text-muted">Order Date</span> 
-                        <span><%=latestOrder.orderDate.toLocaleDateString('en-US')%></span>
-              
                         
+                        <span><%= new Date(latestOrder[i].orderDate).toLocaleDateString() %></span>
                     </div>
                 </td>
-
+        
                 <td>
                     <div class="py-2">
-
-                        <span class="d-block text-muted">Order No</span>
-                    <span><%=latestOrder.orderId%></span>
-                        
+                       
+                        <span><%= latestOrder[i].orderId %></span>
                     </div>
                 </td>
-
+        
                 <td>
                     <div class="py-2">
-
-                        <span class="d-block text-muted">Payment</span>
-                    <span><%=latestOrder.paymentMethod%></span>
-                        
+                      
+                        <span><%= latestOrder[i].paymentMethod %></span>
                     </div>
                 </td>
-
-               
-                
-            
-            <% products.forEach(item => { %>
-              
-           
-                
-              
+        
                 <td>
                     <div class="py-2">
-                        <span class="d-block text-muted">Quantity</span>
-                            <span><%= item.quantity %></span>
-                        
-                        
+                       
+                        <span><%= latestOrder[i].products.reduce((acc, curr) => acc + curr.quantity, 0) %></span>
                     </div>
                 </td>
-                
-                
-            
-            
-            
-               
-            
-     <td>  
-    <div class="py-2 ">
-        <h4 class="d-block text-muted">Total Amount</h4>
-       
-
-            <h4>₹<%= latestOrder.totalAmount %></h4>
         
+                <td>  
+                    <div class="py-2">
+                      
+                        <h4>₹<%= latestOrder[i].ActualAmount %></h4>
+                    </div>
+                </td>
         
-    </div>
-</td>
-<% }) %>
-
-<td>  
-    <div class="py-2 ">
-        <form id="deleteForm" action="/deleteOrder" method="POST">
-            <input type="hidden" name="order_id" value="<%= latestOrder._id %>">
-            <button type="submit" class="btn btn-danger">Delete Order</button>
-        </form>
+                <td>  
+                    <div class="py-2">
+                        <!-- Button for more details, link might need adjustment according to actual URL pattern -->
+                        <a href="/viewmoredetails?id=<%= latestOrder[i]._id %>"><button type="button" class="btn btn-danger">VIEW MORE</button></a>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
         
-        
-    </div>
-</td>
-</tr>
-</tbody>
 
 </table>
 

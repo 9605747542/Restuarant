@@ -474,7 +474,7 @@ li {
     margin: 0 auto
 }
 
-.preloader .preloader-circle {
+.preloader .preloader-square {
     width: 100px;
     height: 100px;
     position: relative;
@@ -515,7 +515,7 @@ li {
 }
 
 .preloader .preloader-img img {
-    max-width: 55px
+    max-width: 70px
 }
 
 .preloader .pere-text strong {

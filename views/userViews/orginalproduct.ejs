@@ -126,7 +126,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        
 
          
 
@@ -134,7 +134,7 @@
 
             <div class="row">
               <div class="col-lg-12">
-                <div class="count-job mb-35">
+                <div class="count-job mb-100">
 
                   <form action='/sort' method="GET">
                   <div class="select-cat">
@@ -150,13 +150,32 @@
                
                   </div>
                   <br>
-                  <button class="btn">Submit</button>
+                  <button style="background-color: #e9855a; padding: 5px 10px; border: none; color: white; cursor: pointer;">Submit</button>
                 </form>
+
+               
+
                   <form action="/search"  class="form-box f-right ">
                     <input type="text" name="query" id="searchinput" placeholder="Search products">
+                   
                     <div class="search-icon">
+                      <br><br>
                       <button class="w-10" style="background-color: #e9855a; padding: 5px 10px; border: none; color: white; cursor: pointer;">Search</button>
                     </div>
+                  </form>
+                  <form action='/filter' method="GET">
+                    <div class="select-cat">
+                      <span >Filter by:</span>
+                      <select class="form-select" id="category" name="category">
+                     
+                        <% for(let i = 0; i < category.length; i++) { %>
+                          <option><%= category[i].categoryName %></option>
+                        <% } %>
+                      </select>
+                 
+                    </div>
+                    <br>
+                    <button style="background-color: #e9855a; padding: 5px 10px; border: none; color: white; cursor: pointer;">Submit</button>
                   </form>
 
                 </div>
@@ -165,60 +184,58 @@
 
 
             <div class="new-arrival new-arrival3">
-
               <div class="row" id="productsList">
+                  <% for (let i = 0; i < data.length; i++) { %>
+                      <% if (data[i].unlist === false) { %>
+                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                              <div class="single-new-arrival mb-50 text-center" style="margin-bottom: 20px;">
+                                  <div class="popular-img">
+                                      <a href="/clickproduct/?id=<%=data[i]._id%>">
+                                          <img src="<%= data[i].image[0] %>" alt="<%= data[i].productName %>">
+                                      </a>
+                                  </div>
+                                  <div class="popular-caption">
+                                    <h5 class="title"><a href="shop-detail.html"><%= data[i].productName %></a></h5>
+                                    <ul class="dz-rating">
+                                      <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
+                                      </li>
+                                      <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
+                                      </li>
+                                      <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
+                                      </li>
+                                      <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
+                                      </li>
+                                      <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
+                                      </li>
+                                    </ul>
+                                    <span class="price">Price: $<%=data[i].price %></span><br>
+                                    <button class="btn" data-animation="fadeInUp" onclick="addtocart('<%=data[i]._id%>')">Add to Cart</button>
+                                   
+                                </div>
+                                
+                              </div>
 
-                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6" style=" width: auto;">
+                          </div>
+                      <% } %>
+                      <% } %>
+                      
+                          </div>
+                          
+                   <!-- your_template_file.ejs -->
 
-                  <%for (let i=0;i< data.length;i++) {%>
-                    <% if(data[i].unlist===false){ %>
-                  <div class="single-new-arrival mb-50 text-center" style="margin:20px;">
-                        <div class="popular-img" style="display: flex;"> 
-     
-
-                          <a href="/clickproduct/?id=<%=data[i]._id%>">
-                            <img src="<%= data[i].image[0] %>" alt></a>
-                        </div>
-                        <div class="popular-caption">
-                          <h5 class="title "><a href="shop-detail.html">
-                              <%= data[i].productName %>
-                            </a></h5>
-                          <ul class="dz-rating">
-                            <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
-                            </li>
-                            <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
-                            </li>
-                            <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
-                            </li>
-                            <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
-                            </li>
-                            <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
-                            </li>
-                          </ul>
-
-                          <span class="price" >price:$<%=data[i].price %></span><br>
-                          <button class="btn" data-animation="fadeInUp" id="clickcount"
-                            onclick="addtocart('<%=data[i]._id%>')">Add to Cart</button>
-
-
-                        </div>
-                      </div>
-                      <%}}%>
-
-                </div>
-
-              </div>
-
-
+               
+           
+          
               <div class="row justify-content-center">
-                <div class="room-btn mt-20">
-                  <a href="catagori.html" class="border-btn">Browse More</a>
-                </div>
+                  <div class="room-btn mt-20">
+                      <a href="category.html" class="border-btn">Browse More</a>
+                  </div>
               </div>
-            </div>
+          </div>
+          
 
           </div>
-        </div>
+        
       </div>
     </div>
 
@@ -384,18 +401,20 @@
         },
         body: JSON.stringify({ productId})
       })
-      const data = response.json();
+      const data = await response.json();
       console.log(data);
       if (data.success === true) {
-        Swal.fire({
-          title: 'Success!',
-          text: data.message,
-          icon: 'success' 
-        })
-        window.location.href = `http://localhost:3002/usercart/${productId}` 
+      
+        window.location.href = `http://localhost:3002/usercart` 
       } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data.message,
+          icon: 'error' 
+        })
+        
 
-        window.location.href = '/usercart/' + productId
+     
       }
     }
   </script>

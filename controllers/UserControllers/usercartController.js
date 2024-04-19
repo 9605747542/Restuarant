@@ -10,47 +10,50 @@ const app = express();
 // Function to handle adding a product to the user cart
 usercart.postusercart = async (req, res) => {
     try {
-        // Extract productId from request body and userId from session
         const productId = req.body.productId;
         const userId = req.session.userid;
        
 
-        // Log the received IDs for debugging
+       
         console.log("Product ID:", productId, "User ID:", userId);
 
-        // Attempt to find the user's existing cart
+     
         let userCart = await cartdb.findOne({ userid: userId });
-
-        // If a cart exists for the user
+        const productData=await productdb.findById(productId);
+     
         if (userCart) {
-            // Find the index of the product in the cart, if it exists
+          
             const existingProductIndex = userCart.products.findIndex(item => item.product && item.product.equals(productId));
+           
+            
+       
+    
 
-            // If product is found in the cart, increase quantity
+           
             if (existingProductIndex !== -1) {
                 userCart.products[existingProductIndex].quantity += 1;
+                userCart.products[existingProductIndex].total += productData.price;
+
             } else {
-                // If product is not found, add new product to the cart
-                userCart.products.push({ product: productId, quantity: 1});
+         
+                userCart.products.push({ product: productId, quantity: 1,total:productData.price});
             }
 
-            // Save the updated cart
             await userCart.save();
 
-            // Send success response
-            res.status(200).json({ success: true, message: 'Product added to cart successfully.' });
+          console.log("heaven");
+          
+           return res.json({ success: true, message: 'Product added to cart successfully.' });
         } else {
-            // If no cart exists for the user, create a new cart with the product
+           
             const newCart = await cartdb.create({
                 userid: userId,
-                products: [{ product: productId, quantity: 1,total:0}]
+                products: [{ product: productId, quantity: 1,total:productData.price}]
             });
-
-            // Send success response
-            res.status(200).json({ success: true, message: 'Cart created and product added successfully.' });
+            return res.json({success: true, message: 'Cart created and product added successfully.' });
         }
     } catch (error) {
-        // Log and send error response if an exception occurs
+       
         console.error('Error updating user cart:', error);
         res.status(500).json({ success: false, message: 'Failed to update cart.' });
     }
@@ -74,8 +77,7 @@ usercart.getusercart = async (req, res) => {
         const cart = await cartdb.findOne({ userid: userId }).populate('products.product');
         console.log("cart data", cart)
         if (cart && cart.products) {
-            const productOne = cart.products[0].product;
-            console.log("Single product", productOne);
+          
 
 
 
@@ -109,17 +111,15 @@ usercart.getusercart = async (req, res) => {
         res.status(500).send('Error fetching cart details');
     }
 };
-usercart.checkuserstock = async (req, res) => {
 
-}
 usercart.changequantity = async (req, res) => {
     console.log("blaaa");
     const userId = req.session.userid;
     const newQuantity = req.body.quantity;
-    const total=req.body.total;
-    console.log(total);
+  
+    
 
-    const proId = req.body.proId; // Convert proId to a valid ObjectId
+    const proId = req.body.productId; // Convert proId to a valid ObjectId
 
     console.log(newQuantity, proId, userId);
     const data = await cartdb.findOne({ userid: userId });
@@ -131,7 +131,7 @@ usercart.changequantity = async (req, res) => {
             { 
                 $set: { 
                     "products.$.quantity": newQuantity,
-                    "products.$.total": total 
+                    // "products.$.total": total 
                 }
             }, // Update
             { new: true }
@@ -141,7 +141,52 @@ usercart.changequantity = async (req, res) => {
     
     
         if (result) {
-            console.log("Updated quantity:", result.quantity);
+            console.log("Updated quantity:");
+            res.json({ success: true, message: "Successfully updated quantity" });
+        } else {
+            console.log("No document found with that ID.");
+            res.status(404).json({ success: false, message: "No document found with that ID" });
+        }
+    } catch (error) {
+        console.error("Error updating quantity:", error);
+        res.status(500).json({ success: false, message: "Failed to update quantity" });
+    }
+}
+
+usercart.changesubtotal=async(req,res)=>{
+    const userId = req.session.userid;
+    const subtotal = req.body.subtotal;
+    const proId = req.body.proId;
+    console.log(subtotal,proId, userId);
+
+    const data = await cartdb.findOne({ userid: userId });
+    console.log(data);
+
+    try {
+        const result = await cartdb.findOneAndUpdate(
+            { "userid": userId, "products.product": proId }, // Query criteria
+            { 
+                $set: { 
+                    "products.$.total":subtotal,
+                    // "products.$.total": total 
+                }
+            }, // Update
+            { new: true }
+        );
+    
+        if (result) {
+            const updatedProduct = result.products.find(p => p.product.toString() === proId.toString());
+            if (updatedProduct) {
+                console.log("Updated total:", updatedProduct.total);
+            } else {
+                console.log("Product not found in the updated document.");
+            }
+        }
+        
+    
+    
+        if (result) {
+            console.log("Updated total:", result.products.total);
             res.json({ success: true, message: "Successfully updated quantity" });
         } else {
             console.log("No document found with that ID.");
@@ -152,15 +197,24 @@ usercart.changequantity = async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to update quantity" });
     }
 
+
+
 }
+
+
 usercart.removecartitem = async (req, res) => {
     const id = req.params.id;
     const userid=req.session.userid;
     console.log(id);
+    const data=await cartdb.findOne({"products.product":id});
+    console.log(data);
+    console.log("Finding total",data.total);
+
     try {
         const removedItem = await cartdb.findOneAndUpdate(
             { userid: userid }, // Filter: Find the cart by its ID
-            { $pull: { products: { product: id } } }, // Update: Pull/remove the product with the specified ID from the products array
+            { $pull: { products: { product: id },total:data.total } },
+
             { new: true } // Options: Return the modified cart after the update
         );
 

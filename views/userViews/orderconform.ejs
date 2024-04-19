@@ -211,7 +211,7 @@
                             <h2>Order Confirmation</h2>
                             <p>Your order has been confirmed. Thank you!</p>
                             <div class="order-details">
-                                <a href="/getorderdetails"><button id="toggleButton"class="btn">Click Me</button></a>
+                                <a href="/getorderdetails"><button id="toggleButton"class="btn">View Details</button></a>
                             </div>
                         </div>
                     </div>
@@ -318,18 +318,6 @@
     <div id="back-top">
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
     </div>
-    <script>
-        const button = document.getElementById('toggleButton');
-        const table = document.querySelector('.payment');
-    
-        button.addEventListener('click', function() {
-            if (table.style.display === 'none') {
-                table.style.display = 'block';
-            } else {
-                table.style.display = 'none';
-            }
-        });
-    </script>
 
 
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

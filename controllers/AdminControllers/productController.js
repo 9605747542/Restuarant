@@ -6,6 +6,8 @@ const path=require('path');
 const sharp=require('sharp');
 const userproduct={};
 const Swal=require('sweetalert2');
+const fs = require('fs').promises;
+const os = require('os');
 const { error, log } = require('console');
 
 
@@ -24,34 +26,25 @@ userproduct.getaddproduct=async(req,res)=>{
 
 userproduct.postaddproduct = async (req, res) => {
 
-        try {
-            const images = req.files;
-            console.log('multiple Images:', images);
+    try {
+        const images = req.files;
+        console.log('multiple Images:', images);
 
-            if (!images || images.length===0) {
-                return res.status(400).json({ error: "No images provided" });
-            }
+        if (!images || images.length===0) {
+            return res.status(400).json({ error: "No images provided" });
+        }
 
-            let imagePaths = [];
+        let imagePaths = [];
 
-            
-            const fs = require('fs');
+        
+        const fs = require('fs');
 
-            for (const image of images) {
-                
-                    const imagePath = "/admin-assets/product-img/" + image.filename;
-                    console.log('imagename:', image.filename);
-            
-                    
-                    // Check if file exists
-                   
-            
-                    imagePaths.push(imagePath);
-            }
-            
-                  
-
-            const { productName, price, priceInMasala, description,category,stock} = req.body;
+        for (const image of images) {
+                const imagePath = "/admin-assets/product-img/" + image.filename;
+                console.log('imagename:', image.filename);
+                imagePaths.push(imagePath);
+        }
+            const { productName, price, description,category,stock} = req.body;
             console.log('blaa');
             console.log(category);
           
@@ -68,7 +61,7 @@ userproduct.postaddproduct = async (req, res) => {
                 image: imagePaths, // Assuming imagePaths is an array of file paths
                 productName,
                 price,
-                priceInMasala,
+                
                 description,
                 category:data._id,
                 stock
@@ -76,23 +69,11 @@ userproduct.postaddproduct = async (req, res) => {
         
 
             console.log(product1);
-
-
-            // const data=await productModel.find();
-          
-
-            // const productNamesArray = data.map(product => product.productName);
-            // console.log(productNamesArray);
-
-
-            // if(productNamesArray.includes(product1.productName)){
-            //     res.json({ success: false, message: 'Duplicate ProductName' });
-
-            // }
-
            if (product1) {
                 await product1.save();
-               res.redirect('/getproduct');
+               
+                res.redirect('/getproduct');
+    
 
             } else {
                 res.json({ success: false ,message:'Product details is not saved '});
@@ -104,7 +85,8 @@ userproduct.postaddproduct = async (req, res) => {
         }
     
    
-};
+
+}
 
 
 userproduct.geteditproduct=async(req,res)=>{
@@ -120,50 +102,13 @@ userproduct.geteditproduct=async(req,res)=>{
 }
 
 
-// userproduct.posteditproduct=async(req,res)=>{
-//     try{
-//     const productId=req.body.id;
-//     const {productName,price,priceInMasala,description,stock}=req.body;
-//     console.log(productId);
-//     if(req.files){
-//     const  image1=req.files;
-//     console.log(image1);
-//     // image1.mv("/admin-assets/product-img/".jpg)
-// }
 
-
-        
-
-    
-//     const existingProduct = await productModel.findById(productId);
-
-//     if (existingProduct) {
-//         // Update the category's name
-//         existingProduct.productName = productName;
-//         existingProduct.price = price;
-//         existingProduct.priceInMasala = priceInMasala;
-//         existingProduct.description = description;
-//         existingProduct.stock=stock
-
-//         await existingProduct.save();
-//         console.log('Product updated:', productName);
-//         return res.json({ success: true, message: "Product updated successfully" });
-//     } else {
-//         console.log("Product not found");
-//         return res.status(404).json({ success: false, message: 'Product not found' });
-//     }
-// } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ success: false, message: "Internal Server Error" });
-// }
-
-// }
 
 
 userproduct.posteditproduct = async (req, res) => {
     try {
         const productId = req.body.id;
-        const { productName, price, priceInMasala, description, stock } = req.body;
+        const { productName, price, description, stock } = req.body;
         console.log(productId);
 
         const existingProduct = await productModel.findById(productId);
@@ -172,32 +117,23 @@ userproduct.posteditproduct = async (req, res) => {
             console.log("Product not found");
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
+        console.log("multiple edited product :",req.files);
+        if (req.file) {
+            const filePath = req.file.path;
 
-        // Assuming a new image was uploaded
-        if (req.files && req.files.image) {
-            const image = req.files.image;
-            // Generate a new filename or use the existing logic from your upload middleware
-            const newImageName = `${Date.now()}-${image.originalname}`;
-            const newPath = `/admin-assets/product-img/${newImageName}`;
+            // Optionally delete the old image file from storage
+            const oldPath = existingProduct.imagePath;
+            fs.unlinkSync(oldPath);
 
-            // Optionally delete the old image from the server
-            const fs = require('fs');
-            const oldPath = existingProduct.imagePath; // Ensure this path is correct
-            if (fs.existsSync(oldPath)) {
-                fs.unlinkSync(oldPath);
-            }
-
-            // Move the new image to the desired location
-            await image.mv(newPath);
-
-            // Update the product's image path
-            existingProduct.imagePath = newPath;
+            // Update product with new image path
+            existingProduct.imagePath = filePath;
         }
 
+       
+     
         // Update other product details
         existingProduct.productName = productName;
         existingProduct.price = price;
-        existingProduct.priceInMasala = priceInMasala;
         existingProduct.description = description;
         existingProduct.stock = stock;
 

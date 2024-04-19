@@ -11,10 +11,6 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  priceInMasala:{
-    type:Number,
-    required:true,
-  },
   image:{
     type:Array,
     required:true,

@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const dotenv=require('dotenv');
 dotenv.config();
-const database=process.env.Database_URL;
+const database=process.env.DATABASE_URL;
 console.log(database);
 const mongodb=async ()=>{
     try{

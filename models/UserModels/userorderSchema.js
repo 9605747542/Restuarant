@@ -7,13 +7,18 @@ const orderSchema = new mongoose.Schema({
     ref: 'users'
   },
   address:{
-    streetaddress: String,
-    city: String,
-    zipcode: String,
-    state: String,
-    House_name: String,
-    landmark: String,
-    phone: Number,
+    type: [{
+     
+      phone: Number,
+      email: String,
+      streetaddress: String,
+      city: String,
+      zipcode: String,
+      state: String,
+      House_name: String,
+      landmark: String
+}]
+  
   },
   products: [{
       quantity:Number,
@@ -28,11 +33,14 @@ const orderSchema = new mongoose.Schema({
   },
   orderDate: { 
     type: Date, 
-    default: Date.now 
   },
+  shipping:Number,
+  ActualAmount:Number,
   paymentMethod: String,
   orderId:String,
-  deliveredAt:Date
+  deliveredAt:Date,
+  useremail:String,
+  username:String
 });
 
 const order = mongoose.model('orders', orderSchema);

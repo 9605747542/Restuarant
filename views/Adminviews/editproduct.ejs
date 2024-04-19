@@ -221,10 +221,6 @@
 											<input type="text" class="form-control" id="price" name="price" value="<%=data.price%>"required>
 										</div>
 										<div class="mb-3 pb-3">
-											<label for="priceinmasala" class="form-label font-w600">Food Price In Masala</label>
-											<input type="text" class="form-control" id="priceinmasala" name="priceInMasala" value="<%=data.priceInMasala%>">
-										</div>
-										<div class="mb-3 pb-3">
 											<label for="stock" class="form-label font-w600">Stock</label>
 											<input type="number" class="form-control" id="stocks" name="stock" value="<%=data.stock%>"">
 
@@ -243,16 +239,18 @@
 					</div>
 					<div class="col-xl-2 col-md-12" style="margin-left: 450px;">
 						<% data.image.forEach((image, index) => { %>
-							<span id="indexValue" style="display: none;"><%= index %></span>
 							<div id="imageContainer_<%= index %>">
 								<div class="previewContainer">
-									<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview" id="galleryInput">
-									<input type="file" onchange="imagechange(event)" >
-	
+									<!-- Use a unique ID for each image element -->
+									<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview" id="imagePreview_<%= index %>">
+									<!-- Ensure the onchange handler passes the right index -->
+									<input type="file" name="ProductImages" onchange="imagechange(event, '<%= index %>')">
 								</div>
 							</div>
 						<% }) %>
 					</div>
+					
+					
 					
 
 					
@@ -261,7 +259,7 @@
 				<div class="card-footer">
 					<button class="btn btn-primary btn-block rounded" onclick="validate()" type="submit">Upload Items</button>
 				</div>
-				</form> <!-- Close the form here -->
+				</form> 
 			</div>
 		</div>
 			
@@ -281,23 +279,7 @@
                 <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2023</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-		<!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
-    </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+       
 
     <!--**********************************
         Scripts
@@ -305,9 +287,20 @@
     <!-- Required vendors -->
 	<script>
 
-		async function imagechange(event){
-			document.getElementById('galleryInput').src=URL.createObjectURL(event.target.files[0])
-		}
+function imagechange(event, index) {
+    const file = event.target.files[0];
+    if (file) {
+        // Create a URL for this file
+        const imageUrl = URL.createObjectURL(file);
+        // Access the image preview element by its unique ID
+        const imagePreview = document.getElementById(`imagePreview_${index}`);
+        if (imagePreview) {
+            imagePreview.src = imageUrl;
+        }
+    }
+}
+
+
 
 		document.getElementById('editproduct').addEventListener('submit',async function(event){
 			event.preventDefault();
@@ -325,10 +318,12 @@
 			
 			const productname=document.getElementById('productname').value;
 			const price=document.getElementById('price').value;
-			const priceinmasala=document.getElementById('priceinmasala').value;
+		
 			const description=document.getElementById('description').value;
 			const stock=document.getElementById('stocks').value;
 			console.log(stock);
+			const imageInputs = document.querySelectorAll('input[type="file"]');
+   
 			
 		
 	
@@ -337,9 +332,10 @@
 				id:urlId,
 				productName:productname,
 				price:price,
-				priceInMasala:priceinmasala,
 				description:description,
-				stock:stock
+				stock:stock,
+				
+			
 
 			
 
@@ -414,6 +410,8 @@
 // }
 
 
+
+
 		document.getElementById('image').addEventListener('change', async function (event) {
     const fileInput = event.target;
 
@@ -432,6 +430,7 @@
             previewContainer.appendChild(imagePreviewContainer);
         }
     }
+
 });
 
 
@@ -459,42 +458,7 @@ async function validate() {
 	
 
 
-    //     const formdata = {
-    //         productName,
-    //         price,
-    //         priceInMasala,
-    //         description
-    //     };
-
-    //     const response = await fetch('/posteditproduct', {
-    //         method: 'post',
-    //         body: JSON.stringify(formdata),
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     });
-
-    //     if (response.ok) {
-    //         const data = await response.json();
-    //         if (data.success === true) {
-    //             Swal.fire({
-    //                 title: 'Success!',
-    //                 text: 'Updated successfully.',
-    //                 icon: 'success',
-    //             });
-    //         } else {
-    //             Swal.fire({
-    //                 title: 'Error!',
-    //                 text: data.error,
-    //                 icon: 'error',
-    //             });
-    //         }
-    //     } else {
-    //         console.error('Failed to update product');
-    //     }
-    // } catch (error) {
-    //     console.error('Error occurred during product update:', error);
-    // }
+   
 
 
 

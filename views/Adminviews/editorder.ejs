@@ -80,39 +80,48 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="table-responsive">
-							<table id="example5" class="display mb-4 defaultTable dataTablesCard" style="min-width: 845px;">
-								<thead>
-									<tr>
-										<th>ORDERID</th>
-										<th>CUSTOMERID</th>
-										<th>ORDERDATE</th>
-										<th>PAYMENT-METHOD</th>
-										<th>ORDERSTATUS</th>
-										<th>TOTAL PRICE</th>
-										<th>ACTION</th>
-									</tr>
-								</thead>
-								<form action="/updateOrder" method="post">
-                                   
-                                        <tbody>
-                                            <% orders.forEach(order => { %>
-                                                <tr>
-                                                    <td><%= order.orderId %></td>
-                                                    <td contenteditable="true"><%= order.customer %></td>
-                                                    <td contenteditable="true"><%= order.orderDate.toLocaleDateString('en-US') %></td>
-                                                    <td contenteditable="true"><%= order.paymentMethod %></td>
-                                                    <td contenteditable="true"><%= order.OrderStatus %></td>
-                                                    <td contenteditable="true"><%= order.totalAmount %></td>
+                            <form>
+                                <table id="example5" class="display mb-4 defaultTable dataTablesCard" style="min-width: 845px;">
+                                    <thead>
+                                        <tr>
+                                            <th>ORDERID</th>
+                                            <th>CUSTOMERID</th>
+                                            <th>ORDERDATE</th>
+                                            <th>ORDER STATUS</th>
+                                            <th>PAYMENT-METHOD</th>
+                                            <th>TOTAL PRICE</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i = orders.length - 1; i >= 0; i--) { %>
+                                            <tr>
+                                                    <td class="orderId" contenteditable="true"><%= orders[i].orderId %></td>
+                                                    <td class="userName" contenteditable="true"><%= orders[i].username %></td>
+                                                    <td class="orderDate" contenteditable="true"><%= orders[i].orderDate.toLocaleDateString() %></td>
                                                     <td>
-                                                        <button type="submit">Update</button>
+                                                        <select id="dropdown">
+                                                          <option value="Order Placed">Order Placed</option>
+                                                          <option value="Shipped">Shipped</option>
+                                                          <option value="Delivery">Delivered</option>
+                                                          <option value="Cancelled">Cancelled</option>
+                                                          <option value="Returned">Returned</option>
+                                                        </select>
                                                     </td>
-                                                </tr>
-                                            <% }) %>
-                                        </tbody>
-                                   
-                                </form>
-                                
-							</table>
+                                     
+                                                    <td class="orderStatus" contenteditable="true"><%= orders[i].paymentMethod %></td>
+                                                    <td class="totalAmount" contenteditable="true"><%= orders[i].totalAmount %></td>
+                                                    <td>
+                                                        <button class="update-btn" data-order-id="<%= orders[i]._id %>" type="button">Update</button>
+
+
+                                                    </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </form>
+                            
 						</div>
 					</div>
 				</div>
@@ -155,6 +164,77 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
+    <script>
+      document.querySelectorAll('.update-btn').forEach(button => {
+    button.addEventListener('click', async () => {
+        console.log("hello");
+
+        // Extracting orderid from the button's class
+        const orderid = button.getAttribute('data-order-id');
+        console.log(orderid);
+
+        const row = button.closest('tr');
+        const orderId = row.querySelector('.orderId').textContent;
+        const userName = row.querySelector('.userName').textContent;
+         const orderDateStr = row.querySelector('.orderDate').textContent;
+        const orderDateParts = orderDateStr.split('/'); // Splitting the date string
+        const orderDate = new Date(orderDateParts[2], orderDateParts[1] - 1, orderDateParts[0]);
+
+        // Get the selected value from the dropdown menu
+        const orderStatus = document.getElementById("dropdown").value;
+        console.log(orderStatus);
+        
+        const paymentMethod = row.querySelector('.orderStatus').textContent;
+        console.log(paymentMethod);
+        const totalAmount = row.querySelector('.totalAmount').textContent;
+   
+        const formData = {
+            orderId,
+            orderDate,
+            userName,
+            paymentMethod,
+            orderStatus,
+            totalAmount
+        };
+
+        try {
+            const response = await fetch(`/updateorder/${orderid}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+				if (data.success===true) {
+					Swal.fire({
+            title: 'Success!',
+            text: data.message,
+            icon: 'success',
+			})
+			window.location.href='/getorders';
+				} else {
+					console.log(data.error);
+					Swal.fire({
+            title: 'Error!',
+            text: data.message,
+            icon: 'error',
+          })
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		})
+    })
+           
+        
+  
+
+    </script>
+    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/admin-assets/vendor/global/global.min.js"></script>
 	<script src="/admin-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<!-- Datatable -->

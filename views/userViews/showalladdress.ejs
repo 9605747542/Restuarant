@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Address Page</title>
-<!-- Font Awesome CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<%-include('header')%>
 
 <style>
   body {
@@ -64,13 +57,46 @@
 
   h3 {
     margin: 0;
-    color: #007bff;
+    color: #FFAC5C;
   }
 
   p {
     margin-top: 5px;
     color: #666666;
   }
+  .custom-btn-success {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-btn-success:hover {
+    background-color: #45a049; /* Darker Green */
+}
+.custom-btn-danger {
+    background-color: #ff6347; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-btn-danger:hover {
+    background-color: #ff483d; /* Darker Red */
+}
+
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -89,8 +115,9 @@
       <p><%=add.state%></p>
       <p><%=add.House_name%></p>
       <p><%=add.landmark%></p>
-      <a href="/geteditaddress/<%= add._id %>" class="btn btn-primary">Edit Address</a>
-      <button onclick="postdltaddress('<%= add._id %>')" class="btn btn-primary">Delete Address</button>
+      <button style="background-color: #FFAC5C; border-color: #FFAC5C;"><a href="/geteditaddress/<%= add._id %>" style="color: white;">Edit Address</a></button>
+
+      <button style="background-color: #FFAC5C;border-color: #FFAC5C; "onclick="postdltaddress('<%= add._id %>')">Delete Address</button>
 
     <% }); %>
 
@@ -108,36 +135,71 @@
   </div>
 </div>
 <script>
-  async function postdltaddress(addressid){
+ async function postdltaddress(addressid) {
     console.log(addressid);
-    const response=await fetch('/postdltaddress',{
-			method:'POST',
-			headers:{
-				'Content-Type':'application/json'
-			},
-			body:JSON.stringify({addressid})
-		})
-		const data=response.json();
-		if(data.success===true){
-      Swal.fire({
-            title: 'Success!',
-            text: data.message,
-            icon: success // Corrected property name
-        })
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'custom-btn-success',
+            cancelButton: 'custom-btn-danger'
+        },
+        buttonsStyling: false
+    });
 
-		
-			
-		}else{
-			  Swal.fire({
-            title: 'Error!',
-            text: data.message,
-            icon: 'error' // Corrected property name
-        })
-		}
-		
-		
+    swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then( (result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            });
+            try {
+                 const response=fetch('/postdltaddress', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ addressid }) // Ensure proper formatting of the object
+                });
+                const data = response.json();
+                if (data.success === true) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while processing your request.',
+                    icon: 'error'
+                });
+            }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your imaginary file is safe :)",
+                icon: "error"
+            });
+        }
+    });
+}
 
-  }
   
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
