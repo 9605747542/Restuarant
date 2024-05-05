@@ -32,6 +32,18 @@ const productSchema = new mongoose.Schema({
     required: true,
     default: 0, // Assuming new products start with no stock
     min: [0, 'Stock cannot be negative.'] // Prevents stock from being negative
+  },
+  orginalPrice:{
+    required:true,
+    type:Number
+  },
+  discount:{
+    required:true,
+    type:String
+  },
+  offertype:{
+    required:true,
+    type:String
   }
 }, { timestamps: true }); 
 

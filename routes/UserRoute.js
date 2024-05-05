@@ -7,9 +7,11 @@ const userprofile = require('../controllers/UserControllers/userprofileControlle
 const usercart = require('../controllers/UserControllers/usercartController');
 const usercheckout = require('../controllers/UserControllers/checkoutController')
 const orderconform = require('../controllers/UserControllers/orderconform')
+const userwishlist=require('../controllers/UserControllers/wishlistController');
 const express = require('express')
 const userRoute = express();
 const isLogged = require('../middleware/userMIddle');
+const usercoupon=require('../controllers/UserControllers/userCouponController');
 
 
 userRoute.get('/', userlogin.showLogin);
@@ -18,6 +20,7 @@ userRoute.post('/submit1/:email', userlogin.checkLogin);
 userRoute.get('/register', userlogin.signuppage)
 userRoute.post('/register1', userlogin.postsignup);
 userRoute.get('/otp-page', userlogin.getOtppage);
+userRoute.post('/signup-otp', userlogin.verifyOtp);
 userRoute.get('/resend-otp', userlogin.getresendotp);
 
 userRoute.get('/forgotpassword', userlogin.getforgotpassword);
@@ -30,9 +33,9 @@ userRoute.post('/submitpassword', userlogin.postnewpassword);
 
 
 userRoute.get('/home', isLogged, userisBlocked, userlogin.showHome);
-// userRoute.get('/signup-otp',userlogin.showOtp);
-userRoute.post('/signup-otp', userlogin.verifyOtp);
-// userRoute.post('/reset-password',userlogin.resendOtp);
+
+
+
 userRoute.get('/getuserproduct', isLogged, userproduct.getproductpage);
 userRoute.get('/search', isLogged, userproduct.searchproducts);
 userRoute.get('/filter', isLogged, userproduct.categoryfilter);
@@ -68,9 +71,18 @@ userRoute.get('/getcheckout', isLogged, usercheckout.getcheckoutpage);
 userRoute.post('/post-userddress-checkout', isLogged, usercheckout.postaddresscheckout)
 userRoute.post('/postorderconformdetails', isLogged, orderconform.getorderconform);
 userRoute.get('/getorder-conform', isLogged, orderconform.getorderconformpage);
+userRoute.post('/verify-payment',isLogged,orderconform.checkrazorpay);
 userRoute.get('/getorderdetails', isLogged, orderconform.getorderdetailspage);
-userRoute.get('/viewmoredetails', isLogged, orderconform.getmoredetailspage);
-userRoute.post('/deleteorder', isLogged, orderconform.deleteorder);
+userRoute.get('/viewmoredetails/:id', isLogged, orderconform.getmoredetailspage);
+userRoute.post('/deleteOrder', isLogged, orderconform.deleteorder);
+
+userRoute.get('/getwishlist',isLogged,userwishlist.getuserwishlist);
+userRoute.post('/addtowishlist',isLogged,userwishlist.postuserwishlist);
+userRoute.delete('/removefromwishlist/:id',isLogged,userwishlist.removewishlist);
+
+userRoute.get('/getcouponcode/:value',isLogged,usercoupon.getcouponcode);
+userRoute.get('/applycoupon/:coupon',isLogged,usercoupon.applycoupon);
+
 
 
 
@@ -103,13 +115,15 @@ async function checkStock(req, res, next) {
 
     // Check if there's a cart for the user
     const cart = await Cartdb.findOne({ userid: req.session.userid });
-    // if (!cart || !cart.products || cart.products.length === 0) {
-    //     console.log("Cart is empty or not found for the user. Proceeding without stock checks.");
-    //     return next();
-    // }
+
+    if (!cart || !cart.products || cart.products.length === 0) {
+        console.log("Cart is empty or not found for the user. Proceeding without stock checks.");
+        return next();
+    }
     // console.log("Cart from middleware:", cart);
 
     // Find the product in the cart
+    console.log("Sree",cart);
     const cartProduct = cart.products.find(p => p.product.toString() === productId.toString());
 
     // Find the product in the database

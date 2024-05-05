@@ -67,8 +67,12 @@ userproduct.getproductpage=async(req,res)=>{
 userproduct.categoryfilter=async(req,res)=>{
     try{
   const categoryname=req.query.category;
-  const data=await Categorydb.findOne({categoryName:categoryname}).populate('products')
-  console.log(data);
+console.log("hhhhhh");
+console.log(categoryname);  
+const catdata=await Categorydb.find({categoryName:categoryname});
+console.log("hhhhhhhhh",catdata);
+  const data=await productdb.find({category:catdata})
+  console.log("ffffffffff",data);
   const id=req.session.userid;
   const carts = await cartdb.find({userid:id});
   let count=0;
@@ -98,7 +102,7 @@ res.render('userViews/orginalproduct',{category,data,count,user})
 
 
 userproduct.sortproducts=async(req,res)=>{
-    const sortBy = req.query.sortBy; // Get the sorting criteria from the request
+    const sortBy = req.query.sortBy; 
 console.log(sortBy);
 
     try {
@@ -158,7 +162,7 @@ console.log(sortBy);
      
             const pid=req.query.id;
             console.log(pid);
-            const data=await productdb.findById(pid);
+            const data=await productdb.findById(pid).populate('category');
             console.log(data);
             const image=data.image;
           

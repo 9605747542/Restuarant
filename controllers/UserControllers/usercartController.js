@@ -66,51 +66,35 @@ usercart.postusercart = async (req, res) => {
 usercart.getusercart = async (req, res) => {
     try {
         const userId = req.session.userid;
-
-
-        console.log(userId);
-        const data = await cartdb.find({ userid: userId });
-        const pid = req.session.productId;
-
-
-        console.log('working');
+        console.log('User ID:', userId);
         const cart = await cartdb.findOne({ userid: userId }).populate('products.product');
-        console.log("cart data", cart)
-        if (cart && cart.products) {
-          
 
-
-
+        if (cart && cart.products.length) {
             const datas = cart.products.map(cartItem => {
-                const product1 = cartItem.product;
-
-
-
-                if (product1) {
-                    const quantity = cartItem.quantity;
-                    const total=cartItem.total;
-                    console.log(quantity);
+                if (cartItem.product) {
                     return {
-                        _id: product1._id,
-                        image: product1.image,
-                        productName: product1.productName,
-                        price: product1.price,
-                        quantity: quantity
-
+                        _id: cartItem.product._id,
+                        image: cartItem.product.image,
+                        productName: cartItem.product.productName,
+                        price: cartItem.product.price,
+                        quantity: cartItem.quantity,
+                        total: cartItem.quantity * cartItem.product.price
                     };
                 }
-            });
+            }).filter(item => item !== undefined);
 
-            console.log(datas);
-            res.render('userViews/usercart', { datas });
+            console.log("Cart Items:", datas);
+            res.render('userViews/usercart', { datas: datas, message: '' }); // Pass an empty message
         } else {
-            console.log("No products found in cart.");
+            console.log('No products found in cart.');
+            res.render('userViews/usercart', { datas: [], message: 'No products found in cart.' });
         }
     } catch (error) {
         console.error('Error fetching user cart:', error);
         res.status(500).send('Error fetching cart details');
     }
 };
+
 
 usercart.changequantity = async (req, res) => {
     console.log("blaaa");
@@ -126,6 +110,10 @@ usercart.changequantity = async (req, res) => {
     console.log(data);
 
     try {
+        if (newQuantity < 1) {
+            console.log("New quantity must be at least 1.");
+            return res.status(400).json({ success: false, message: "New quantity must be at least 1" });
+        }
         const result = await cartdb.findOneAndUpdate(
             { "userid": userId, "products.product": proId }, // Query criteria
             { 

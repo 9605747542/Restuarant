@@ -27,6 +27,31 @@
   <link rel="stylesheet" href="assets/css/nice-select.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+<style>
+  /* Define styles for the badge */
+.badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+/* Define styles for the yellow badge */
+.badge-yellow {
+    background-color: #ffc107;
+    color: black;
+}
+
+/* Define styles for the warning badge */
+.badge-warning {
+    background-color: orange;
+    color: black;
+}
+
+</style>
 
 <body class="full-wrapper">
 
@@ -79,6 +104,14 @@
                       </span>
                     </div>
                   </li>
+                  <li>
+                    <a href="/getwishlist"><div class="card-stor" style="margin-left: 25px;font-weight:bold">
+                       <img src="assets/img/icon/love.png" alt>
+                       <span>0</span>
+                     </div>
+                   </a>
+                     
+                   </li>
                 </ul>
               </div>
             </div>
@@ -193,6 +226,11 @@
                                       <a href="/clickproduct/?id=<%=data[i]._id%>">
                                           <img src="<%= data[i].image[0] %>" alt="<%= data[i].productName %>">
                                       </a>
+                                      <% if (data[i].orginalPrice !== 0) { %>
+                                        <span class="badge badge-warning"><%= data[i].discount %></span>
+                                   
+                                    <span class="badge badge-yellow"><%=data[i].discount%>% Off</span> 
+                                    <% } %>
                                   </div>
                                   <div class="popular-caption">
                                     <h5 class="title"><a href="shop-detail.html"><%= data[i].productName %></a></h5>
@@ -209,7 +247,12 @@
                                       </li>
                                     </ul>
                                     <span class="price">Price: $<%=data[i].price %></span><br>
-                                    <button class="btn" data-animation="fadeInUp" onclick="addtocart('<%=data[i]._id%>')">Add to Cart</button>
+                                    <button style="border: none; background-color:#FD8F5F; display: inline-block; margin-right: 20px" onclick="addtocart('<%=data[i]._id%>')">
+                                      <i class="fa fa-shopping-cart" style="font-size:36px;color: black; "></i>
+                                  </button>
+                                  <button style="border: none; background-color:#FD8F5F; display: inline-block;" onclick="addtoWishlist('<%=data[i]._id%>')">
+                                    <i class="fa fa-heart" style="font-size:36px;color: black;"></i>
+                                  </button>
                                    
                                 </div>
                                 
@@ -417,7 +460,37 @@
      
       }
     }
+    async function addtoWishlist(productId) {
+      console.log(productId);
+      console.log("hai");
+      
+      
+      const response = await fetch('/addtowishlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId})
+      })
+      const data = await response.json();
+      console.log(data);
+      if (data.success === true) {
+      
+        window.location.href = '/getuserproduct' ;
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data.message,
+          icon: 'error' 
+        })
+        
+
+     
+      }
+    }
   </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

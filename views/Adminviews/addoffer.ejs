@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="author" content="DexignZone">
+	<meta name="robots" content="">
+	<meta name="keywords" content="admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard">
+	<meta name="description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+	<meta property="og:title" content="Davur : Restaurant Admin Dashboard + FrontEnd">
+	<meta property="og:description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+	<meta property="og:image" content="https://davur.dexignzone.com/xhtml/social-image.png">
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- Mobile Specific -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	 <link rel="icon" type="image/png" sizes="16x16" href="admin-assets/images/favicon.png">
+	
+	<!-- Title -->
+	<title>PLAZA PLATE</title>
+    <!-- Favicon icon -->
+  
+    <link href="admin-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="admin-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="admin-assets/css/style.css" rel="stylesheet">
+	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+
+</head>
+<style>
+	/* #body {
+		display: flex;
+		justify-content: flex-end;
+		padding: 20px;
+	} */
+ #previewContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	} 
+
+	#imagePreview {
+		max-width: 300px;
+		margin-top: 10px;
+	} 
+
+	#imageContainer{
+		display: flex;
+	}
+</style>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+            <!-- Content body start
+        *********************************** -->
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+                    <form>
+                        <div class="col-xl-10 col-md-12">
+                            <div class="row">
+                                <div class="col-xl-7 col-lg-7 col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Upload an offer</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3 pb-3">
+                                                <label for="productname" class="form-label font-w600">Offer Name</label>
+                                                <input type="text" class="form-control" id="productname"placeholder="Offer Name" required>
+                                            </div>
+                                            <div class="mb-3 pb-3">
+                                                <label for="category" class="form-label font-w600">Discount-on</label>
+                                                <select class="form-select" id="common" onchange="updateOfferselect('<%= JSON.stringify(output) %>', '<%= JSON.stringify(result) %>')">
+                                                    <option>Select any Option</option>
+                                                    <option value="product">Products</option>
+                                                    <option value="category">Category</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3 pb-3">
+                                                <label for="stock" class="form-label font-w600">Discount Value(in %)</label>
+                                                <input type="number" class="form-control" id="discount"  placeholder="23%">
+                                            </div>
+                                            <div id="error" style="color: red;"></div>
+                                            <div class="mb-3 pb-3">
+                                                <label for="startDate" class="form-label font-w600">Start Date</label>
+                                                <input type="date" class="form-control" id="startDate"  required>
+                                            </div>
+                                            <div class="mb-3 pb-3">
+                                                <label for="endDate" class="form-label font-w600">End Date</label>
+                                                <input type="date" class="form-control" id="endDate"  required>
+                                            </div>
+                                           
+                                            <div class="mb-3 pb-3" id="descriptionField">
+                                                <label for="description" class="form-label font-w600">Item description</label>
+                                                <input type="text" class="form-control" id="selectoffertype"  placeholder="Description" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-block rounded" style="width: 240px;" type="submit" onclick="validate()">Upload Offer</button>
+                        </div>
+                    </form>
+                    
+				</div>
+			</div>
+		</div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer p-0">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2023</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+		<!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+	<script>
+
+document.getElementById('startDate').addEventListener('change', validateDateRange);
+document.getElementById('endDate').addEventListener('change', validateDateRange);
+
+async function validateDateRange() {
+    var startDate = new Date(document.getElementById("startDate").value);
+    var endDate = new Date(document.getElementById("endDate").value);
+    
+    if (startDate >= endDate) {
+        document.getElementById("error").innerText = "Start date must be before end date.";
+    } else {
+        document.getElementById("error").innerText = "";
+    }
+}
+
+   
+        
+     
+
+function updateOfferselect(outputString,resultString) {
+    const output = JSON.parse(outputString);
+    const result = JSON.parse(resultString);
+    console.log("data",result);
+     
+    const discountType = document.getElementById('common').value;
+    const descriptionField = document.getElementById('descriptionField');
+
+    if (discountType === 'product') {
+        // Start with the label and opening tag of the select element
+        let selectHTML = `
+            <label for="description" class="form-label font-w600">Product Select</label>
+            <select class="form-control" id="selectoffertype"  required>
+                <option value="">Select Product Name</option>`;
+
+        // Add options dynamically from the output array
+        for (let i = 0; i < output.length; i++) {
+            selectHTML += `<option value="${output[i]}">${output[i]}</option>`;
+        }
+
+        // Close the select tag
+        selectHTML += `</select>`;
+
+        // Set innerHTML of descriptionField
+        descriptionField.innerHTML = selectHTML;
+
+    } else if (discountType === 'category') {
+      
+        // Start with the label and opening tag of the select element
+        let selectHTML = `
+            <label for="description" class="form-label font-w600">Category Select</label>
+            <select class="form-control" id="selectoffertype" required>
+                <option value="">Select Category Name</option>`;
+
+        // Add options dynamically from the output array
+        for (let i = 0; i < result.length; i++) {
+            selectHTML += `<option value="${result[i]}">${result[i]}</option>`;
+        }
+
+        // Close the select tag
+        selectHTML += `</select>`;
+
+        // Set innerHTML of descriptionField
+        descriptionField.innerHTML = selectHTML;
+    
+}
+}
+
+
+		async function validate() {
+    
+        const offerName = document.getElementById('productname').value;
+      
+        const offertype1 = document.getElementById('common').value;
+        console.log(offertype1);
+        const discount = document.getElementById('discount').value;
+        const startDate = document.getElementById('startDate').value;
+        console.log(startDate);
+        const endDate = document.getElementById('endDate').value;
+       
+        const offertype2 = document.getElementById('selectoffertype').value;
+            console.log(offertype2);
+        if (offerName === '' || offertype1 === '' || offertype2 === '' || discount === '' || startDate === '' || endDate==='') {
+            Swal.fire({
+                title: 'Error!',
+                text: "Please Enter the required fields",
+                icon: 'error'
+            });
+            return;
+        }
+		try{
+
+        const formdata = {
+            offerName,
+            offertype1,
+            offertype2,
+            discount,
+            startDate,
+            endDate
+          
+        };
+        console.log(formdata);
+    
+
+        const response = await fetch('/postaddoffer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formdata)
+        });
+            const data = await response.json();
+			console.log(data);
+            if (data.success === true) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: data.message,
+                    icon: 'success'
+                });
+                window.location.reload='/getoffer'
+				
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.message,
+                    icon: 'error'
+                });
+            }
+        
+    } catch (error) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while processing the request.',
+            icon: 'error'
+        });
+        console.error("An error occurred while processing the request:", error);
+    }
+}
+
+
+        
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="admin-assets/vendor/global/global.min.js"></script>
+	<script src="admin-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="admin-assets/js/custom.min.js"></script>
+	<script src="admin-assets/js/deznav-init.js"></script>
+	
+	<!-- Counter Up -->
+    <script src="admin-assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="admin-assets/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+	
+	<!-- Datatable -->
+    <script src="admin-assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	
+	
+	<script>
+	(function($) {
+	 
+		var table = $('#example5').DataTable({
+			searching: false,
+			paging:true,
+			select: false,
+			//info: false,         
+			lengthChange:false
+		});
+		$('#example tbody').on('click', 'tr', function () {
+			var data = table.row( this ).data();
+			
+		});
+	   
+	})(jQuery);
+	</script>
+	
+</body>
+</html>

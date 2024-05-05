@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <!-- All Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="author" content="DexignZone">
+	<meta name="robots" content="">
+	<meta name="keywords" content="admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard">
+	<meta name="description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+	<meta property="og:title" content="Davur : Restaurant Admin Dashboard + FrontEnd">
+	<meta property="og:description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+	<meta property="og:image" content="https://davur.dexignzone.com/dashboard/social-image.png">
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- Mobile Specific -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Title -->
+	<title>PLAZA PLATE</title>
+    
+	
+    <link rel="icon" type="image/png" sizes="16x16" href="admin-assets/images/favicon.png">
+    <link href=" admin-assets/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="admin-assets/vendor/select2/css/select2.min.css">
+    <link href=" admin-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+      <link href="admin-assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+		<div class="nav-header">
+            <a href="/dashboard" class="brand-logo">
+                <img class="logo-abbr" src="admin-assets/images/mainlogo.png" alt="">
+                <!-- <img class="logo-compact" src="admin-assets/images/logo-text.png" alt="">
+                <img class="brand-title" src="admin-assets/images/logo-text.png" alt=""> -->
+				<h3 class="placeholder-heading" data-placeholder="Plaza Plate" >Plaza Plate</h3>
+
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+         
+            Sidebar start
+        ***********************************-->
+      <div class="deznav">
+            <div class="deznav-scroll">
+				<ul class="metismenu" id="menu">
+          
+          <li><a class="has-arrow ai-icon" href='/dashboard 'aria-expanded="false">
+            <i class="flaticon-381-television"></i>
+            <span class="nav-text">Dashboard</span>
+          </a>
+                   
+                  </li>
+					<li><a class="has-arrow ai-icon" href='/getUser' aria-expanded="false">
+							<i class="fa-solid fa-gear"></i>
+							<span class="nav-text">User-Details</span>
+							<!-- <span class="badge badge-xs badge-danger">New</span> -->
+						</a>
+                    </li>
+					
+                    <li><a class="has-arrow ai-icon" href='/getcategory 'aria-expanded="false">
+							<i class="flaticon-381-television"></i>
+							<span class="nav-text">Category</span>
+						</a>
+                     
+                    </li>
+					<li><a class="has-arrow ai-icon" href="/getproduct" aria-expanded="false">
+						<i class="flaticon-381-controls-3"></i>
+						<span class="nav-text">Products</span>
+					</a>
+				   
+				</li>
+				<li><a class="has-arrow ai-icon" href="/getorders" aria-expanded="false">
+					<i class="flaticon-381-television"></i>
+					<span class="nav-text">User-Orders</span>
+				</a>
+			   
+			</li>
+			<li><a class="has-arrow ai-icon" href="/getcoupon" aria-expanded="false">
+				<i class="flaticon-381-television"></i>
+				<span class="nav-text">User-Coupon</span>
+			</a>
+		   
+		</li>
+    <li><a class="has-arrow ai-icon" href="/getoffer" aria-expanded="false">
+      <i class="flaticon-381-television"></i>
+      <span class="nav-text">Offer-Module</span>
+    </a>
+     
+  </li>
+				<li><a class="has-arrow ai-icon" href="/adminlogout" aria-expanded="false">
+					<i class="flaticon-381-controls-3"></i>
+					<span class="nav-text">Logout</span>
+				</a>
+			   
+			</li>
+                    
+					
+                   
+                  
+                  
+                   
+					
+                </ul>
+            
+				<!-- <div class="add-menu-sidebar">
+					<img src="admin-assets/images/icon1.png" alt="">
+					<p>Organize your menus through button bellow</p>
+					<a href="javascript:void(0);" class="btn bg-white text-black">+ Add Menus</a>
+				</div>
+				<div class="copyright">
+					<p><strong>Davur - Restaurant Admin Dashboard</strong> ©2023 All Rights Reserved</p>
+					<p>Made with <span class="heart"></span> by DexignZone</p>
+				</div> -->
+			</div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<div class="container-fluid">
+				<!-- Row -->
+				<div class="row">
+					<div class="col-xl-12">
+						<a href="/getaddcoupon">
+							<button class="btn btn-success btn-sm ml-auto">Add Coupons</button>
+						</a> <br><br><br>
+						<table id="couponTable" class="table">
+							<thead>
+								<tr>
+									<th>Coupon Code</th>
+									<th>Discount</th>
+									<th>Date</th>
+									<th>Price</th>
+									<th>Status</th>
+									<th>Actions</th>
+									<th>Edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let i=0;i< data.length;i++){%>
+								
+								<tr>
+									<td><%=data[i].couponName%></td>
+									<td><%=data[i].discount%></td>
+									<td><%= new Date(data[i].expiry).toLocaleDateString() %></td>
+									<td><%=data[i].price%></td>
+									<td><%= data[i]. isBlocked ? 'Blocked' : 'Active' %></td>
+							<%if(data[i].isBlocked===false){%>
+									<td><button onclick="blockbtn('<%=data[i]._id%>')" style="background-color: red; color: white; border: none; width: 150px;height: 40px;">Block</button></td>
+									<%}else{%>
+										<td><button onclick="unblockbtn('<%=data[i]._id%>')" style="background-color: red; color: white; border: none; width: 150px;height: 40px;">Unblock</button></td>
+										<%}%>
+									<td><button style="background-color: blue; color: white; border: none; width: 150px;height: 40px;"><a href="/geteditcoupon/<%=data[i]._id%>">Edit Coupon</a></button></td>
+								</tr>
+								<%}%>
+							</tbody>
+							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a>2023</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+
+
+	<script>
+
+		async function blockbtn(couponId){
+			console.log(couponId);
+			const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'custom-btn-success',
+    cancelButton: 'custom-btn-danger'
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel!",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    fetch(`/blockcoupon/${couponId}`, {
+        method: 'POST',
+      })
+      .then(response => {
+        if (response.ok) {
+          // Remove the row from the table
+        window.location.href='/getcoupon'
+
+        } else {
+          console.error('Failed to remove item from cart');
+        }
+      })
+      .catch(error => {
+        console.error('Error removing item from cart:', error);
+      });
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "Cancelled",
+      text: "Your imaginary file is safe :)",
+      icon: "error"
+    });
+  }
+});
+
+		}
+
+		async function unblockbtn(couponId){
+			console.log(couponId);
+			const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'custom-btn-success',
+    cancelButton: 'custom-btn-danger'
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel!",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    fetch(`/unblockcoupon/${couponId}`, {
+        method: 'POST',
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href='/getcoupon';
+        
+
+        } else {
+          console.error('Failed to remove item from cart');
+        }
+      })
+      .catch(error => {
+        console.error('Error removing item from cart:', error);
+      });
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "Cancelled",
+      text: "Your imaginary file is safe :)",
+      icon: "error"
+    });
+  }
+});
+		}
+
+		
+
+
+
+		document.getElementById('categoryform').addEventListener('click', async (event) => {
+			event.preventDefault();
+			const categorytype = document.getElementById('categorytype').value;
+			console.log(categorytype);
+			
+			const formData = {
+				categorytype:categorytype
+			}
+	
+			try {
+				const response = await fetch('/postcategory', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(formData), // Wrap categorytype in an object
+	
+				})
+	
+				if (response.ok) {
+					const data =await response.json();
+					console.log("nourii",data);
+					if (data.success === true) {
+					window.location.href='/getcategory';
+				
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.message,
+                    icon: 'error',
+                });
+            }
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to add category',
+                icon: 'error',
+            });
+        }
+    } catch (error) {
+        console.error('Error adding category:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Internal server error',
+            icon: 'error',
+        });
+    }
+		});
+
+
+
+
+
+	
+	</script>
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src=" admin-assets/vendor/global/global.min.js"></script>
+	<script src=" admin-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="admin-assets/js/dashboard/cms.js"></script>
+	<!-- ck-editor -->
+	<script src="admin-assets/vendor/ckeditor/ckeditor.js"></script>
+	
+    <!-- Datatable -->
+	<script src=" admin-assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    
+	<script src=" admin-assets/js/deznav-init.js"></script>
+   <script src=" admin-assets/js/custom.min.js"></script>
+
+</body>
+
+</html>

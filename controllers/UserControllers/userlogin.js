@@ -1,12 +1,13 @@
 
 const userdb = require('../../models/UserModels/UserSignupSchema');
+const Userwalletdb=require('../../models/UserModels/walletSchema');
 const Swal = require('sweetalert2');
 const bcrypt = require('bcrypt');
 const otpgenerator= require('otp-generator');
 const nodemailer=require('nodemailer');
 const session = require('express-session');
 const productdb = require('../../models/AdminModels/ProductSchema');
-
+const crypto = require('crypto');
 const userlogin={};
 
 userlogin.getforgotpassword=async(req,res)=>{
@@ -220,7 +221,7 @@ async function sendOtp(email,otp){
         pass: 'fugx ocdh gxso pzzg',
       },
     });
-    // Setup email data
+    // Setup email datareferral
     const mailOptions = {
       from: 'nourinvn@gmail.com',
       to: email,
@@ -242,13 +243,19 @@ async function sendOtp(email,otp){
 
 
 userlogin.postsignup=async(req,res)=>{
-         const{name,email,password1} = req.body;
-        console.log(name,email,password1);
+         const{name,email,password1,refferal} = req.body;
+        console.log(name,email,password1,refferal);
       
           const existingEmail = await userdb.findOne({email:email})
           if(existingEmail){
             res.json({ status: 'error', error: '' });
           }
+          const refferalCode=await userdb.find({referral:refferal})
+          refferalCode.forEach(reff=>{
+            if(reff.referral!==refferal){  
+              res.json({ status: 'error', error: '' });
+            }
+          })
         
         // Function to generate a random 6-digit OTP
 function generateRandomOTP() {
@@ -265,6 +272,7 @@ req.session.signupdata={
   email,
   password1,
   randomOTP,
+  refferal,
   timestamp:Date.now(),
 }
 
@@ -308,26 +316,65 @@ userlogin.getresendotp=async(req,res)=>{
 
 
 
-userlogin.verifyOtp=async(req,res)=>{
-  const {otp}=req.body;
-  console.log("otp backend");
-  console.log(otp);
-  console.log(req.session.signupdata.randomOTP);
-  if(req.session.signupdata.randomOTP===otp){
-    const hashedPassword = await bcrypt.hash(req.session.signupdata.password1, 10);
-   
-    const newUser =  userdb({
-      name:req.session.signupdata.name,
-      email:req.session.signupdata.email,
-      password1:hashedPassword
-    })
-    await newUser.save();
-    res.json({success:true})
-  }else{
-    res.json({success:false})
+userlogin.verifyOtp = async (req, res) => {
+  const { otp } = req.body;
+  console.log("OTP received on backend:", otp);
+
+  // Function to generate referral code
+  function generateReferralCode(length = 5) {
+      let result = '';
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
   }
 
-}
+  // Check if the OTP matches
+  if (req.session.signupdata && req.session.signupdata.randomOTP === otp) {
+      const hashedPassword = await bcrypt.hash(req.session.signupdata.password1, 10);
+      
+      const newUser = new userdb({
+          name: req.session.signupdata.name,
+          email: req.session.signupdata.email,
+          password1: hashedPassword,
+          referral: generateReferralCode()
+      });
+
+      await newUser.save();
+
+     console.log("dddd",req.session.signupdata.refferal);
+      if (req.session.signupdata.refferal) { 
+          const checkReferral = await userdb.findOne({ referral: req.session.signupdata.refferal });
+          if (checkReferral) {
+              let wallet = await Userwalletdb.findOne({ userId: newUser._id });
+              if (!wallet) {
+                  wallet = new Userwalletdb({
+                      userId: newUser._id,
+                      balance: 100,
+                      transactionHistory: [{
+                          transaction: 'Referral Money',
+                          amount: 100
+                      }],
+                  });
+              } else {
+                  wallet.balance += 100;
+                  wallet.transactionHistory.push({
+                      transaction: 'Referral Added',
+                      amount: 100
+                  });
+              }
+              await wallet.save();
+          }
+      }
+
+      res.json({ success: true });
+  } else {
+      res.json({ success: false });
+  }
+};
+
 
 
 

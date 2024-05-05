@@ -21,15 +21,15 @@ usercheckout.getcheckoutpage = async (req, res) => {
 
         console.log("Cart products:", cart.products);
 
-        // Extract product information from cart
         const products = cart.products.map(cartItem => {
-            return {
-                quantity: cartItem.quantity,
-                productName: cartItem.product.productName,
-                price: cartItem.product.price,
-                total:cartItem.total
-            };
-        });
+       
+                return {
+                    quantity: cartItem.quantity,
+                    productName: cartItem.product.productName,
+                    price: cartItem.product.price,
+                    total: cartItem.total
+                };
+            })
         
         // Render checkout page with user address and cart products
         if(cart.products.length !== 0){

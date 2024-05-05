@@ -84,6 +84,12 @@
 		<div class="deznav">
 			<div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
+					<li><a class="has-arrow ai-icon" href="/dashboard" aria-expanded="false">
+						<i class="flaticon-381-controls-3"></i>
+						<span class="nav-text">Dashboard</span>
+					</a>
+				   
+				</li>
 
 					<li><a class="has-arrow ai-icon" href="getUser" aria-expanded="false">
 							<i class="fa-solid fa-gear"></i>
@@ -112,7 +118,19 @@
 				</a>
 			   
 			</li>
-					<li><a class="has-arrow ai-icon" href="/logout" aria-expanded="false">
+			<li><a class="has-arrow ai-icon" href="/getcoupon" aria-expanded="false">
+				<i class="flaticon-381-television"></i>
+				<span class="nav-text">User-Coupon</span>
+			</a>
+		   
+		</li>
+		<li><a class="has-arrow ai-icon" href="/getoffer" aria-expanded="false">
+			<i class="flaticon-381-television"></i>
+			<span class="nav-text">Offer-Module</span>
+		</a>
+	   
+	</li>
+					<li><a class="has-arrow ai-icon" href="/adminlogout" aria-expanded="false">
 						<i class="flaticon-381-controls-3"></i>
 						<span class="nav-text">Logout</span>
 					</a>
@@ -140,11 +158,8 @@
 		<div class="content-body">
 			<div class="container-fluid">
 				<div class="row page-titles">
-					<!-- <ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Apps</a></li>
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Product List</a></li>
-					</ol> -->
-					<i><a href="/dashboard" style="font-size: 25px;">Back</a></i><br>
+					
+					<!-- <i><a href="/dashboard" style="font-size: 25px;">Back</a></i><br> -->
 					<a href="/getaddproduct">
 						<button class="btn btn-success btn-sm ml-auto">Add Products</button>
 					</a> <br>
@@ -181,14 +196,11 @@
 											<p>price: <span class="item">
 													<%= data[i].price %>
 												</span> </p>
-											<p>Price in Masala :<span class="item">
-													<%= data[i].priceInMasala %>
-												</span></p>
 												<p>Stock :<span class="item">
 													<%= data[i].stock %>
 												</span></p>
 												<p>Category :<span class="item">
-													<%= data[i].category %>
+													<%= data[i].category.categoryName %>
 												</span></p>
 											<p>Description:<span class="text-content">
 													<%= data[i].description %>

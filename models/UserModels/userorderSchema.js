@@ -29,7 +29,10 @@ const orderSchema = new mongoose.Schema({
   totalAmount: Number,
   OrderStatus:{
     type:String,
-    enum:['Order Placed','Shipped','Delivered','Cancelled','Returned']
+    enum:['Order Placed','Delivered','Cancelled','Returned']
+  },
+  coupon:{
+    type:'String'
   },
   orderDate: { 
     type: Date, 
@@ -41,7 +44,8 @@ const orderSchema = new mongoose.Schema({
   deliveredAt:Date,
   useremail:String,
   username:String
-});
+},{timestamps:true});
+
 
 const order = mongoose.model('orders', orderSchema);
 

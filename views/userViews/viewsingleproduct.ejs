@@ -141,6 +141,7 @@
   </header>
 
   <main>
+   
 
     <div class="slider-area">
       <div class="slider-active">
@@ -192,14 +193,16 @@
               <ul class="list">
                 <li>
                   <a class="active" href="#">
-                    <span>Category</span> :<%=data.category%></a>
+                    <span>Category</span> :<%=data.category.categoryName%></a>
                 </li>
+               
                 <li>
-                  <a class="active" href="#">
-                    <span>Price in masala</span>:<%=data.priceInMasala%></a>
-                </li>
-                <li>
-                  <a href="#"> <span>Availibility</span> : In Stock</a>
+                 <% if(data.stock>1){%>
+                    <p><span>Availibility</span> : In Stock</p>
+                 <% }else{%>
+                    <p><span>Availibility</span> :No Stock</p>
+                 <% }%>
+                  
                 </li>
               </ul>
               <p>

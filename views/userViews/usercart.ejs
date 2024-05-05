@@ -1,31 +1,5 @@
-<!doctype html>
-<html class="no-js" lang="zxx">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Shop | eCommerce</title>
-<meta name="description" content>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="site.webmanifest">
-<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
-
-<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="/assets/css/slicknav.css">
-<link rel="stylesheet" href="/assets/css/flaticon.css">
-<link rel="stylesheet" href="/assets/css/progressbar_barfiller.css">
-<link rel="stylesheet" href="/assets/css/lightslider.min.css">
-<link rel="stylesheet" href="/assets/css/price_rangs.css">
-<link rel="stylesheet" href="/assets/css/gijgo.css">
-<link rel="stylesheet" href="/assets/css/animate.min.css">
-<link rel="stylesheet" href="/assets/css/animated-headline.css">
-<link rel="stylesheet" href="/assets/css/magnific-popup.css">
-<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="/assets/css/themify-icons.css">
-<link rel="stylesheet" href="/assets/css/slick.css">
-<link rel="stylesheet" href="/assets/css/nice-select.css">
-<link rel="stylesheet" href="/assets/css/style.css">
+<%-include('header')%>
 
  
 <style>
@@ -34,9 +8,7 @@
     opacity: 0.8;
 }
 
-.input-number {
-    outline: none;
-}
+
 .custom-btn-success {
     background-color: #4CAF50; /* Green */
     color: white;
@@ -132,8 +104,22 @@
 </div>
 </div>
 </div>
+<% if(message) { %>
+        <section class="cart_area section-padding40">
+            <div class="container">
+                <div class="cart_inner">
+                    <div class="table-responsive">
+                        <table class="table" id="cartTable">
+                            <thead>
+                                <tr><th><%= message %></th></tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-
+<%} else{%>
 <section class="cart_area section-padding40">
 <div class="container">
 <div class="cart_inner">
@@ -172,7 +158,7 @@
     <div class="product_count" style="display: flex; align-items: center; gap: 5px;">
         <button class="input-number-decrement-btn" onclick="changeQuantity('<%= datas[i]._id %>', -1)" style="background-color: #ff4d4d; color: white; border: none; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 5px;" id="decrement<%= datas[i]._id %>">-</button>
         
-        <input class="input-number" id="quantity<%=datas[i]._id%>" type="text" value="<%=datas[i].quantity%>" min="1" max="10" style="width: 50px; height: 30px; text-align: center; font-size: 14px; border: 1px solid #ccc; border-radius: 5px;">
+        <input  id="quantity<%=datas[i]._id%>" type="text" value="<%=datas[i].quantity%>" min="1" max="10" style="width: 50px; height: 30px; text-align: center; font-size: 14px; border: 1px solid #ccc; border-radius: 5px;">
 
     
         <button class="input-number-increment-btn" onclick="changeQuantity('<%= datas[i]._id %>', 1)" style="background-color: #4CAF50; color: white; border: none; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 5px;" id="increment<%= datas[i]._id %>">+</button>
@@ -194,18 +180,6 @@
 </tr>
 <%}%>
 
-
-
-<tr class="bottom_button">
-<td>
-<a class="btn" href="#">Update Cart</a>
-</td>
-<td></td>
-<td></td>
-<td>
-
-</td>
-</tr>
 <tr>
 <td></td>
 <td></td>
@@ -226,6 +200,7 @@
 </div>
 </div>
 </div>
+<%}%>
 </section>
 
 
@@ -399,7 +374,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             cancelButtonText: 'Cancel',
         
             
-            customClass: {  // Custom class for styling if needed
+            customClass: {
                 popup: 'my-popup'
             }
         }).then((result) => {
@@ -416,7 +391,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
  async function changeQuantity(productId, change) {
     console.log(productId);
     let quantityInput = document.getElementById('quantity' + productId);
-    console.log(quantityInput.value);
+    console.log("vhbjbjbj",quantityInput.value);
     let newQuantity = parseInt(quantityInput.value) + change ;
     console.log("new",newQuantity);
    let total = document.getElementById('subtotal'+productId).innerText;
@@ -434,10 +409,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         })
         const data= await response.json();
+       
         console.log("data from backend",data.success);
         if(data.success===true){
               
             console.log("Quantity updated successfully");
+            quantityInput.value=newQuantity;
+            console.log("bvnvjbjbu",quantityInput.value);
             updateSubtotal(productId, newQuantity);
         }else{
           swal.fire({
