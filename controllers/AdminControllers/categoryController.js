@@ -1,4 +1,6 @@
+const { id } = require('date-fns/locale');
 const categorys=require('../../models/AdminModels/categorySchema');
+const Productdb=require('../../models/AdminModels/ProductSchema');
 const session=require('express-session');
 const Swal = require('sweetalert2');
 const userCatagory={};
@@ -12,32 +14,7 @@ userCatagory.getcategory=async(req,res)=>{
         }
 }
 
-// userCatagory.postcategory = async (req, res) => {
-//     try {
-//         const categoryname = req.body.categorytype.toLowerCase();
-//         console.log(categoryname);
-//         const result = await categorys.findOne({ categoryName:categoryname});
-//         console.log(result);
-//         if (!result) {
-//             // If category does not exist, insert it into the database
-//             await categorys.insertOne({ categoryName: categoryname }, (err, result) => {
-//                 if (err) {
-//                     console.error('Error inserting category:', err);
-//                     res.status(500).json({ success: false, message: "Failed to insert category" });
-//                 } else {
-//                     console.log('Category added:', categoryname);
-//                     res.json({success: true, message: "Category created successfully" });
-//                 }
-//             });
-//         } else {
-//             // If category already exists, send a message indicating that to the user
-//             res.status(400).json({ success:false, message: 'Category already exists. Please choose a different one.' });
-//         }
-//     } catch (err) {
-//         console.error('Error finding/inserting category:', err);
-//         res.status(500).json({ success: false, message: "Internal Server Error" });
-//     }
-// }
+
 
 
 userCatagory.postcategory = async (req, res) => {
@@ -156,6 +133,7 @@ userCatagory.postdeletecategory = async (req, res) => {
     try {
         const idValue= req.body.idValue;
         const currentcategory = await categorys.findById(idValue);
+        const productId=currentcategory.products;
 
         // Check if the category exists
         if (!currentcategory) {
@@ -164,7 +142,12 @@ userCatagory.postdeletecategory = async (req, res) => {
 
         // Delete the category by its ID
         const result = await categorys.findOneAndDelete({ _id: idValue });
-        res.json({ success:true,message:"SuccessFully deleted Category" });
+        if(result){
+            const productData=await Productdb.deleteMany({category:idValue});
+            console.log("SuccessFully deleted");
+            res.json({ success:true,message:"SuccessFully deleted Category" });
+        }
+       
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Internal server error" });

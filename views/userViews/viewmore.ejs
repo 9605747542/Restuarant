@@ -1,35 +1,35 @@
 <%-include('header')%>
 <style>
     .square-image {
-    width: 300px; /* Adjust the width as needed */
-    height: 300px; /* Set the same value as the width to make it square */
-    overflow: hidden; /* Ensure the image doesn't overflow if it's larger */
+    width: 300px;
+    height: 300px; 
+    overflow: hidden; 
 }
 
 </style>
 <main>
 
-<div class="slider-area ">
-<div class="slider-active">
-<div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
-<div class="container">
-<div class="row">
-<div class="col-xl-6 col-lg-8 col-md-8">
-<div class="hero__caption hero__caption2">
-<h1 data-animation="fadeInUp" data-delay=".4s">Cart List</h1>
-<nav aria-label="breadcrumb">
-<ol class="breadcrumb">
-<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-<li class="breadcrumb-item"><a href="#">Cart List</a></li>
-</ol>
-</nav>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="slider-area ">
+        <div class="slider-active">
+        <div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
+        <div class="container">
+        <div class="row">
+        <div class="col-xl-6 col-lg-8 col-md-8">
+        <div class="hero__caption hero__caption2">
+        <h1 data-animation="fadeInUp" data-delay=".4s">ORDER DETAILS</h1>
+        <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Order Details</a></li>
+        </ol>
+        </nav>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
     
     
 <section class="cart_area section-padding40">
@@ -54,7 +54,7 @@
                           
                             <div class="square-image">
                                 <span>
-                                    <img style="transition: 10ms;" src="<%= value.image[0] %>" alt="">
+                                    <img style="transition: 10ms;" src="<%=value.image[0]%>" alt="">
                                 </span>
                             </div>
                             
@@ -68,31 +68,33 @@
                             
                         </div>
                     </td>
-                    <td>
-                        <% address.forEach(addr => { %>
-                            <p><strong> Phone:</strong> <%= addr.phone %></p>
-                            <p><strong>Street Address:</strong> <%= addr.streetaddress %></p>
-                            <p><strong>City:</strong> <%= addr.city %></p>
-                            <p><strong>Zipcode:</strong> <%= addr.zipcode %></p>
-                            <p><strong>State:</strong> <%= addr.state %></p>
-                            <p><strong>House Name:</strong> <%= addr.House_name %></p>
-                            <p><strong>Landmark:</strong> <%= addr.landmark %></p>
-                        <% }) %>
-                    </td>
                    
-                    
+                         
   
     <%})%>
- 
+    <td>
+        <% address.forEach(addr => { %>
+            <p><strong> Phone:</strong> <%= addr.phone %></p>
+            <p><strong>Street Address:</strong> <%= addr.streetaddress %></p>
+            <p><strong>City:</strong> <%= addr.city %></p>
+            <p><strong>Zipcode:</strong> <%= addr.zipcode %></p>
+            <p><strong>State:</strong> <%= addr.state %></p>
+            <p><strong>House Name:</strong> <%= addr.House_name %></p>
+            <p><strong>Landmark:</strong> <%= addr.landmark %></p>
+        <% }) %>
+    </td>
+    
     <td>  
         <div class="py-2 ">
-            <form id="deleteForm" action="/deleteOrder" method="POST">
+            <form id="deleteForm">
                 <input type="hidden" name="order_id" value="">
                 <button type="submit" class="btn btn-danger">Cancel Order</button>
             </form>
         </div>
     </td>
-    </tr>
+    </tr> 
+ 
+   
     
     </tbody>
     
@@ -107,6 +109,7 @@
     </div>
     </div>
     </section>
+</main>
     
     
     
@@ -199,8 +202,59 @@
         <div id="back-top">
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
         </div>
+        <script>
+
+
+
+   function extractidFromURL() {
+    var currentURL = window.location.href;
+    console.log(currentURL);
+    var path = window.location.pathname;
+    console.log(path);
+    var segments = path.split('/');
+    console.log(segments);
+    var id = segments[segments.length - 1];
+    console.log("ID extracted:", id);
+
+    return id;
+}
+
+
+document.getElementById('deleteForm').addEventListener('click', async (e) => {
+    e.preventDefault()
+    var id = extractidFromURL();
+    console.log("ID extracted:", id);
+
+    const response = await fetch('/deleteOrder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id }) // Send the extracted ID in the request body
+    });
+
+    const data = await response.json();
+    console.log("Data from backend:", data);
+
+    // Handle the response from the server
+    if (data.success === true) {
+        swal.fire({
+            title: "Success",
+            text: data.message,
+            icon: "success"
+        });
+        window.location.href='/getorderdetails'
+    } else {
+        swal.fire({
+            title: "Error",
+            text: data.message,
+            icon: "error"
+        });
+    }
+});
+        </script>
         
-        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
         <script src="./assets/js/popper.min.js"></script>
@@ -248,4 +302,4 @@
        
         
         
-        
+       

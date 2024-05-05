@@ -23,70 +23,67 @@ userproduct.getaddproduct=async(req,res)=>{
 }
 
 
-
 userproduct.postaddproduct = async (req, res) => {
-
     try {
         const images = req.files;
         console.log('multiple Images:', images);
 
-        if (!images || images.length===0) {
+        if (!images || images.length === 0) {
             return res.status(400).json({ error: "No images provided" });
         }
 
         let imagePaths = [];
 
-        
-        const fs = require('fs');
-
+        // Assuming image paths are stored in "/admin-assets/product-img/"
         for (const image of images) {
-                const imagePath = "/admin-assets/product-img/" + image.filename;
-                console.log('imagename:', image.filename);
-                imagePaths.push(imagePath);
+            const imagePath = "/admin-assets/product-img/" + image.filename;
+            console.log('imagename:', image.filename);
+            imagePaths.push(imagePath);
         }
-            const { productName, price, description,category,stock} = req.body;
-            console.log('blaa');
-            console.log(category);
-          
-           
-            const data=await categorys.findOne({categoryName:category});
-            if(!data){
-                return res.status(400).json({success:false,message: "Category not found" });
-            }
-            else{
-               
-            
-            
+
+        const { productName, price, description, category, stock } = req.body;
+        console.log('blaa');
+        console.log(category);
+
+
+        const categoryData = await categorys.findOne({ categoryName: category });
+
+        if (!categoryData) {
+            return res.status(400).json({ success: false, message: "Category not found" });
+        } else {
+            const roundedPrice = Math.ceil(price);
             const product1 = new productModel({
-                image: imagePaths, // Assuming imagePaths is an array of file paths
+                image: imagePaths,
                 productName,
-                price,
-                
+                price: roundedPrice,
                 description,
-                category:data._id,
-                stock
+                category: categoryData._id,
+                stock,
+                orginalPrice: 0,
+                discount: 0,
+                offertype: 0
             });
-        
 
             console.log(product1);
-           if (product1) {
-                await product1.save();
-               
-                res.redirect('/getproduct');
-    
 
-            } else {
-                res.json({ success: false ,message:'Product details is not saved '});
-            }
-        } 
-    }catch (error) {
-            console.error('Error adding product:', error);
-            res.status(500).json({ success: false, message: 'Internal server error' });
+            await product1.save();
+            console.log("product id",product1._id);
+
+            
+            await categorys.updateOne(
+                { _id: categoryData._id },
+                { $addToSet: { products: product1._id } }
+            );
+            
+
+            res.redirect('/getproduct');
         }
-    
-   
-
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
 }
+
 
 
 userproduct.geteditproduct=async(req,res)=>{
@@ -118,7 +115,7 @@ userproduct.posteditproduct = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
         console.log("multiple edited product :",req.files);
-        if (req.file) {
+        if (req.files) {
             const filePath = req.file.path;
 
             // Optionally delete the old image file from storage

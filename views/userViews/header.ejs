@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="assets/css/slick.css">
   <link rel="stylesheet" href="assets/css/nice-select.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
 <body>
@@ -51,7 +52,7 @@
               <div class="main-menu  d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/home">Home</a></li>
                     <li><a href="/getuserproduct">Product</a></li>
              
                     <li><a href="/logout">LogOut</a></li>
@@ -74,8 +75,8 @@
     <ul class="submenu">
     <li><a href="/userprofile">My profile</a></li>
     <li><a href="/getalladdress">My Address</a></li>
-    <li><a href="card.html">My Wishlist</a></li>
-    <li><a href="categories.html">My Orders</a></li>
+    <li><a href="/getwishlist">My Wishlist</a></li>
+    <li><a href="/getorderdetails">My Orders</a></li>
     </ul>
     </li> 
  
@@ -84,11 +85,21 @@
                     </nav>
                   </div>
                   <li>
-                    <div class="card-stor">
+                   <a href="/usercart"><div class="card-stor">
                       <img src="assets/img/icon/card.svg" alt>
                       <span>0</span>
                     </div>
+                  </a>
+                    
                   </li>
+                  <li>
+                    <a href="/getwishlist"><div class="card-stor" style="margin-left: 25px;font-weight:bold">
+                       <img src="assets/img/icon/love.png" alt>
+                       <span>0</span>
+                     </div>
+                   </a>
+                     
+                   </li>
                 
               
             </div>

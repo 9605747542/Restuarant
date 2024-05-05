@@ -7,7 +7,8 @@ const categorys=new mongoose.Schema({
         required:true
     },
     products:[{
-        type:Schema.Types.ObjectId,ref:'products'
+        type:Schema.Types.ObjectId,
+        ref:'products',
     }],
     isListed:{
         type:Boolean,

@@ -34,10 +34,15 @@
         <thead>
             <tr>
                 <th>ORDER DATE</th>
-                <th>ORDER NO</th>
+                <th>USER NAME</th>
                 <th>PAYMENT</th>
                 <th>NO OF PRODUCTS</th>
+                <th>STATUS</th>
                 <th>TOTAL AMOUNT</th>
+                <th>ACTUAL AMOUNT</th>
+               
+                <th>COUPONS</th>
+              
                 <th class="text-end">ACTION</th>
             </tr>
         </thead>
@@ -60,7 +65,7 @@
                 <td>
                     <div class="py-2">
                        
-                        <span><%= latestOrder[i].orderId %></span>
+                        <span><%= latestOrder[i].username %></span>
                     </div>
                 </td>
         
@@ -77,18 +82,38 @@
                         <span><%= latestOrder[i].products.reduce((acc, curr) => acc + curr.quantity, 0) %></span>
                     </div>
                 </td>
-        
                 <td>  
                     <div class="py-2">
                       
-                        <h4>₹<%= latestOrder[i].ActualAmount %></h4>
+                        <h4><%=latestOrder[i].OrderStatus%></h4>
+                    </div>
+                </td>
+                <td>  
+                    <div class="py-2">
+                      
+                        <h4>₹<%=latestOrder[i].totalAmount %></h4>
                     </div>
                 </td>
         
                 <td>  
                     <div class="py-2">
+                      
+                        <h4>₹<%=latestOrder[i].ActualAmount %></h4>
+                    </div>
+                </td>
+             
+               
+                    <td>  
+                        <div class="py-2">
+                            <h4><%= latestOrder[i].coupon || 'NULL' %></h4>
+                        </div>
+                    </td>
+                    
+        
+                <td>  
+                    <div class="py-2">
                         <!-- Button for more details, link might need adjustment according to actual URL pattern -->
-                        <a href="/viewmoredetails?id=<%= latestOrder[i]._id %>"><button type="button" class="btn btn-danger">VIEW MORE</button></a>
+                        <a href="/viewmoredetails/<%=latestOrder[i]._id%>"><button type="button" class="btn btn-danger">VIEW MORE</button></a>
                     </div>
                 </td>
             </tr>

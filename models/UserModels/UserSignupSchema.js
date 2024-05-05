@@ -30,6 +30,9 @@ address: {
 isBlocked:{
     type:Boolean,
     default:false,
+},
+referral:{
+    type:String,
 }
 }
 const User=mongoose.model('users',userSignup)

@@ -11,6 +11,8 @@ const MongoDB=require('./models/database')
 const Swal = require('sweetalert2');
 const upload=require('./multer'); 
 const dotenv=require('dotenv');
+const Razorpay=require('razorpay');
+const pdfkit=require('pdfkit');
 
 // app.use(upload);
 // console.log(typeof upload);
