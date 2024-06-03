@@ -50,7 +50,6 @@ app.use(session({
     secret:sessionSecret,
     resave:true,
     saveUninitialised:true,
-
 }))
 
 app.use(express.json());
@@ -64,5 +63,5 @@ MongoDB();
 const port=process.env.PORT;
 
 app.listen(port,()=>{
-    console.log("Port Connected SuccessFully!!");
+    console.log(`Port Connected SuccessFully!!,${port}`);
 })
