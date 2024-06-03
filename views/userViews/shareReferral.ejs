@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Referral</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+  /* Sidebar Styles */
+  .sidebar {
+   background-color:#FFAC5C; /* Orange color */
+   width: 250px;
+   height: 100vh;
+   position: fixed;
+   left: 0;
+   top: 0;
+   overflow-x: hidden;
+   padding-top: 20px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
+ }
+ 
+ .sidebar a {
+   padding: 15px 20px; /* Larger padding for more comfortable click/touch */
+   text-decoration: none;
+   color: white;
+   display: flex;
+   align-items: center; /* Align icon and text vertically */
+   transition: 0.3s;
+ }
+ 
+ .sidebar a i {
+   margin-right: 10px; /* Add some space between icon and text */
+ }
+ 
+ .sidebar a:hover {
+   background-color:#FF7F00; /* Darker orange color on hover */
+ }
+</style>
+<body>
+  <div class="sidebar">
+    <a href="/home"><i class="fas fa-home"></i> Home</a>
+    <a href="/getalladdress"><i class="fas fa-user"></i> My Address</a>
+    <a href="/getwishlist"><i class="fas fa-heart"></i> My Wishlist</a>
+    <a href="/getorderdetails"><i class="fas fa-sign-out-alt"></i> My Orders</a>
+    </div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div class="col-xl-6">
+        <div class="card">
+          <div class="card-header border-0">
+            <h4 class="text-center">User Name</h4>
+          </div>
+          <div class="card-body text-center" id="authenticationNumContent">
+            <div class="form-group">
+              <label for="link">Link</label>
+              <input type="text" id="link" class="form-control solid text-center" placeholder="Enter your link" value="">
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary mr-2" id="shareButton">Share</button>
+              <button class="btn btn-secondary" id="copyButton">Copy Link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const referralCode = "<%= referral %>";
+      const referralLink = `http://localhost:3002/register?code=${referralCode}`;
+      const linkInput = document.getElementById('link');
+      linkInput.value = referralLink;
+
+      document.getElementById('shareButton').addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Share Link',
+            text: 'Check out this link:',
+            url: referralLink,
+          }).catch((error) => console.error('Error sharing', error));
+        } else {
+          // Fallback for devices that do not support navigator.share
+          const whatsappURL = `https://api.whatsapp.com/send?text=${encodeURIComponent('Check out this link: ' + referralLink)}`;
+          window.open(whatsappURL, '_blank');
+        }
+      });
+
+      document.getElementById('copyButton').addEventListener('click', () => {
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand('copy');
+        console.log("link testing", linkInput.value);
+        alert('Link copied to clipboard: ' + linkInput.value);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema({
   totalAmount: Number,
   OrderStatus:{
     type:String,
-    enum:['Order Placed','Delivered','Cancelled','Returned']
+    enum:['Order Placed','Delivered','Cancelled','Returned','Shipped','Payment Pending']
   },
   coupon:{
     type:'String'

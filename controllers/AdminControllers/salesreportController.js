@@ -497,6 +497,116 @@ salesReport.downloadYearlyReport = async (req, res) => {
     }
 };
 
+//for doing custom sales data
+salesReport.getcustomsalesReport = async (req, res) => {
+    try {
+        const custom = req.params.custom;
+        const [startYear, startMonth, startDay] = custom.split('-').map(Number);
+        const startDate = new Date(startYear, startMonth - 1, startDay);
+        const endDate = new Date(startDate);
+        endDate.setHours(23, 59, 59);
+        
+        const customOrders = await OrderDB.find({
+            orderDate: { $gte: startDate, $lte: endDate }
+        });
+        
+        let returnedOrders = 0;
+        let deliveredOrders = 0;
+        let cancelledOrders = 0;
+        
+        customOrders.forEach(order => {
+            if (order.OrderStatus === "Returned") {
+                returnedOrders++;
+            } else if (order.OrderStatus === "Delivered") {
+                deliveredOrders++;
+            } else if (order.OrderStatus === "Cancelled") {
+                cancelledOrders++;
+            }
+        });
+        
+        const salesData = {
+            returned: returnedOrders,
+            delivered: deliveredOrders,
+            cancelled: cancelledOrders,
+        };
+        
+        res.json(salesData);
+    } catch (error) {
+        console.error("Error fetching custom sales data:", error);
+        res.status(500).json({ message: "Error fetching data" });
+    }
+};
+
+salesReport.downloadCustomReport = async (req, res) => {
+    try {
+        const customDate = req.params.custom;
+        console.log(customDate);
+        const selectedDate = new Date(customDate);
+        console.log("dtt",selectedDate);
+        if (isNaN(selectedDate.getTime())) {
+            throw new Error('Invalid date format');
+        }
+        const startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), 0, 0, 0);
+        const endDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), 23, 59, 59);
+
+        const salesData = await OrderDB.find({
+            orderDate: { $gte: startDate, $lte: endDate }
+        });
+
+        const doc = new pdfDocument({ margin: 40 });
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="custom-sales-report-${customDate}.pdf"`);
+        doc.pipe(res);
+
+        doc.fontSize(10).text('Custom Sales Report', { align: 'center' });
+        doc.moveDown(2);
+
+        doc.fontSize(8).text(`Date: ${customDate}`, { align: 'center' });
+        doc.moveDown(1);
+
+        const headers = ['Date', 'Order ID', 'User', 'Order Status', 'Total Amount', 'Coupon', 'Discount Value', 'Actual Amount'];
+        const columnWidths = [80, 60, 60, 60, 90, 60, 60, 70];
+
+        doc.font('Helvetica-Bold').fontSize(8);
+        let startX = doc.x;
+        let startY = doc.y;
+
+        headers.forEach((header, index) => {
+            doc.text(header, startX, startY, { width: columnWidths[index], align: 'center' });
+            startX += columnWidths[index];
+        });
+        startY += 20;
+
+        doc.font('Helvetica').fontSize(8);
+        salesData.forEach(order => {
+            let xPosition = doc.page.margins.left;
+            const rowData = [
+                order.orderDate.toLocaleDateString('en-US'),
+                order.orderId,
+                order.username,
+                order.OrderStatus,
+                "₹" + order.totalAmount.toFixed(2),
+                order.ActualAmount ? `product / ${order.coupon}` : null,
+                "₹" + (order.totalAmount - order.ActualAmount).toFixed(2),
+                "₹" + order.ActualAmount.toFixed(2),
+            ];
+
+            rowData.forEach((data, index) => {
+                doc.text(data, xPosition, startY, { width: columnWidths[index], align: 'center' });
+                xPosition += columnWidths[index];
+            });
+
+            startY += 20;
+        });
+
+        doc.end();
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
 
 
 

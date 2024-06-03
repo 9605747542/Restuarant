@@ -21,7 +21,7 @@
 	<!-- Title -->
 	<title>PLAZA PLATE</title>
     <!-- Favicon icon -->
-  
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
     <link href="admin-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<link href="admin-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="admin-assets/css/style.css" rel="stylesheet">
@@ -69,7 +69,7 @@
 		<div class="content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
-					<form enctype="multipart/form-data" action="/postaddproduct" method="post" >
+					<form enctype="multipart/form-data">
 					<div class="col-xl-2 col-md-12">
 						
 						
@@ -136,17 +136,9 @@
 							</div>
 						</div>
 					</div>
-					
-					
-
-
-					
-
-					
-			
-
 					<div class="card-footer">
-						<button class="btn btn-primary btn-block rounded" onclick="validate()" type="submit">Upload Items</button>
+						<button type="button" class="btn btn-primary btn-block rounded" id="cropButton">Crop Image</button>
+						<button class="btn btn-primary btn-block rounded" id="validate">Upload Items</button>
 					</div>
 					</form> 
 			
@@ -196,26 +188,139 @@
     ***********************************-->
     <!-- Required vendors -->
 	<script>
-		 document.getElementById('image').addEventListener('change', function (event) {
-             const imagePreviewContainer = document.getElementById('previewContainer');
-             const fileInput = event.target;
+		//  document.getElementById('image').addEventListener('change', function (event) {
+        //      const imagePreviewContainer = document.getElementById('previewContainer');
+        //      const fileInput = event.target;
 
-            if (fileInput.files && fileInput.files.length > 0) {
-				for (let i = 0; i < fileInput.files.length; i++) {
-                const reader = new FileReader();
-				const imagePreviewContainer = document.createElement('div');
-                    imagePreviewContainer.classList.add('imagePreview');
+        //     if (fileInput.files && fileInput.files.length > 0) {
+		// 		for (let i = 0; i < fileInput.files.length; i++) {
+        //         const reader = new FileReader();
+		// 		const imagePreviewContainer = document.createElement('div');
+        //             imagePreviewContainer.classList.add('imagePreview');
 
-               reader.onload = function (e) {
-                   imagePreviewContainer.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
-                     imagePreviewContainer.style.display = 'block';
-                 };
+        //        reader.onload = function (e) {
+        //            imagePreviewContainer.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
+        //              imagePreviewContainer.style.display = 'block';
+        //          };
 
-                 reader.readAsDataURL(fileInput.files[i]);
-		 		previewContainer.appendChild(imagePreviewContainer);
-             }
-		 }
-        });
+        //          reader.readAsDataURL(fileInput.files[i]);
+		//  		previewContainer.appendChild(imagePreviewContainer);
+        //      }
+		//  }
+        // });
+
+		// let cropper;
+		// let croppedBlob;
+
+		// document.getElementById('image').addEventListener('change', function(event) {
+        //     const fileInput = event.target;
+        //     const previewContainer = document.getElementById('previewContainer');
+        //     previewContainer.innerHTML = ''; // Clear previous images
+
+        //     if (fileInput.files && fileInput.files.length > 0) {
+        //         const file = fileInput.files[0];
+        //         const reader = new FileReader();
+
+        //         reader.onload = function(e) {
+        //             const img = document.createElement('img');
+        //             img.src = e.target.result;
+        //             img.style.maxWidth = '100%';
+        //             img.id = 'imageToCrop';
+
+        //             previewContainer.appendChild(img);
+
+        //             // Initialize cropper
+        //             cropper = new Cropper(img, {
+        //                 aspectRatio: 1, // Adjust aspect ratio as needed
+        //                 viewMode: 1,
+        //                 autoCropArea: 1,
+        //                 movable: true,
+        //                 zoomable: true,
+        //                 rotatable: true,
+        //                 scalable: true,
+        //             });
+
+        //             // Add a button to confirm the crop
+        //             const cropButton = document.createElement('button');
+        //             cropButton.textContent = 'Crop Image';
+        //             cropButton.onclick = function() {
+        //                 const canvas = cropper.getCroppedCanvas({
+        //                     width: 200, // Adjust width as needed
+        //                     height: 200 // Adjust height as needed
+        //                 });
+
+        //                 canvas.toBlob(function(blob) {
+        //                     croppedBlob = blob;
+        //                     const croppedImg = document.createElement('img');
+        //                     croppedImg.src = URL.createObjectURL(blob);
+        //                     previewContainer.innerHTML = ''; // Clear the container
+        //                     previewContainer.appendChild(croppedImg); // Display cropped image
+        //                 }, 'image/jpeg');
+        //             };
+
+        //             previewContainer.appendChild(cropButton);
+        //         };
+
+        //         reader.readAsDataURL(file);
+        //     }
+        // });
+
+
+	// 	let cropper;
+    //     let croppedBlob;
+
+    //     document.getElementById('image').addEventListener('change', function(event) {
+    //         const fileInput = event.target;
+    //         const previewContainer = document.getElementById('previewContainer');
+    //         previewContainer.innerHTML = ''; // Clear previous images
+
+    //         if (fileInput.files && fileInput.files.length > 0) {
+    //             const file = fileInput.files[0];
+    //             const reader = new FileReader();
+
+    //             reader.onload = function(e) {
+    //                 const img = document.createElement('img');
+    //                 img.src = e.target.result;
+    //                 img.style.maxWidth = '100%';
+    //                 img.id = 'imageToCrop';
+
+    //                 previewContainer.appendChild(img);
+
+    //                 // Initialize cropper
+    //                 cropper = new Cropper(img, {
+    //                     aspectRatio: 1, // Adjust aspect ratio as needed
+    //                     viewMode: 1,
+    //                     autoCropArea: 1,
+    //                     movable: true,
+    //                     zoomable: true,
+    //                     rotatable: true,
+    //                     scalable: true,
+    //                 });
+    //             };
+
+    //             reader.readAsDataURL(file);
+    //         }
+    //     });
+
+    //     document.getElementById('cropButton').addEventListener('click', function() {
+    //         if (cropper) {
+    //             const canvas = cropper.getCroppedCanvas({
+    //                 width: 200, // Adjust width as needed
+    //                 height: 200 // Adjust height as needed
+    //             });
+
+    //             canvas.toBlob(function(blob) {
+    //                 croppedBlob = blob;
+    //                 const croppedImg = document.createElement('img');
+    //                 croppedImg.src = URL.createObjectURL(blob);
+    //                 const previewContainer = document.getElementById('previewContainer');
+    //                 previewContainer.innerHTML = ''; // Clear the container
+    //                 previewContainer.appendChild(croppedImg); // Display cropped image
+    //             }, 'image/jpeg');
+    //         }
+    //     });
+
+
 	
 
 
@@ -227,51 +332,315 @@
 
 
 
-		async function validate() {
+	// document.getElementById('validate').addEventListener('click',async(e)=>{
+	// 	e.preventDefault();
+
+	// 	console.log("MAHN");
     
+    //     const productName = document.getElementById('productname').value;
+    //     console.log(productName);
+    //     const price = document.getElementById('price').value;
+    //     const description = document.getElementById('description').value;
+    //     const stock = document.getElementById('stocks').value;
+    //     console.log(stock);
+    //     const category = document.getElementById('category').value;
+		
+
+    //     if (productName === '' || price === '' || stock === '' || description === '' || category==='') {
+    //         Swal.fire({
+    //             title: 'Error!',
+    //             text: "Please Enter the required fields",
+    //             icon: 'error'
+    //         });
+    //         return;
+    //     }
+	// 	try {
+
+    //     const formdata = {
+    //         productName,
+    //         price,
+    //         description,
+    //         stock,
+    //         category
+    //     };
+	// 	const croppedImage = document.getElementById('image').dataset.croppedImage;
+    //         if (croppedImage) {
+	// 			console.log("another");
+    //             formData.append('ProductImages', croppedImage);
+    //         }
+
+    //     console.log(formdata.stock);
+	// 	console.log("Form Data",formdata);
+
+    //     const response = await fetch('/postaddproduct', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(formdata)
+    //     });
+    //         const data = await response.json();
+	// 		console.log(data);
+    //         if (data.success === true) {
+    //             Swal.fire({
+    //                 title: 'Success!',
+    //                 text: data.message,
+    //                 icon: 'success'
+    //             });
+				
+    //         } else {
+    //             Swal.fire({
+    //                 title: 'Error!',
+    //                 text: data.message,
+    //                 icon: 'error'
+    //             });
+    //         }
+        
+    // } catch (error) {
+    //     Swal.fire({
+    //         title: 'Error!',
+    //         text: 'An error occurred while processing the request.',
+    //         icon: 'error'
+    //     });
+    //     console.error("An error occurred while processing the request:", error);
+    // }
+
+	// })
+
+
+
+// 	document.addEventListener('DOMContentLoaded', function() {
+//     const imageInput = document.getElementById('image');
+//     const previewContainer = document.getElementById('previewContainer');
+//     const cropButton = document.getElementById('cropButton');
+//     const validateButton = document.getElementById('validate');
+
+
+// 	let cropper;
+// let croppedBlob;
+
+// document.getElementById('image').addEventListener('change', function(event) {
+//     const fileInput = event.target;
+//     const previewContainer = document.getElementById('previewContainer');
+//     previewContainer.innerHTML = ''; // Clear previous images
+
+//     if (fileInput.files && fileInput.files.length > 0) {
+//         const file = fileInput.files[0];
+//         const reader = new FileReader();
+
+//         reader.onload = function(e) {
+//             const img = document.createElement('img');
+//             img.src = e.target.result;
+//             img.style.maxWidth = '100%';
+//             img.id = 'imageToCrop';
+
+//             previewContainer.appendChild(img);
+
+//             // Initialize cropper
+//             cropper = new Cropper(img, {
+//                 aspectRatio: 1, // Adjust aspect ratio as needed
+//                 viewMode: 1,
+//                 autoCropArea: 1,
+//                 movable: true,
+//                 zoomable: true,
+//                 rotatable: true,
+//                 scalable: true,
+//             });
+//         };
+
+//         reader.readAsDataURL(file);
+//     }
+// });
+// console.log();
+
+// document.getElementById('cropButton').addEventListener('click', function() {
+//     if (cropper) {
+//         const canvas = cropper.getCroppedCanvas({
+//             width: 200, // Adjust width as needed
+//             height: 200 // Adjust height as needed
+//         });
+
+//         canvas.toBlob(function(blob) {
+//             croppedBlob = blob;
+//             const croppedImg = document.createElement('img');
+//             croppedImg.src = URL.createObjectURL(blob);
+//             const previewContainer = document.getElementById('previewContainer');
+//             previewContainer.innerHTML = ''; // Clear the container
+//             previewContainer.appendChild(croppedImg); // Display cropped image
+//         }, 'image/jpeg');
+//     }
+// });
+
+// validateButton.addEventListener('click',async(e)=>{
+// 	e.preventDefault();
+  
+// 	console.log("data");
+
+//     const productName = document.getElementById('productname').value;
+//     const price = document.getElementById('price').value;
+//     const description = document.getElementById('description').value;
+//     const stock = document.getElementById('stocks').value;
+//     const category = document.getElementById('category').value;
+
+//     if (productName === '' || price === '' || stock === '' || description === '' || category === '') {
+//         Swal.fire({
+//             title: 'Error!',
+//             text: "Please enter the required fields",
+//             icon: 'error'
+//         });
+//         return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append('productName', productName);
+//     formData.append('price', price);
+//     formData.append('description', description);
+//     formData.append('stock', stock);
+//     formData.append('category', category);
+
+//     if (croppedBlob) {
+//         formData.append('ProductImages', croppedBlob, 'croppedImage.jpg');
+//     }
+
+//     try {
+//         const response = await fetch('/postaddproduct', {
+//             method: 'POST',
+//             body: formData
+//         });
+// 		console.log(response);
+// 		console.log("mad");
+//         const data = await response.json();
+// 		console.log("data in the frontend",data);
+//         if (data.success) {
+//             Swal.fire({
+//                 title: 'Success!',
+//                 text: data.message,
+//                 icon: 'success'
+//             });
+// 			window.location.href='/getproduct';
+//         } else {
+//             Swal.fire({
+//                 title: 'Error!',
+//                 text: data.message,
+//                 icon: 'error'
+//             });
+//         }
+//     } catch (error) {
+//         Swal.fire({
+//             title: 'Error!',
+//             text: 'An error occurred while processing the request.',
+//             icon: 'error'
+//         });
+//         console.error("An error occurred while processing the request:", error);
+//     }
+// });
+// 	});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('image');
+    const previewContainer = document.getElementById('previewContainer');
+    const cropButton = document.getElementById('cropButton');
+    const validateButton = document.getElementById('validate');
+
+    let cropper;
+    let croppedBlob;
+
+    imageInput.addEventListener('change', function(event) {
+        const fileInput = event.target;
+        previewContainer.innerHTML = ''; // Clear previous images
+
+        if (fileInput.files && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100%';
+                img.id = 'imageToCrop';
+
+                previewContainer.appendChild(img);
+
+                // Initialize cropper
+                cropper = new Cropper(img, {
+                    aspectRatio: 1, // Adjust aspect ratio as needed
+                    viewMode: 1,
+                    autoCropArea: 1,
+                    movable: true,
+                    zoomable: true,
+                    rotatable: true,
+                    scalable: true,
+                });
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    cropButton.addEventListener('click', function() {
+        if (cropper) {
+            const canvas = cropper.getCroppedCanvas({
+                width: 200, // Adjust width as needed
+                height: 200 // Adjust height as needed
+            });
+
+            canvas.toBlob(function(blob) {
+                croppedBlob = blob;
+                const croppedImg = document.createElement('img');
+                croppedImg.src = URL.createObjectURL(blob);
+                previewContainer.innerHTML = ''; // Clear the container
+                previewContainer.appendChild(croppedImg); // Display cropped image
+            }, 'image/jpeg');
+        }
+    });
+
+    validateButton.addEventListener('click', async function(e) {
+        e.preventDefault();
+
         const productName = document.getElementById('productname').value;
-        console.log(productName);
         const price = document.getElementById('price').value;
         const description = document.getElementById('description').value;
         const stock = document.getElementById('stocks').value;
-        console.log(stock);
         const category = document.getElementById('category').value;
 
-        if (productName === '' || price === '' || priceInMasala === '' || stock === '' || description === '' || category==='') {
+        if (productName === '' || price === '' || stock === '' || description === '' || category === '') {
             Swal.fire({
                 title: 'Error!',
-                text: "Please Enter the required fields",
+                text: "Please enter the required fields",
                 icon: 'error'
             });
             return;
         }
-		try {
 
-        const formdata = {
-            productName,
-            price,
-            description,
-            stock,
-            category
-        };
-        console.log(formdata.stock);
+        const formData = new FormData();
+        formData.append('productName', productName);
+        formData.append('price', price);
+        formData.append('description', description);
+        formData.append('stock', stock);
+        formData.append('category', category);
 
-        const response = await fetch('/postaddproduct', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formdata)
-        });
+        if (croppedBlob) {
+            formData.append('ProductImages', croppedBlob, 'croppedImage.jpg');
+        }
+
+        try {
+            const response = await fetch('/postaddproduct', {
+                method: 'POST',
+                body: formData
+            });
+
+            console.log(response);
             const data = await response.json();
-			console.log(data);
-            if (data.success === true) {
+            console.log("data in the frontend", data);
+            if (data.success) {
                 Swal.fire({
                     title: 'Success!',
                     text: data.message,
                     icon: 'success'
                 });
-				
+                window.location.href = '/getproduct';
             } else {
                 Swal.fire({
                     title: 'Error!',
@@ -279,19 +648,24 @@
                     icon: 'error'
                 });
             }
-        
-    } catch (error) {
-        Swal.fire({
-            title: 'Error!',
-            text: 'An error occurred while processing the request.',
-            icon: 'error'
-        });
-        console.error("An error occurred while processing the request:", error);
-    }
-}
+        } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while processing the request.',
+                icon: 'error'
+            });
+            console.error("An error occurred while processing the request:", error);
+        }
+    });
+});
+
+
+
+			
+
 
 	</script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="admin-assets/vendor/global/global.min.js"></script>

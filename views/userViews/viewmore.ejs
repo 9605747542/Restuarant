@@ -1,9 +1,15 @@
 <%-include('header')%>
 <style>
-    .square-image {
-    width: 300px;
-    height: 300px; 
-    overflow: hidden; 
+   .square-image {
+    width: 100px; 
+    height: 100px; 
+    overflow: hidden;
+}
+
+.square-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 </style>
@@ -43,10 +49,12 @@
                 <th> PRODUCT IMAGE</th>
                 <th> PRODUCT NAME</th>
                 <th> ADDRESS</th>
+                <th> ACTION</th>
+                <th></th>
             </thead>
             
             <tbody>
-                <% values.forEach(value =>{ %>
+            
                 <tr>
                     <td>
                         <div class="py-2">
@@ -54,7 +62,7 @@
                           
                             <div class="square-image">
                                 <span>
-                                    <img style="transition: 10ms;" src="<%=value.image[0]%>" alt="">
+                                    <img style="transition: 10ms;" src="<%=productDetails.image[0]%>" alt="">
                                 </span>
                             </div>
                             
@@ -64,14 +72,15 @@
                         <div class="py-2">
     
                            
-                        <span><%=value.productName%></span>
+                        <span><%=productDetails.productName%></span>
                             
                         </div>
                     </td>
                    
                          
   
-    <%})%>
+  
+    
     <td>
         <% address.forEach(addr => { %>
             <p><strong> Phone:</strong> <%= addr.phone %></p>
@@ -84,6 +93,8 @@
         <% }) %>
     </td>
     
+
+    <% if(orderDetails.OrderStatus!=='Payment Pending' && orderDetails.OrderStatus!=='Delivered' &&  orderDetails.OrderStatus!=='Cancelled'){%>
     <td>  
         <div class="py-2 ">
             <form id="deleteForm">
@@ -92,6 +103,35 @@
             </form>
         </div>
     </td>
+    <%}%>
+    <% if(orderDetails.OrderStatus==='Payment Pending'){%>
+        <td>  
+            <td>  
+                <div class="py-2">
+                    <a href="/continuepayment/<%=orderDetails._id%>"><button class="btn btn-danger">Continue Payment</button></a>
+                </div>
+            </td>
+            
+        </td>
+        
+        <%}%>
+    <% if(orderDetails.OrderStatus === 'Delivered') { %>
+        <td>  
+            <div class="py-2">
+                <a href="/downloadinvoice/<%=orderDetails._id%>">
+                        <button class="btn btn-danger">Invoice Download</button>
+                    </a>
+                    </div>
+        </td>
+        <td>  
+            <div class="py-2">
+                <a href="/returnorder/<%=orderDetails._id%>">
+                        <button class="btn btn-danger">Return Order</button>
+                    </a>
+                    </div>
+        </td>
+    <% } %>
+    
     </tr> 
  
    
@@ -206,31 +246,39 @@
 
 
 
-   function extractidFromURL() {
+
+
+
+function extractIdFromURL() {
     var currentURL = window.location.href;
     console.log(currentURL);
-    var path = window.location.pathname;
-    console.log(path);
-    var segments = path.split('/');
-    console.log(segments);
-    var id = segments[segments.length - 1];
-    console.log("ID extracted:", id);
+    var queryString1 = currentURL.split('?')[1];
+    var queryString2 = currentURL.split('?')[1];
+    var params1 = new URLSearchParams(queryString1);
+    var params2 = new URLSearchParams(queryString2);
+    var id1 = params1.get('id');
+    var id2 = params2.get('pid');
+    console.log("ID extracted:", id1);
+    console.log("ID extracted:", id2);
 
-    return id;
+    return {id1:id1,id2:id2};
 }
+
 
 
 document.getElementById('deleteForm').addEventListener('click', async (e) => {
     e.preventDefault()
-    var id = extractidFromURL();
-    console.log("ID extracted:", id);
+    var ids = extractIdFromURL();
+    var id1=ids.id1;
+    var id2=ids.id2;
+    console.log("ID extracted:", id1);
 
     const response = await fetch('/deleteOrder', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id: id }) // Send the extracted ID in the request body
+        body: JSON.stringify({ id: id1 }) // Send the extracted ID in the request body
     });
 
     const data = await response.json();
@@ -252,6 +300,16 @@ document.getElementById('deleteForm').addEventListener('click', async (e) => {
         });
     }
 });
+
+
+
+
+
+
+
+
+
+
         </script>
         
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

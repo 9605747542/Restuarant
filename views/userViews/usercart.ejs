@@ -148,6 +148,7 @@
 </div>
 <div class="media-body">
 <p><%=datas[i].productName%></p>
+ <p><%=datas[i].stock%></p>
 </div>
 </div>
 </td>
@@ -351,19 +352,18 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 
-  document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.product').forEach(product => {
+document.addEventListener('DOMContentLoaded', async function() {
+    document.querySelectorAll('.product').forEach(product => {
         console.log("blaaa909");
 
         let productId = product.querySelector('input[type="text"]').id.replace('quantity', '');
         let quantity = parseInt(document.getElementById('quantity' + productId).value);
         console.log("blaaa");
         updateSubtotal(productId, quantity);
+    });
 
-
-
-        const proceedButton = document.getElementById('proceed-btn');
-    proceedButton.addEventListener('click', function() {
+    const proceedButton = document.getElementById('proceed-btn');
+    proceedButton.addEventListener('click', async function() {
         Swal.fire({
             title: 'Continue with Checkout',
             icon: 'warning',
@@ -372,24 +372,70 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes continue',
             cancelButtonText: 'Cancel',
-        
-            
             customClass: {
                 popup: 'my-popup'
             }
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-               window.location.href='/getcheckout';
+                let allSuccess = true;
+
+                const products = document.querySelectorAll('.product');
+                for (const product of products) {
+                  console.log("product",product);
+                    let productId = product.querySelector('input[type="text"]').id.replace('quantity', '');
+                    let quantity = parseInt(document.getElementById('quantity' + productId).value);
+                    let newQuantity = quantity;  // Assuming you have some logic to determine the new quantity
+
+                    console.log(`Updating quantity for product ${productId} to ${newQuantity}`);
+
+                    try {
+                      console.log("link works")
+                        const response = await fetch(`/getcheckout?quantity=${newQuantity}&productId=${productId}`);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        console.log("data in the frontend",data);
+
+                        if (data.success === false) {
+                     
+                          allSuccess=false;
+                          Swal.fire({
+            title: "Error",
+            text: data.message,
+            icon: "error"
+          })
+                        }else{
+                      window.location.href=`/getcheckoutpage`
+                        }
+                        
+                    } catch (error) {
+                        allSuccess = false;
+                        console.error(`Error updating quantity for product ${productId}:`, error);
+                        
+                    }
+                }
+
+                if (allSuccess) {
+                    console.log("All quantities updated successfully.");
+                    // Proceed with further actions, e.g., redirecting to the checkout page
+                } else {
+                    console.error("Failed to update quantities for some products.");
+                    // Handle the failure case
+                }
             }
         });
     });
 });
-    });
+    
+
 
 
 
  async function changeQuantity(productId, change) {
     console.log(productId);
+    console.log("fff",change);
     let quantityInput = document.getElementById('quantity' + productId);
     console.log("vhbjbjbj",quantityInput.value);
     let newQuantity = parseInt(quantityInput.value) + change ;

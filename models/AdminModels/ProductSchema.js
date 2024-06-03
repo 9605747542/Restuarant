@@ -44,6 +44,10 @@ const productSchema = new mongoose.Schema({
   offertype:{
     required:true,
     type:String
+  },
+  popularity:{
+    default:0,
+    type:Number
   }
 }, { timestamps: true }); 
 

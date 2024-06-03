@@ -41,7 +41,7 @@ useroffer.postaddoffers = async (req, res) => {
                     console.log(products.discount);
                     const discountPercentage = discount / 100;
                     const discountedPrice = products.orginalPrice * (1 - discountPercentage);
-                    products.price = discountedPrice; 
+                    products.price =Math.ceil(discountedPrice); 
                     products.offertype=offertype1
                     await products.save();
                    
@@ -59,7 +59,25 @@ useroffer.postaddoffers = async (req, res) => {
           
          
         }else if(offertype1==='category'){
-            // If discount is applied on category or other type
+
+            const category = await CategoryDB.findOne({ categoryName: offertype2 });
+                
+            const products = await ProductDB.findOne({category:category._id});
+
+            console.log(products);
+               
+                    products.orginalPrice = products.price;
+                    console.log(products.orginalPrice);
+                    products.discount = discount; 
+                    console.log(products.discount);
+                    const discountPercentage = discount / 100;
+                    const discountedPrice = products.orginalPrice * (1 - discountPercentage);
+                    products.price = Math.ceil(discountedPrice); 
+                    products.offertype=offertype1
+                    await products.save();
+
+
+
             data = await OfferDB.create({
                 offerName: offerName,
                 discount_on: offertype1,

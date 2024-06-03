@@ -13,6 +13,10 @@ const categorys=new mongoose.Schema({
     isListed:{
         type:Boolean,
         default:true
+    },
+    popularity:{
+        type:Number,
+        default:0
     }
 })
 

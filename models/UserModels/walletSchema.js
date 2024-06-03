@@ -12,7 +12,7 @@ const  walletSchema = new mongoose.Schema({
         {
             transaction:{
                 type:String,
-                enum:["Money Added","Money Deducted","Referral Money"]
+                enum:["Money Added","Money Deducted","Referral Money","Referral Bonus"]
             },
             amount:{
                 type:Number

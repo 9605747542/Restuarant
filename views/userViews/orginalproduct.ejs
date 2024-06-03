@@ -92,7 +92,7 @@
                    
                   </li>
                   <li>
-                    <a href="login.html" class="account-btn" target="_blank">
+                    <a  class="account-btn" target="_blank">
                       <%=user.name%>
                     </a>
                   </li>
@@ -215,7 +215,7 @@
               </div>
             </div>
 
-
+<br><br>
             <div class="new-arrival new-arrival3">
               <div class="row" id="productsList">
                   <% for (let i = 0; i < data.length; i++) { %>
@@ -246,7 +246,13 @@
                                       <li style="display: inline-block;"><i class="fa-solid fa-star" style="color: gold;"></i>
                                       </li>
                                     </ul>
-                                    <span class="price">Price: $<%=data[i].price %></span><br>
+                                    <%if(data[i].orginalPrice){%>
+                                      <span class="price">Price: <strike> ₹<%=data[i].orginalPrice %></strike> <br> ₹<%=data[i].price %></span><br>
+                                  <%}else{%>
+                                      <span class="price"> ₹<%=data[i].price %></span><br>
+                                      <br>
+                                  <%}%>
+                                  
                                     <button style="border: none; background-color:#FD8F5F; display: inline-block; margin-right: 20px" onclick="addtocart('<%=data[i]._id%>')">
                                       <i class="fa fa-shopping-cart" style="font-size:36px;color: black; "></i>
                                   </button>

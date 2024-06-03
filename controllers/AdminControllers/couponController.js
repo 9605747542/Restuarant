@@ -11,34 +11,39 @@ usercoupon.getaddcoupon=async(req,res)=>{
     res.render('Adminviews/addcoupon');
 }
 
-usercoupon.addnewcoupon=async(req,res)=>{
-   const couponcode=req.body.couponcode;
-   const price=req.body.price;
-   const discount=req.body.discount;
-   const expiry_date=req.body.date;
-
-   console.log("data",couponcode,price,discount,expiry_date);
- 
-   try {
-    const data=new CouponDB({
-        couponName:couponcode,
-        price:price,
-        discount:discount,
-        expiry:expiry_date
-
-    })
-    await data.save();
-    res.json({success:true,message:"successFully saved"})
+usercoupon.addnewcoupon = async (req, res) => {
+    const { couponcode, price, discount, expiryDate: endDate,startDate:startDate } = req.body;
+  
+    console.log("data", couponcode, price, discount, endDate,startDate);
     
-   } catch (error) {
-    res.json({success:true,message:"not saved"})
-    console.log(error);
-    
-   }
-}
+    try {
+      const couponDetails = await CouponDB.findOne({ couponName: couponcode });
+      console.log("then", couponDetails);
+      
+      if (couponDetails) {
+        return res.json({ success: false, message: "Coupon is already there" });
+      }
+  
+      const data = new CouponDB({
+        couponName: couponcode,
+        price: price,
+        discount: discount,
+        expiry: endDate,
+        startDate:startDate
+      });
+  
+      await data.save();
+      res.json({ success: true, message: "Successfully saved" });
+  
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Not saved", error: error.message });
+      console.log(error);
+    }
+  };
+  
 
 usercoupon.geteditcoupon=async(req,res)=>{
-    const couponID=req.params.id;
+    const couponID=req.query.id;
     console.log("id in the backend",couponID);
     const data=await CouponDB.findById(couponID);
     console.log("data ",data);
@@ -77,6 +82,7 @@ usercoupon.posteditcoupon=async(req,res)=>{
 usercoupon.blockcoupon=async(req,res)=>{
    const couponId=req.params.id;
     const data=await CouponDB.findById(couponId);
+    console.log("coupon data",data);
     if(data.isBlocked===false){
         data.isBlocked=true;
        await data.save();

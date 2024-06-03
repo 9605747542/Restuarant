@@ -11,6 +11,28 @@
     height: 100%;
     object-fit: cover;
 }
+.table-borderless {
+    border-collapse: collapse;
+}
+
+.table-borderless th,
+.table-borderless td {
+    border: none;
+    padding-left: 40px; 
+    padding-top: 20px;
+    
+}
+.tables-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+
+
+
 
 
 </style>
@@ -37,69 +59,74 @@
 </div>
 </div>
 </div>
-<% if (message) { %>
-    <section class="cart_area section-padding40">
-        <div class="container">
-            <div class="cart_inner">
-                <div class="table-responsive">
-                    <table class="table" id="cartTable">
-                        <thead>
-                            <tr>
-                                <th><%= message %></th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
+    
+    
+<section class="cart_area section-padding40">
+    <div class="container">
+    <div class="cart_inner">
+    <div class="table-responsive">
+      <div class="payment border-top mt-3 mb-3 border-bottom table-responsive" >
+        <div class="tables-container">
+        <table class= "table-borderless">
+            <thead>
+                <tr>
+                    <th>USER NAME</th>
+                    <th>WALLET BALANCE</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="py-2"> 
+                            <span><%= userName %></span>  
+                        </div>
+                    </td>
+                    <td>
+                        <div class="py-2"> 
+                            <span><strong><%= data.balance %></strong></span>  
+                        </div>
+                    </td>
+                
+                </tr>
+                </tbody>
+                </table>
+              
+                <table class= "table-borderless">
+                    <thead>
+                        <tr>
+                     <th>TRANSACTION</th>
+                    <th>AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.transactionHistory.forEach((transaction) => { %>
+                    <tr>
+                       <td>
+                            <div class="py-2"> 
+                                <span><%= transaction.transaction %></span>  
+                            </div>
+                        </td>
+                      
+                        <td>
+                            <div class="py-2"> 
+                                <span><%= transaction.amount %></span>  
+                            </div>
+                        </td>
+                       
+                    </tr>
+                    
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+        
+    </div>
+    </div>
+    
+    </div>
+    </div>
     </section>
-<% } else { %>
-    <section class="cart_area section-padding40">
-        <div class="container">
-            <div class="cart_inner">
-                <div class="table-responsive">
-                    <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th>PRODUCT IMAGE</th>
-                                    <th>PRODUCT NAME</th>
-                                    <th>ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% data.forEach(value => { %>
-                                    <tr>
-                                        <td>
-                                            <div class="py-2">
-                                                <div class="square-image">
-                                                    <img style="transition: 10ms;" src="<%= value.image[0] %>" alt="Product Image">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="py-2">
-                                                <span><%= value.productname %></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="py-2">
-                                                <form action="/removefromwishlist/<%= value._id %>" method="POST">
-                                                    <button type="submit" class="btn btn-danger">Remove Wishlist</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-<% } %>
-
     
     
     
@@ -169,7 +196,6 @@
         </div>
         </div>
         </div>
-        
         <div class="footer-bottom-area">
         <div class="container">
         <div class="footer-border">
@@ -185,10 +211,8 @@
         </div>
         </div>
         </div>
-        
         </div>
         </footer>
-        
         <div id="back-top">
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
         </div>

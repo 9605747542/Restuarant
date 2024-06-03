@@ -94,30 +94,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for (let i = orders.length - 1; i >= 0; i--) { %>
+                                      
                                             <tr>
-                                                    <td class="orderId" contenteditable="true"><%= orders[i].orderId %></td>
-                                                    <td class="userName" contenteditable="true"><%= orders[i].username %></td>
-                                                    <td class="orderDate" contenteditable="true"><%= orders[i].orderDate.toLocaleDateString() %></td>
+                                                    <td class="orderId" contenteditable="true"><%= data.orderId %></td>
+                                                    <td class="userName" contenteditable="true"><%= data.username %></td>
+                                                    <td class="orderDate" contenteditable="true"><%= data.orderDate.toLocaleDateString() %></td>
                                                     <td>
                                                         <select id="dropdown">
                                                           <option value="Order Placed">Order Placed</option>
                                                           <option value="Shipped">Shipped</option>
-                                                          <option value="Delivery">Delivered</option>
+                                                          <option value="Delivered">Delivered</option>
                                                           <option value="Cancelled">Cancelled</option>
                                                           <option value="Returned">Returned</option>
+                                                          <option value="Payment Pending">Payment Pending</option>
                                                         </select>
                                                     </td>
                                      
-                                                    <td class="orderStatus" contenteditable="true"><%= orders[i].paymentMethod %></td>
-                                                    <td class="totalAmount" contenteditable="true"><%= orders[i].totalAmount %></td>
+                                                    <td class="orderStatus" contenteditable="true"><%= data.paymentMethod %></td>
+                                                    <td class="totalAmount" contenteditable="true"><%= data.totalAmount %></td>
                                                     <td>
-                                                        <button class="update-btn" data-order-id="<%= orders[i]._id %>" type="button">Update</button>
+                                                        <button class="update-btn" data-order-id="<%= data._id %>" type="button">Update</button>
 
 
                                                     </td>
                                             </tr>
-                                        <% } %>
+                                   
                                     </tbody>
                                 </table>
                             </form>

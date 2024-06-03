@@ -10,8 +10,10 @@ const orderconform = require('../controllers/UserControllers/orderconform')
 const userwishlist=require('../controllers/UserControllers/wishlistController');
 const express = require('express')
 const userRoute = express();
-const isLogged = require('../middleware/userMIddle');
+const { isLogged, userisBlocked, checkStock,checkStock1 } = require('../middleware/userMIddle');
 const usercoupon=require('../controllers/UserControllers/userCouponController');
+const userwallet=require('../controllers/UserControllers/walletController');
+const userinvoice=require('../controllers/UserControllers/invoiceDownnloadController');
 
 
 userRoute.get('/', userlogin.showLogin);
@@ -19,6 +21,7 @@ userRoute.post('/submit1/:email', userlogin.checkLogin);
 
 userRoute.get('/register', userlogin.signuppage)
 userRoute.post('/register1', userlogin.postsignup);
+userRoute.get('/getrefferalcode',userlogin.getrefferalcode)
 userRoute.get('/otp-page', userlogin.getOtppage);
 userRoute.post('/signup-otp', userlogin.verifyOtp);
 userRoute.get('/resend-otp', userlogin.getresendotp);
@@ -67,89 +70,34 @@ userRoute.post('/changequantity', isLogged, checkStock, usercart.changequantity)
 userRoute.post('/changetotal', isLogged, usercart.changesubtotal);
 userRoute.delete('/removeitemfromcart/:id', isLogged, usercart.removecartitem);
 
-userRoute.get('/getcheckout', isLogged, usercheckout.getcheckoutpage);
+userRoute.get('/getcheckout', isLogged,checkStock1,usercheckout.getcheckout);
+userRoute.get('/getcheckoutpage',isLogged,usercheckout.getcheckoutpage)
 userRoute.post('/post-userddress-checkout', isLogged, usercheckout.postaddresscheckout)
 userRoute.post('/postorderconformdetails', isLogged, orderconform.getorderconform);
 userRoute.get('/getorder-conform', isLogged, orderconform.getorderconformpage);
 userRoute.post('/verify-payment',isLogged,orderconform.checkrazorpay);
 userRoute.get('/getorderdetails', isLogged, orderconform.getorderdetailspage);
-userRoute.get('/viewmoredetails/:id', isLogged, orderconform.getmoredetailspage);
+userRoute.get('/viewmoredetails', isLogged, orderconform.getmoredetailspage);
 userRoute.post('/deleteOrder', isLogged, orderconform.deleteorder);
 
 userRoute.get('/getwishlist',isLogged,userwishlist.getuserwishlist);
 userRoute.post('/addtowishlist',isLogged,userwishlist.postuserwishlist);
-userRoute.delete('/removefromwishlist/:id',isLogged,userwishlist.removewishlist);
+userRoute.post('/removefromwishlist/:id',isLogged,userwishlist.removewishlist);
 
 userRoute.get('/getcouponcode/:value',isLogged,usercoupon.getcouponcode);
-userRoute.get('/applycoupon/:coupon',isLogged,usercoupon.applycoupon);
+
+
+
+userRoute.get('/getuserwallet',isLogged,userwallet.getwalletpage);
+userRoute.get('/continuepayment/:id',isLogged,orderconform.continuePaymentFailed);
+userRoute.get('/getcheckout1',isLogged,orderconform.getpaymentpending);
+
+userRoute.get('/downloadinvoice/:id',isLogged,userinvoice.downloadDeliveredInvoice);
+userRoute.get('/returnorder/:id',isLogged,userinvoice.getreturnorder);
 
 
 
 
-async function userisBlocked(req, res, next) {
-    if (req.session && req.session.userid) {
-        try {
-
-            const user = await Userdb.findById(req.session.userid);
-
-            if (user && user.isBlocked === true) {
-
-                console.error("User is blocked by admin");
-                req.session.Usersession = false;
-                res.redirect('/');
-            } else {
-
-                next();
-            }
-        } catch (error) {
-            console.error("Error checking user block status:", error);
-        }
-    }
-}
-async function checkStock(req, res, next) {
-    
-    const productId = req.body.productId;
-    console.log("ID from middleware:", productId);
-    console.log("middleware...");
-    console.log("User ID:", req.session.userid);
-
-    // Check if there's a cart for the user
-    const cart = await Cartdb.findOne({ userid: req.session.userid });
-
-    if (!cart || !cart.products || cart.products.length === 0) {
-        console.log("Cart is empty or not found for the user. Proceeding without stock checks.");
-        return next();
-    }
-    // console.log("Cart from middleware:", cart);
-
-    // Find the product in the cart
-    console.log("Sree",cart);
-    const cartProduct = cart.products.find(p => p.product.toString() === productId.toString());
-
-    // Find the product in the database
-    const product = await Productdb.findOne({ _id: productId });
-    if (!product) {
-        console.log("Product not found");
-        return res.json({ message: "Product not found", success: false });
-    }
-
-    console.log("Stock:", product.stock);
-
-    // Check if there's enough stock for the product
-    if (cartProduct) {
-        if (product.stock <= cartProduct.quantity) {
-            console.log("Not enough stock available");
-            return res.json({ message: "Not enough stock available", success: false });
-        }
-    } else {
-        if (product.stock === 0) {
-            console.log("Not enough stock available");
-            return res.json({ message: "Not enough stock available", success: false });
-        }
-    }
-
-    return next();
-}
 
 module.exports = userRoute;
 

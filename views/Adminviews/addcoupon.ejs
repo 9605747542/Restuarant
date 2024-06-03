@@ -123,15 +123,7 @@
 					
                 </ul>
             
-				<!-- <div class="add-menu-sidebar">
-					<img src="admin-assets/images/icon1.png" alt="">
-					<p>Organize your menus through button bellow</p>
-					<a href="javascript:void(0);" class="btn bg-white text-black">+ Add Menus</a>
-				</div>
-				<div class="copyright">
-					<p><strong>Davur - Restaurant Admin Dashboard</strong> ©2023 All Rights Reserved</p>
-					<p>Made with <span class="heart"></span> by DexignZone</p>
-				</div> -->
+	
 			</div>
         </div>
         <!--**********************************
@@ -156,9 +148,14 @@
                                 <label for="discount">Discount:</label>
                                 <input type="number" class="form-control" id="discount" >
                             </div>
+                            <div id="error" style="color: red;"></div>
                             <div class="form-group">
-                                <label for="date">Date:</label>
-                                <input type="date" class="form-control" id="date" >
+                                <label for="date"> Starting Date:</label>
+                                <input type="date" class="form-control" id="start" >
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Expiry Date:</label>
+                                <input type="date" class="form-control" id="expiry" >
                             </div>
                             <div class="form-group">
                                 <label for="price">Price:</label>
@@ -199,63 +196,103 @@
 <!-- <script> starts -->
 
 	<script>
-      document.getElementById('couponForm').addEventListener('submit',async(e)=>{
-        e.preventDefault()
-     
-           const couponcode= document.getElementById('couponcode').value;
-           const price= document.getElementById('price').value;
-           const discount= document.getElementById('discount').value;
-           const date= document.getElementById('date').value;
-        
 
-		
-			
-			const formData = {
-				couponcode:couponcode,
-                price:price,
-                discount:discount,
-                date:date
-			}
-	
-			try {
-				const response = await fetch('/postaddcoupon', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(formData), // Wrap categorytype in an object
-	
-				})
-	
-				if (response.ok) {
-					const data =await response.json();
-					console.log("nourii",data);
-					if (data.success === true) {
-					window.location.href='/getcoupon';
-				
+document.getElementById('start').addEventListener('change', validateDateRange);
+document.getElementById('expiry').addEventListener('change', validateDateRange);
+
+async function validateDateRange() {
+    console.log("mahn");
+    var startDate = new Date(document.getElementById("start").value);
+    console.log("date here",startDate);
+    var endDate = new Date(document.getElementById("expiry").value);
+    
+    if (startDate >= endDate) {
+        document.getElementById("error").innerText = "Start date must be before end date.";
+    } else {
+        document.getElementById("error").innerText = "";
+    }
+}
+      document.getElementById('couponForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const couponcode = document.getElementById('couponcode').value.trim();
+    const price = parseFloat(document.getElementById('price').value.trim());
+    const discount = parseFloat(document.getElementById('discount').value.trim());
+    var endDate = new Date(document.getElementById("expiry").value);
+    var startDate = new Date(document.getElementById("start").value);
+      
+
+
+    let isValid = true;
+
+    if (couponcode === '') {
+        isValid = false;
+        alert('Please enter a coupon code.');
+    }
+
+    if (isNaN(discount) || discount <= 0 || discount === '') {
+        isValid = false;
+        alert('Please enter a valid discount.');
+    }
+
+   
+
+    if (isNaN(price) || price <= 0 || price === '') {
+        isValid = false;
+        alert('Please enter a valid price.');
+    }
+   
+  
+
+    if (isValid) {
+        const formData = {
+            couponcode: couponcode,
+            price: price,
+            discount: discount,
+           startDate:startDate,
+           expiryDate:endDate
+        };
+
+        try {
+            const response = await fetch('/postaddcoupon', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("nourii", data);
+                if (data.success) {
+                    window.location.href = '/getcoupon';
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error',
+                    });
+                }
             } else {
                 Swal.fire({
                     title: 'Error!',
-                    text: data.message,
+                    text: 'Failed to add coupon',
                     icon: 'error',
                 });
             }
-        } else {
+        } catch (error) {
+            console.error('Error adding coupon:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Failed to add category',
+                text: 'Internal server error',
                 icon: 'error',
             });
         }
-    } catch (error) {
-        console.error('Error adding category:', error);
-        Swal.fire({
-            title: 'Error!',
-            text: 'Internal server error',
-            icon: 'error',
-        });
+    } else {
+        alert('Your form submitted the wrong way!');
     }
-})
+});
 
 
 

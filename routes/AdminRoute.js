@@ -9,11 +9,12 @@ const upload=require('../multer');
 const productdb=require('../models/AdminModels/ProductSchema');
 const Orderdb=require('../models/UserModels/userorderSchema');
 const Userdb=require('../models/UserModels/UserSignupSchema');
-const isAdminLogged = require('../middleware/adminMiddle');
+const {isAdminLogged,getdashboard,getadminlogin,getproductlist} = require('../middleware/adminMiddle');
 const userorder = require('../controllers/AdminControllers/userorderController');
 const usercoupon=require('../controllers/AdminControllers/couponController');
 const useroffer=require('../controllers/AdminControllers/offerController');
 const usersales=require('../controllers/AdminControllers/salesreportController');
+const excelreport=require('../controllers/AdminControllers/excelsalesreportController');
 
 
 
@@ -44,7 +45,7 @@ AdminRouter.post('/postdeletecategory',isAdminLogged,userCategory.postdeletecate
 //Admin Side Product
 AdminRouter.get('/getproduct',isAdminLogged,getproductlist);
 AdminRouter.get('/getaddproduct',isAdminLogged,userproduct.getaddproduct);
-AdminRouter.post('/postaddproduct',isAdminLogged,upload.array('image', 5),userproduct.postaddproduct);
+AdminRouter.post('/postaddproduct',isAdminLogged,upload.array('ProductImages', 5),userproduct.postaddproduct);
 AdminRouter.get('/editadminproduct',isAdminLogged,userproduct.geteditproduct);
 AdminRouter.post('/posteditproduct',isAdminLogged, upload.array('ProductImages', 5),userproduct.posteditproduct);
 AdminRouter.post('/removeproductimage',isAdminLogged,userproduct.removeproductimage);
@@ -66,7 +67,7 @@ AdminRouter.post('/cancelOrder/:id',isAdminLogged,userorders.cancelorder);
 AdminRouter.get('/getcoupon',isAdminLogged,usercoupon.getcouponpage);
 AdminRouter.get('/getaddcoupon',isAdminLogged,usercoupon.getaddcoupon);
 AdminRouter.post('/postaddcoupon',isAdminLogged,usercoupon.addnewcoupon);
-AdminRouter.get('/geteditcoupon/:id',isAdminLogged,usercoupon.geteditcoupon);
+AdminRouter.get('/geteditcoupon',isAdminLogged,usercoupon.geteditcoupon);
 AdminRouter.post('/posteditcoupon',isAdminLogged,usercoupon.posteditcoupon);
 AdminRouter.post('/blockcoupon/:id',isAdminLogged,usercoupon.blockcoupon);
 AdminRouter.post('/unblockcoupon/:id',isAdminLogged,usercoupon.unblockcoupon);
@@ -87,84 +88,22 @@ AdminRouter.get('/gettodaySalesreport',isAdminLogged,usersales.gettodaysalesRepo
 AdminRouter.get('/downloadtodaysReport',isAdminLogged,usersales.downloadTodaysReport);
 
 AdminRouter.get('/getyearlySalesReport/:year',isAdminLogged,usersales.getyearlysalesReport);
-AdminRouter.get('/downloadyearlyReport/:year',isAdminLogged,usersales.downloadYearlyReport)
+AdminRouter.get('/downloadyearlyReport/:year',isAdminLogged,usersales.downloadYearlyReport);
+
+AdminRouter.get('/getcustomSalesReport/:custom',isAdminLogged,usersales.getcustomsalesReport)
+AdminRouter.get('/downloadcustomReport/:custom',isAdminLogged,usersales.downloadCustomReport)
+
+//for getting excel format sales Report
+AdminRouter.get('/downloadmonthlyReportinExcel/:month',isAdminLogged,excelreport.getmonthlysalesReport);
+AdminRouter.get('/downloadcustomReportinExcel/:custom',isAdminLogged,excelreport.getcustomsalesReport);
 
 
 
 
-async function getproductlist(req,res,next){
-    if(req.session.admin){
-        try{
-        const data= await productdb.find().populate('category');
-        res.render('Adminviews/productdetails',{data});
-        }catch (error) {
-            console.log(error);
-            // Handle the error appropriately, e.g., sending an error response to the client
-            res.status(500).send('Internal Server Error');
-        }
-    }else{
-        res.redirect('/adminlogin');
-    }
 
-}
 
-async function getadminlogin(req,res,next){
-    if(!req.session.admin){
-        res.render('Adminviews/adminlogin');
-    }else{
-        res.redirect('/dashboard');
-    }
-    
-}
-async function getdashboard(req, res, next) {
-    if (req.session.admin) {
-        try {
-            // Initialize counters and sums
-            let count = 0;
-            let totalAmount = 0;
-            let userCount = 0;
-            let productCount = 0;
-            let discountAmount = 0;
 
-            // Fetch products and count them
-            const products = await productdb.find();
-            productCount = products.length;
 
-            // Fetch users and count them
-            const users = await Userdb.find();
-            userCount = users.length;
-
-            // Fetch orders, calculate totals and discount
-            const orders = await Orderdb.find();
-            orders.forEach(order => {
-                count++;
-                totalAmount += order.ActualAmount;
-                discountAmount += order.totalAmount - order.ActualAmount;
-            });
-
-            // Logging for debugging purposes
-            console.log("Orders processed:", count);
-            console.log("Total amount:", totalAmount);
-            console.log("Discount amount:", discountAmount);
-
-            // Render the admin dashboard view with the data
-            res.render('Adminviews/adminhome', {
-                count,
-                totalAmount,
-                userCount,
-                productCount,
-                discountAmount
-            });
-        } catch (error) {
-            // Error handling
-            console.error('Error fetching data:', error);
-            res.status(500).send("Unable to retrieve data.");
-        }
-    } else {
-        // Redirect if not admin
-        res.redirect('/adminlogin');
-    }
-}
 
 
 module.exports=AdminRouter;

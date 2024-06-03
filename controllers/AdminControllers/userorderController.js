@@ -16,33 +16,38 @@ userorder.getuserorderpage=async(req,res)=>{
             orderDate: cartItem.orderDate,
             OrderStatus: cartItem.OrderStatus,
             paymentMethod: cartItem.paymentMethod,
-        totalAmount: cartItem.totalAmount,
+       ActualAmount: cartItem.ActualAmount,
         username:cartItem.username
 
         };
     });
+  
     console.log("checking",orders);
    
     res.render('Adminviews/userorders',{orders})
 }
 
 userorder.geteditorder=async(req,res)=>{
-    const data=await Orderdb.find();
-    const orders = data.map(cartItem => {
-        return {
-            orderId: cartItem.orderId,
-            customer: cartItem.customer,
-            orderDate: cartItem.orderDate,
-            OrderStatus: cartItem.OrderStatus,
-            paymentMethod: cartItem.paymentMethod,
-        totalAmount: cartItem.totalAmount,
-        username:cartItem.username,
-        _id:cartItem._id
+    console.log("maaaaaaa");
+    const orderId=req.query.id;
+    console.log("paste it",orderId);
+    const data=await Orderdb.findOne({orderId:orderId});
+    console.log("vbjbjbjvf",data);
+    // const orders = data.map(cartItem => {
+    //     return {
+    //         orderId: cartItem.orderId,
+    //         customer: cartItem.customer,
+    //         orderDate: cartItem.orderDate,
+    //         OrderStatus: cartItem.OrderStatus,
+    //         paymentMethod: cartItem.paymentMethod,
+    //     totalAmount: cartItem.totalAmount,
+    //     username:cartItem.username,
+    //     _id:cartItem._id
 
 
-        };
-    });
-    res.render('Adminviews/editorder',{orders})
+    //     };
+    // });
+    res.render('Adminviews/editorder',{data})
 }
 
 userorder.posteditorder = async (req, res) => {
@@ -99,9 +104,9 @@ userorder.cancelorder=async(req,res)=>{
         
        
     } catch (error) {
-        // Handle errors
+   
         console.log(error);
-        // Redirect to an error page
+       
     }
 
 

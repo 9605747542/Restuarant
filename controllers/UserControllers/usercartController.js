@@ -24,12 +24,6 @@ usercart.postusercart = async (req, res) => {
         if (userCart) {
           
             const existingProductIndex = userCart.products.findIndex(item => item.product && item.product.equals(productId));
-           
-            
-       
-    
-
-           
             if (existingProductIndex !== -1) {
                 userCart.products[existingProductIndex].quantity += 1;
                 userCart.products[existingProductIndex].total += productData.price;
@@ -78,7 +72,8 @@ usercart.getusercart = async (req, res) => {
                         productName: cartItem.product.productName,
                         price: cartItem.product.price,
                         quantity: cartItem.quantity,
-                        total: cartItem.quantity * cartItem.product.price
+                        total: cartItem.quantity * cartItem.product.price,
+                        stock:cartItem.product.stock
                     };
                 }
             }).filter(item => item !== undefined);

@@ -15,8 +15,12 @@ const couponSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    startDate:{
+        type:Date,
+        required:true
+    },
     expiry:{
-        type:'Date',
+        type:Date,
         required:true,
     },
     isBlocked:{

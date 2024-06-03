@@ -72,11 +72,7 @@
                     <label>Confirm Password</label>
                     <input type="password" placeholder="Enter Password" name="password2" id="cpass" required>
                   </div>
-               
-                  <div class="single-input-fields">
-                    <label>Have referral code?</label>
-                    <input type="text" name="referral" id="referral" placeholder="Enter the referral Code">
-                  </div><br><br>
+      
                   <button class="submit-btn3" type="submit" id="signupButton" >Sign Up</button>
                 </div>
               </form>
@@ -98,6 +94,12 @@
 
 
   <script>
+
+function extractIdFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('code') || '';
+}
+
 
     async function validate() {
      
@@ -170,51 +172,56 @@
 
     // Call the validate function and store the result in a variable
     let isValid = await validate();
-    console.log(isValid);
+console.log(isValid);
+let refferal = extractIdFromURL();
 
-    // Check if validation succeeded
-    if (isValid) {
-        // Get user-entered values
-        var name = document.getElementById('fname').value;
-        var email = document.getElementById('femail').value;
-        var password1 = document.getElementById('fpass').value;
-        var refferal=document.getElementById('referral').value;
-        const formData = {
-            name,
-            email,
-            password1,
-            refferal
-        };
-        console.log(formData);
-        try {
-            // Send form data to the server using fetch or another AJAX method
-            const response = await fetch('/register1', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData),
-            });
+// Check if validation succeeded
+if (isValid) {
+  // Get user-entered values
+  var name = document.getElementById('fname').value;
+  var email = document.getElementById('femail').value;
+  var password1 = document.getElementById('fpass').value;
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                if (!data.success) {
-                    console.error("Data failed to submit");
-                } else {
-                    console.log("Data submitted successfully");
-                    window.location.href = '/otp-page';
-                }
-            } else {
-                console.error("Server responded with error:", response.status);
-            }
-        } catch (error) {
-            console.error('Error occurred during form submission:', error);
-        }
+  const formData = {
+    name,
+    email,
+    password1,
+    refferal
+  };
+  console.log(formData);
+  try {
+    // Send form data to the server using fetch or another AJAX method
+    const response = await fetch('/register1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      if (data.status === false) {
+        Swal.fire({
+          title: "Error!",
+          text: data.message,
+          icon: "error"
+        });
+      } else {
+        console.log("Data submitted successfully");
+        window.location.href = '/otp-page';
+      }
     } else {
-        console.log("Form validation failed");
+      console.error("Server responded with error:", response.status);
     }
-});
+  } catch (error) {
+    console.error('Error occurred during form submission:', error);
+  }
+} else {
+  console.log("Form validation failed");
+}
+})
 
     
   </script>

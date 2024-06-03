@@ -14,13 +14,17 @@ userlogin.getforgotpassword=async(req,res)=>{
 
     res.render("userViews/forgetpassword");
 }
+function generateRandomOTP() {
+  return Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+}
 
 
 
 
 
 
-async function sendOtp1(email,otp){
+
+async function sendOtp(email,otp){
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -29,7 +33,7 @@ async function sendOtp1(email,otp){
         pass: 'fugx ocdh gxso pzzg',
       },
     });
-    // Setup email data
+    // Setup email datareferral
     const mailOptions = {
       from: 'nourinvn@gmail.com',
       to: email,
@@ -45,13 +49,7 @@ async function sendOtp1(email,otp){
 
 }
 
-
-
-
-function generateRandomOTP1() {
-  return Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-}
-const randomOTP1 = generateRandomOTP1();
+const randomOTP1 = generateRandomOTP();
 
 userlogin.checkemail = async (req, res) => {
   const email = req.body.email;
@@ -73,7 +71,7 @@ userlogin.checkemail = async (req, res) => {
 
   
        
-       await sendOtp1(email,randomOTP1);
+       await sendOtp(email,randomOTP1);
        console.log('Random OTP:', randomOTP1);
 
       res.json({ success: true, message: "User with this email exists" });
@@ -211,31 +209,7 @@ userlogin.checkLogin=async(req,res)=>{
 
 
 
-//User Signup
-async function sendOtp(email,otp){
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'nourinvn@gmail.com',
-        pass: 'fugx ocdh gxso pzzg',
-      },
-    });
-    // Setup email datareferral
-    const mailOptions = {
-      from: 'nourinvn@gmail.com',
-      to: email,
-      subject: 'Your Otp for verification is',
-      text: otp,
-    };
-  
-    const info=transporter.sendMail(mailOptions);
-    console.log('Email sent: ' + info.response); 
-  } catch (error) {
-    console.log('Error sending email:',error);
-  }
 
-}
 
 
 
@@ -248,19 +222,13 @@ userlogin.postsignup=async(req,res)=>{
       
           const existingEmail = await userdb.findOne({email:email})
           if(existingEmail){
-            res.json({ status: 'error', error: '' });
+            console.log("linking");
+            res.json({ status:false,message:"You are already registered"});
           }
-          const refferalCode=await userdb.find({referral:refferal})
-          refferalCode.forEach(reff=>{
-            if(reff.referral!==refferal){  
-              res.json({ status: 'error', error: '' });
-            }
-          })
+         
         
         // Function to generate a random 6-digit OTP
-function generateRandomOTP() {
-  return Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-}
+
 
 // Generate a random OTP
 const randomOTP = generateRandomOTP();
@@ -275,14 +243,12 @@ req.session.signupdata={
   refferal,
   timestamp:Date.now(),
 }
-
-
 try{
-
+console.log("signup",randomOTP);
  await sendOtp(email,randomOTP);
  console.log('Email send to the otp:',req.session.signupdata.email);
 console.log('Form Data',req.session);
-  res.json({success:true})
+  res.json({status:true})
 
 }
 catch(error){
@@ -291,25 +257,48 @@ catch(error){
 
 }}
 
-
 userlogin.getresendotp=async(req,res)=>{
   try{
     const email = req.session.signupdata.email;
     console.log(email);
-    const OTP =  generateRandomOTP1();
-    const subject = 'Your OTP for verification';
-    const text = `Your OTP is: ${OTP}. Please use this code to verify your identity.`;
+    console.log("damn");
+    const OTP =  generateRandomOTP();
+    console.log("resend",OTP);
+    req.session.signupdata.randomOTP=OTP
+
+    console.log('Form Data',req.session);
   
     sendOtp(email,OTP);
-  
-    res.redirect('/otp-page');
+    res.json({ success: true });
+   
 
   }catch (err) {
     console.error("Error during signup:", err);
-    res.redirect('/register');
+   
+    res.json({ success: false });
   }
    
 }
+
+
+userlogin.getrefferalcode = async (req, res)=> {
+
+  const user = await userdb.findById(req.session.userid);
+  let referral1;
+  if (user.referral) {
+    referral1 = user.referral;
+  } else {
+    referral1 = 0;
+  }
+
+  res.render('userViews/shareReferral', { referral: referral1 });
+  
+
+}
+
+
+
+
 
 
 
@@ -344,29 +333,56 @@ userlogin.verifyOtp = async (req, res) => {
 
       await newUser.save();
 
-     console.log("dddd",req.session.signupdata.refferal);
-      if (req.session.signupdata.refferal) { 
-          const checkReferral = await userdb.findOne({ referral: req.session.signupdata.refferal });
-          if (checkReferral) {
-              let wallet = await Userwalletdb.findOne({ userId: newUser._id });
-              if (!wallet) {
-                  wallet = new Userwalletdb({
-                      userId: newUser._id,
-                      balance: 100,
-                      transactionHistory: [{
-                          transaction: 'Referral Money',
-                          amount: 100
-                      }],
-                  });
-              } else {
-                  wallet.balance += 100;
-                  wallet.transactionHistory.push({
-                      transaction: 'Referral Added',
-                      amount: 100
-                  });
-              }
-              await wallet.save();
+      if (req.session.signupdata.refferal) {
+        const checkReferral = await userdb.findOne({ referral: req.session.signupdata.refferal });
+
+        if (checkReferral) {
+          const existingId = checkReferral._id;
+
+          // Update the new user's wallet
+          let wallet = await Userwalletdb.findOne({ userId: newUser._id });
+          if (!wallet) {
+            wallet = new Userwalletdb({
+              userId: newUser._id,
+              balance: 100,
+              transactionHistory: [{
+                transaction: 'Referral Money',
+                amount: 100
+              }],
+            });
+          } else {
+            wallet.balance += 100;
+            wallet.transactionHistory.push({
+              transaction: 'Referral Added',
+              amount: 100
+            });
           }
+          await wallet.save();
+
+          // Update the referrer's wallet
+          let referrerWallet = await Userwalletdb.findOne({ userId: existingId });
+          if (!referrerWallet) {
+            referrerWallet = new Userwalletdb({
+              userId: existingId,
+              balance: 50,
+              transactionHistory: [{
+                transaction: 'Referral Bonus',
+                amount: 50
+              }],
+            });
+          } else {
+            referrerWallet.balance += 50;
+            referrerWallet.transactionHistory.push({
+              transaction: 'Referral Bonus',
+              amount: 50
+            });
+          }
+          await referrerWallet.save();
+        } else {
+          console.log('No referrer found with the given referral code');
+        }
+      } else {
+        console.log('No referral code provided');
       }
 
       res.json({ success: true });
@@ -374,6 +390,7 @@ userlogin.verifyOtp = async (req, res) => {
       res.json({ success: false });
   }
 };
+
 
 
 

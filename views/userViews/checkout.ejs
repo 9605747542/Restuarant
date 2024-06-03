@@ -1,711 +1,921 @@
 <%-include('header')%>
-<style>
-    .address-details {
-        display: inline-block;
-        margin-right: 20px;
-        vertical-align: top;
-        cursor: pointer;
-    }
+    <style>
+        .address-details {
+            display: inline-block;
+            margin-right: 20px;
+            vertical-align: top;
+            cursor: pointer;
+        }
 
-    .address-details.selected {
-        border-color: blue; /* Change border color when selected */
-    }
+        .address-details.selected {
+            border-color: blue;
+            /* Change border color when selected */
+        }
 
-    .address-details h3 {
-        margin-top: 0;
-    }
+        .address-details h3 {
+            margin-top: 0;
+        }
 
-    .address-info {
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-</style>
+        .address-info {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
 
-</head>
+    </head>
 
-<body>
-
-
-
+    <body>
 
 
-<main>
-
-<div class="slider-area ">
-<div class="slider-active">
-<div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
-<div class="container">
-<div class="row">
-<div class="col-xl-6 col-lg-8 col-md-8">
-<div class="hero__caption hero__caption2">
-<h1 data-animation="fadeInUp" data-delay=".4s">Checkout</h1>
-<nav aria-label="breadcrumb">
-<ol class="breadcrumb">
-<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-<li class="breadcrumb-item"><a href="#">checkout</a></li>
-</ol>
-</nav>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
 
-<section class="checkout_area section-padding40">
-<div class="container">
 
-<div class="cupon_area">
-<div class="check_title">
-<h2> Have a coupon?
-<button style="border: none;" onclick="getcoupon()"><a style="color: blue;">Click here to enter your code</a></button>
-</h2>
-</div>
-<input type="text" placeholder="Enter coupon code" id="couponcode" />
-<button style="border: none;" onclick="applycoupon()"><a class="btn" href="#">Apply Coupon</a></button>
-</div>
-<div class="billing_details">
-<div class="row">
-<div class="col-lg-8">
-<h3>Billing Details</h3>
-<form class="row contact_form" action="#" method="post" novalidate="novalidate">
-<div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="first" name="name" placeholder="First name" />
+        <main>
 
-</div>
-<div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="street" name="name" />
-<span class="placeholder" data-placeholder="Street Address"></span>
-</div>
-<div class="col-md-12 form-group">
-<input type="text" class="form-control" id="state" name="state" placeholder="State" />
-</div>
-<div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="number" name="number" placeholder="Phone number"/>
-
-</div>
-<div class="col-md-6 form-group p_star">
-<input type="text" class="form-control" id="email" name="email" placeholder="Email Address"/>
-
-</div>
-<div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="housename" name="housename" placeholder="House_name"/>
-
-</div>
-<div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="landmark" name="lankmark" placeholder="Landmark" />
-
-</div>
-
-<div class="col-md-12 form-group p_star">
-<input type="text" class="form-control" id="city" name="city" placeholder="Town/City" />
-
-</div>
-<div class="col-md-12 form-group">
-<input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Postcode/ZIP" />
-</div>
-<div class="col-md-12 form-group">
-<div class="checkout-cap">
-    <button style="border: none;" id="submit-btn"><a class="btn w-20">Submit</a></button>
-</div>
-</div>
-</form>
-<div class="col-md-12 form-group">
-<div class="creat_account">
-<h3>Address Details</h3>
-
-<div class="container">
-    <h2>Your Addresses</h2>
-    <p id="errorMessage" style="color: red; display: none;">Please select an address.</p>
-    <div class="address-box">
-        <form id="addressForm">
-            <% data.forEach(function(add, index) { %>
-            <div class="address-details">
-                <h3>Address <%= index + 1 %></h3>
-                <div class="address-info">
-                    <p><strong>Street Address:</strong> <%= add.streetaddress %></p>
-                    <p><strong>Phone:</strong> <%= add.phone %></p>
-                    <p><strong>City:</strong> <%= add.city %></p>
-                    <p><strong>Zip Code:</strong> <%= add.zipcode %></p>
-                    <p><strong>State:</strong> <%= add.state %></p>
-                    <p><strong>House Name:</strong> <%= add.House_name %></p>
-                    <p><strong>Landmark:</strong> <%= add.landmark %></p>
-                 
+            <div class="slider-area ">
+                <div class="slider-active">
+                    <div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-8 col-md-8">
+                                    <div class="hero__caption hero__caption2">
+                                        <h1 data-animation="fadeInUp" data-delay=".4s">Checkout</h1>
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                                <li class="breadcrumb-item"><a href="#">checkout</a></li>
+                                            </ol>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- for passing address to backend and stores accordingly  -->
-                <input type="radio" name="address" value='<%=add._id %>'id="address<%= index %>" required>
-                <label for="address<%= index %>">Select Address <%= index + 1 %></label>
             </div>
-            <% }); %>
-        </form>
-    </div>
-</div>
+
+
+            <section class="checkout_area section-padding40">
+                <div class="container">
+
+                    <div class="cupon_area">
+                        <div class="check_title">
+                            <h2> Have a coupon?
+                                <button style="border: none;" onclick="getcoupon()"><a style="color: blue;">Click here
+                                        to enter your code</a></button>
+                            </h2>
+                        </div>
+                        <input type="text" placeholder="Enter coupon code" id="couponcode">
+                        <button style="border: none;" id="applyCouponButton"><a class="btn nothing">Apply
+                                Coupon</a></button>
+                    </div>
+                    <div class="billing_details">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h3>Billing Details</h3>
+                                <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="first" name="name"
+                                            placeholder="First name" />
+
+                                    </div>
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="street" name="name" />
+                                        <span class="placeholder" data-placeholder="Street Address"></span>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" id="state" name="state"
+                                            placeholder="State" />
+                                    </div>
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="number" name="number"
+                                            placeholder="Phone number" />
+
+                                    </div>
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="email" name="email"
+                                            placeholder="Email Address" />
+
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="housename" name="housename"
+                                            placeholder="House_name" />
+
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="landmark" name="lankmark"
+                                            placeholder="Landmark" />
+
+                                    </div>
+
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="city" name="city"
+                                            placeholder="Town/City" />
+
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" id="zipcode" name="zipcode"
+                                            placeholder="Postcode/ZIP" />
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="checkout-cap">
+                                            <button style="border: none;" id="submit-btn"><a
+                                                    class="btn w-20">Submit</a></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-md-12 form-group">
+                                    <div class="creat_account">
+                                        <h3>Address Details</h3>
+
+                                        <div class="container">
+                                            <h2>Your Addresses</h2>
+                                            <p id="errorMessage" style="color: red; display: none;">Please select an
+                                                address.</p>
+                                            <div class="address-box">
+                                                <form id="addressForm">
+                                                    <% data.forEach(function(add, index) { %>
+                                                        <div class="address-details">
+                                                            <h3>Address <%= index + 1 %>
+                                                            </h3>
+                                                            <div class="address-info">
+                                                                <p><strong>Street Address:</strong>
+                                                                    <%= add.streetaddress %>
+                                                                </p>
+                                                                <p><strong>Phone:</strong>
+                                                                    <%= add.phone %>
+                                                                </p>
+                                                                <p><strong>City:</strong>
+                                                                    <%= add.city %>
+                                                                </p>
+                                                                <p><strong>Zip Code:</strong>
+                                                                    <%= add.zipcode %>
+                                                                </p>
+                                                                <p><strong>State:</strong>
+                                                                    <%= add.state %>
+                                                                </p>
+                                                                <p><strong>House Name:</strong>
+                                                                    <%= add.House_name %>
+                                                                </p>
+                                                                <p><strong>Landmark:</strong>
+                                                                    <%= add.landmark %>
+                                                                </p>
+
+                                                            </div>
+                                                            <!-- for passing address to backend and stores accordingly  -->
+                                                            <input type="radio" name="address" value='<%=add._id %>'
+                                                                id="address<%= index %>" required>
+                                                            <label for="address<%= index %>">Select Address <%= index +
+                                                                    1 %></label>
+                                                        </div>
+                                                        <% }); %>
+                                                </form>
+                                            </div>
+                                        </div>
 
 
 
-</div>
+                                    </div>
 
-</div>
+                                </div>
 
-</div>
-<div class="col-lg-4">
-<div class="order_box">
-<h2>Your Order</h2>
-
-    
-<ul class="list">
-    <li>
-        <a href="#">Product<span>Total</span>
-        </a>
-     </li>
-     <% products.forEach(product1 => { %>
-        <li class="product-item">
-            <a href="#" style="color: black;">
-                <%= product1.productName %>
-                <span class="middle" id="quantity<%=product1._id %>">x <%= product1.quantity %></span>
-                <span id="price<%= product1._id %>" class="last"><%= product1.total %></span>
-            </a>
-            <!-- Subtotal -->
-           
-        </li>
-        <% }) %>
-    
-<a href="#" style="color: black;">Delivery
-<span>Flat rate: $50.00</span>
-</a>
-</li>
-<li>
-   
-<a>Total
-    <% var total = 0; %>
-    <% products.forEach(product1 => { %>
-            <% total += product1.total; %>
-        <% }) %>
-    <span id="total"><%=total + 50 %></span>
-  
-    
-</a>
-</li>
-
-</ul>
-</li>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="order_box">
+                                    <h2>Your Order</h2>
 
 
-<p id="errorMessage1" style="color: red; display: none;">Please select any type of payment.</p>
-<div class="payment_item">
-    <div class="radion_btn">
-        <input type="radio" id="f-option5" name="selector" />
-        <label for="f-option5">Wallet</label>
-        <div class="check"></div>
-    </div>
-    <p> Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
-</div>
-<div class="payment_item">
-    <div class="radion_btn">
-        <input type="radio" id="f-option7" name="selector" />
-        <label for="f-option7">Cash On Delivery</label>
-        <div class="check"></div>
-    </div>
-    <p> Please pay cash on delivery to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
-</div>
-<div class="payment_item active">
-    <div class="radion_btn">
-        <input type="radio" id="f-option6" name="selector" />
-        <label for="f-option6">Razorpay</label>
-        <img src="assets/img/gallery/card.jpg" alt />
-        <div class="check"></div>
-    </div>
-    <p> Please proceed to Razorpay for payment. </p>
-</div>
+                                    <ul class="list">
+                                        <li>
+                                            <a href="#">Product<span>Total</span>
+                                            </a>
+                                        </li>
+                                        <% products.forEach(product1=> { %>
+                                            <li class="product-item">
+                                                <a href="#" style="color: black;">
+                                                    <%= product1.productName %>
+                                                        <span class="middle" id="quantity<%=product1._id %>">x <%=
+                                                                product1.quantity %></span>
+                                                        <span id="price<%= product1._id %>" class="last">
+                                                            <%= product1.total %>
+                                                        </span>
+                                                </a>
 
-<div class="creat_account checkout-cap">
-<input type="checkbox" id="f-option8" name="selector" />
-<label for="f-option8">I’ve read and accept the <a href="#">terms & conditions*</a> </label>
-</div>
-<button id="CODButton" class="btn w-20" style="border: none;">
-    Proceed to Confirm
-</button>
+                                            </li>
+                                            <% }) %>
 
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+                                                <a style="color: black;">Delivery
+                                                    <% var total=0; %>
+                                                        <% products.forEach(product1=> { %>
+                                                            <% total +=product1.total; %>
+                                                                <% }) %>
+                                                                    <%if(total>1000){%>
 
+                                                                        <span id="max1" class="middle">rate: ₹100.00</span>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                        <%=total+100%>
+                                                                            <%}else if(total< 1000){%>
+                                                                                <span id="max1" class="middle">rate: ₹50.00</span>
+                                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                               <%=total+50%>
+                                                                                    <%}%>
+                                                </a>
 
-<div class="categories-area section-padding40 gray-bg">
-<div class="container">
-<div class="row">
-<div class="col-lg-3 col-md-6 col-sm-6">
-<div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-<div class="cat-icon">
-<img src="assets/img/icon/services1.svg" alt>
-</div>
-<div class="cat-cap">
-<h5>Fast & Free Delivery</h5>
-<p>Free delivery on all orders</p>
-</div>
-</div>
-</div>
-<div class="col-lg-3 col-md-6 col-sm-6">
-<div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-<div class="cat-icon">
-<img src="assets/img/icon/services2.svg" alt>
-</div>
-<div class="cat-cap">
-<h5>Secure Payment</h5>
-<p>Free delivery on all orders</p>
-</div>
-</div>
-</div>
-<div class="col-lg-3 col-md-6 col-sm-6">
-<div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-<div class="cat-icon">
-<img src="assets/img/icon/services3.svg" alt>
-</div>
-<div class="cat-cap">
-<h5>Money Back Guarantee</h5>
-<p>Free delivery on all orders</p>
-</div>
-</div>
-</div>
-<div class="col-lg-3 col-md-6 col-sm-6">
-<div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-<div class="cat-icon">
-<img src="assets/img/icon/services4.svg" alt>
-</div>
-<div class="cat-cap">
-<h5>Online Support</h5>
-<p>Free delivery on all orders</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                                                <li>
 
-</main>
-<footer>
-<div class="footer-wrapper">
+                                                    <a>Total
 
-<div class="footer-area footer-padding">
-<div class="container ">
-<div class="row justify-content-between">
-<div class="col-xl-4 col-lg-3 col-md-8 col-sm-8">
-<div class="single-footer-caption mb-50">
-<div class="single-footer-caption mb-30">
+                                                        <%if(total>1000){%>
+                                                            <span id="total">
+                                                                <%=total + 100 %>
+                                                            </span>
+                                                            <%}else if(total< 1000){%>
+                                                                <span id="total">
+                                                                    <%=total + 50 %>
+                                                                </span>
+                                                                <%}%>
+                                                    </a>
+                                                </li>
 
-<div class="footer-logo mb-35">
-<a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt></a>
-</div>
-<div class="footer-tittle">
-<div class="footer-pera">
-<p>Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla.</p>
-</div>
-</div>
-
-<div class="footer-social">
-<a href="#"><i class="fab fa-twitter"></i></a>
-<a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-<a href="#"><i class="fab fa-pinterest-p"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
-<div class="single-footer-caption mb-50">
-<div class="footer-tittle">
-<h4>Quick links</h4>
-<ul>
-<li><a href="#">Image Licensin</a></li>
-<li><a href="#">Style Guide</a></li>
-<li><a href="#">Privacy Policy</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
-<div class="single-footer-caption mb-50">
-<div class="footer-tittle">
-<h4>Shop Category</h4>
-<ul>
-<li><a href="#">Image Licensin</a></li>
-<li><a href="#">Style Guide</a></li>
-<li><a href="#">Privacy Policy</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
-<div class="single-footer-caption mb-50">
-<div class="footer-tittle">
-<h4>Pertners</h4>
-<ul>
-<li><a href="#">Image Licensin</a></li>
-<li><a href="#">Style Guide</a></li>
-<li><a href="#">Privacy Policy</a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="footer-bottom-area">
-<div class="container">
-<div class="footer-border">
-<div class="row d-flex align-items-center">
-<div class="col-xl-12 ">
-<div class="footer-copy-right text-center">
-<p>
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</footer>
-
-<div id="back-top">
-<a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
-</div>
-<script>
+                                    </ul>
+                                    </li>
 
 
+                                    <p id="errorMessage1" style="color: red; display: none;">Please select any type of
+                                        payment.</p>
+                                    <div>
+                                        <%if(total> 1000){%>
 
-document.addEventListener('DOMContentLoaded', function() {
-    const addressRadios = document.querySelectorAll('input[type="radio"][name="address"]');
-    const paymentRadios = document.querySelectorAll('input[type="radio"][name="selector"]');
-    const errorMessage = document.getElementById("errorMessage"); // Make sure this ID exists in HTML
-    const errorMessage1 = document.getElementById("errorMessage1"); // Make sure this ID exists in HTML
-    const CODButton = document.getElementById('CODButton');
+                                            <div class="payment_item">
+                                                <div class="radion_btn">
+                                                    <input type="radio" id="f-option5" name="selector" />
+                                                    <label for="f-option5">Wallet</label>
+                                                    <div class="check"></div>
+                                                </div>
+                                                <p> Please send a check to Store Name, Store Street, Store Town, Store
+                                                    State / County, Store Postcode. </p>
+                                            </div>
+                                            <div class="payment_item">
+                                                <div class="radion_btn">
+                                                    <input type="radio" id="f-option7" name="selector" />
+                                                    <label for="f-option7">Cash On Delivery</label>
+                                                    <div class="check"></div>
+                                                </div>
+                                                <p> Please pay cash on delivery to Store Name, Store Street, Store Town,
+                                                    Store State / County, Store Postcode. </p>
+                                            </div>
+                                            <div class="payment_item active">
+                                                <div class="radion_btn">
+                                                    <input type="radio" id="f-option6" name="selector" />
+                                                    <label for="f-option6">Razorpay</label>
+                                                    <img src="assets/img/gallery/card.jpg" alt />
+                                                    <div class="check"></div>
+                                                </div>
+                                                <p> Please proceed to Razorpay for payment. </p>
+                                            </div>
 
-    // Function to check if any address is selected
-    function isAddressSelected() {
-        for (const radio of addressRadios) {
-            if (radio.checked) {
-                return radio.value;
-            }
-        }
-        return null;
-    }
+                                            <div class="creat_account checkout-cap">
+                                                <input type="checkbox" id="f-option8" name="selector" />
+                                                <label for="f-option8">I’ve read and accept the <a href="#">terms &
+                                                        conditions*</a> </label>
+                                            </div>
+                                            <%}else{%>
 
-    // Function to check if any payment method is selected
-    function isPaymentSelected() {
-        for (const radio of paymentRadios) {
-            if (radio.checked) {
-                return radio.id;  
-            }
-        }
-        return false;
-    }
+                                                <div class="payment_item">
+                                                    <div class="radion_btn">
+                                                        <input type="radio" id="f-option5" name="selector" />
+                                                        <label for="f-option5">Wallet</label>
+                                                        <div class="check"></div>
+                                                    </div>
+                                                    <p> Please send a check to Store Name, Store Street, Store Town,
+                                                        Store State / County, Store Postcode. </p>
+                                                </div>
 
-    // Event listeners for changing selection will hide error messages
-    addressRadios.forEach(radio => radio.addEventListener('change', () => errorMessage.style.display = "none"));
-    paymentRadios.forEach(radio => radio.addEventListener('change', () => errorMessage1.style.display = "none"));
+                                                <div class="payment_item active">
+                                                    <div class="radion_btn">
+                                                        <input type="radio" id="f-option6" name="selector" />
+                                                        <label for="f-option6">Razorpay</label>
+                                                        <img src="assets/img/gallery/card.jpg" alt />
+                                                        <div class="check"></div>
+                                                    </div>
+                                                    <p> Please proceed to Razorpay for payment. </p>
+                                                </div>
 
-    // Event listener for the confirm button
-    CODButton.addEventListener('click', async function(event) {
-        const addressID = isAddressSelected();
-        const paymentID = isPaymentSelected();
-        if(paymentID==='f-option5'){
-            selectedOption='Wallet';
-        }else if(paymentID==='f-option7'){
-            selectedOption='Cash on Delivery';
-        }else{
-            selectedOption='Razorpay'
-        }
-        console.log(paymentID);
-        console.log(selectedOption);
+                                                <div class="creat_account checkout-cap">
+                                                    <input type="checkbox" id="f-option8" name="selector" />
+                                                    <label for="f-option8">I’ve read and accept the <a href="#">terms &
+                                                            conditions*</a> </label>
+                                                </div>
+                                                <%}%>
 
-        if (!addressID || !paymentID) {
-            event.preventDefault();
-            if (!addressID) {
-                errorMessage.style.display = "block";
-            }
-            if (!paymentID) {
-                errorMessage1.style.display = "block";
-            }
-        } else {
-            const response = await fetch(`/postorderconformdetails`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ addressDetails: addressID, selectedOption: selectedOption}),
-            });
 
-            const data = await response.json();
-            if (data.success) {
-                console.log("everytime");
-                window.location.href = '/getorder-conform';
-            } else if (data.message==='Razorpay working Successfully'){
-                console.log("data from function");
-                console.log("data",data.order);
-                RazorpayPayment(data.order)
-                
-                
-            }
-            else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: data.message,
-                    icon: 'error'
+                                    </div>
+                                    <button id="CODButton" class="btn w-20" style="border: none;">
+                                        Proceed to Confirm
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class="categories-area section-padding40 gray-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                                <div class="cat-icon">
+                                    <img src="assets/img/icon/services1.svg" alt>
+                                </div>
+                                <div class="cat-cap">
+                                    <h5>Fast & Free Delivery</h5>
+                                    <p>Free delivery on all orders</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                                <div class="cat-icon">
+                                    <img src="assets/img/icon/services2.svg" alt>
+                                </div>
+                                <div class="cat-cap">
+                                    <h5>Secure Payment</h5>
+                                    <p>Free delivery on all orders</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                                <div class="cat-icon">
+                                    <img src="assets/img/icon/services3.svg" alt>
+                                </div>
+                                <div class="cat-cap">
+                                    <h5>Money Back Guarantee</h5>
+                                    <p>Free delivery on all orders</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                                <div class="cat-icon">
+                                    <img src="assets/img/icon/services4.svg" alt>
+                                </div>
+                                <div class="cat-cap">
+                                    <h5>Online Support</h5>
+                                    <p>Free delivery on all orders</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer>
+            <div class="footer-wrapper">
+
+                <div class="footer-area footer-padding">
+                    <div class="container ">
+                        <div class="row justify-content-between">
+                            <div class="col-xl-4 col-lg-3 col-md-8 col-sm-8">
+                                <div class="single-footer-caption mb-50">
+                                    <div class="single-footer-caption mb-30">
+
+                                        <div class="footer-logo mb-35">
+                                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt></a>
+                                        </div>
+                                        <div class="footer-tittle">
+                                            <div class="footer-pera">
+                                                <p>Suspendisse varius enim in eros elementum tristique. Duis cursus, mi
+                                                    quis viverra ornare, eros dolor interdum nulla.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="footer-social">
+                                            <a href="#"><i class="fab fa-twitter"></i></a>
+                                            <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                                <div class="single-footer-caption mb-50">
+                                    <div class="footer-tittle">
+                                        <h4>Quick links</h4>
+                                        <ul>
+                                            <li><a href="#">Image Licensin</a></li>
+                                            <li><a href="#">Style Guide</a></li>
+                                            <li><a href="#">Privacy Policy</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                                <div class="single-footer-caption mb-50">
+                                    <div class="footer-tittle">
+                                        <h4>Shop Category</h4>
+                                        <ul>
+                                            <li><a href="#">Image Licensin</a></li>
+                                            <li><a href="#">Style Guide</a></li>
+                                            <li><a href="#">Privacy Policy</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                                <div class="single-footer-caption mb-50">
+                                    <div class="footer-tittle">
+                                        <h4>Pertners</h4>
+                                        <ul>
+                                            <li><a href="#">Image Licensin</a></li>
+                                            <li><a href="#">Style Guide</a></li>
+                                            <li><a href="#">Privacy Policy</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom-area">
+                    <div class="container">
+                        <div class="footer-border">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-xl-12 ">
+                                    <div class="footer-copy-right text-center">
+                                        <p>
+                                            Copyright &copy;
+                                            <script>document.write(new Date().getFullYear());</script> All rights
+                                            reserved | This template is made with <i class="fa fa-heart"
+                                                aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                target="_blank">Colorlib</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+        <div id="back-top">
+            <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+        </div>
+        <script>
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const addressRadios = document.querySelectorAll('input[type="radio"][name="address"]');
+                const paymentRadios = document.querySelectorAll('input[type="radio"][name="selector"]');
+                const errorMessage = document.getElementById("errorMessage");
+                const errorMessage1 = document.getElementById("errorMessage1");
+                const ActualAmount = document.getElementById('total');
+                const CODButton = document.getElementById('CODButton');
+                const couponcode = document.getElementById('couponcode');
+
+                if (ActualAmount) {
+                    const totalText = ActualAmount.textContent || ActualAmount.innerText;
+                    const totalValue = parseInt(totalText, 10);
+                    localStorage.setItem('totalVal', totalValue);
+                }
+
+                let Actualcoupon1;
+                if (localStorage.getItem('coupon') !== null) {
+
+                    const couponValue = parseFloat(localStorage.getItem('coupon'));
+                    const applyCouponButton = document.getElementById('applyCouponButton')
+                    Actualcoupon1 = localStorage.getItem('couponcode1');
+                    console.log("Coupon value:", Actualcoupon1);
+                    couponcode.value = Actualcoupon1;
+                 
+                        const totalElement = document.querySelector('#total'); // Select by ID using querySelector
+                        console.log("Total element:", totalElement);
+                        const originalTotal = parseFloat(totalElement.textContent);
+                        console.log("Original total:", originalTotal);
+
+                        // Calculate the discounted total
+                        const discountedTotal = originalTotal - couponValue;
+                        console.log("Discounted total:", discountedTotal);
+                        totalElement.textContent = discountedTotal.toFixed(2);
+                        console.log("safar", totalElement);
+                        localStorage.setItem('fullTotal', discountedTotal);
+
+
+                        // Calculate the discount percentage
+                        const discountPercentage = ((couponValue / originalTotal) * 100).toFixed(2);
+                        const discountSpan = document.createElement('span');
+                        discountSpan.textContent = ` (${discountPercentage}% off)`;
+                        totalElement.appendChild(discountSpan);
+
+                        // Update button to remove coupon
+                        applyCouponButton.innerHTML = `<button style="border: none;"><a class="btn removeCouponButton">Remove Coupon</a></button>`;
+
+                        // Add event listener for the remove button
+                        const data = document.querySelector('.removeCouponButton').addEventListener('click', removeCoupon);
+
+
+
+                  
+                }
+
+                console.log("coupon", Actualcoupon1);
+
+                function isAddressSelected() {
+                    for (const radio of addressRadios) {
+                        if (radio.checked) {
+                            return radio.value;
+                        }
+                    }
+                    return null;
+                }
+
+                function isPaymentSelected() {
+                    for (const radio of paymentRadios) {
+                        if (radio.checked) {
+                            return radio.id;
+                        }
+                    }
+                    return null;
+                }
+
+                addressRadios.forEach(radio => radio.addEventListener('change', () => errorMessage.style.display = "none"));
+                paymentRadios.forEach(radio => radio.addEventListener('change', () => errorMessage1.style.display = "none"));
+
+                CODButton.addEventListener('click', async function (event) {
+                    const addressID = isAddressSelected();
+                    const paymentID = isPaymentSelected();
+                    let selectedOption;
+                    let lastTotal = localStorage.getItem('fullTotal');
+                    console.log("mahn", lastTotal);
+
+                    if (paymentID === 'f-option5') {
+                        selectedOption = 'Wallet';
+                    } else if (paymentID === 'f-option7') {
+                        selectedOption = 'Cash on Delivery';
+                    } else {
+                        selectedOption = 'Razorpay';
+                    }
+
+                    if (!addressID || !paymentID) {
+                        event.preventDefault();
+                        if (!addressID) {
+                            errorMessage.style.display = "block";
+                        }
+                        if (!paymentID) {
+                            errorMessage1.style.display = "block";
+                        }
+                    } else {
+                        Actualcoupon1 = localStorage.getItem('couponcode1'); // Ensure this is up-to-date
+                        console.log("very", Actualcoupon1);
+                        try {
+                            const response = await fetch(`/postorderconformdetails`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    addressDetails: addressID,
+                                    selectedOption: selectedOption,
+                                    coupon1: Actualcoupon1,
+                                    lastTotal: lastTotal
+                                }),
+                            });
+
+                            const data = await response.json();
+                            console.log("Response data:", data);
+                            localStorage.clear();
+
+                            if (data.success) {
+                                window.location.href = '/getorder-conform';
+                            } else if (data.message === 'Razorpay working Successfully') {
+                                RazorpayPayment(data.orderData);
+                            } else if (data.message === 'Order placed through Wallet successfully') {
+                                window.location.href = '/getorder-conform';
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An unexpected error occurred',
+                                icon: 'error'
+                            });
+                        }
+                    }
                 });
+            });
+
+            async function RazorpayPayment(order) {
+                console.log("hello");
+                console.log(order.amount);
+                let amountString = order.amount;
+                let amountInteger = parseInt(amountString);
+
+                var options = {
+                    "key": "rzp_test_NS5BWa3t52AqKK",
+                    "amount": amountInteger,
+                    "currency": "INR",
+                    "name": "Plaza Plate",
+                    "description": "Your Transaction Working Successfully",
+                    "image": "./assets/img/icon/love.png",
+                    "order_id": order.id,
+                    "handler": function (response) {
+                        console.log(response);
+                        console.log("Payment successful:", response);
+                        verifyPayment(response, order);
+                        window.location.href = '/getorder-conform';
+                    },
+                    "prefill": {
+                        "name": "Gaurav Kumar",
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function (response) {
+                    console.error("Payment failed:", response);
+                    window.location.href = '/getorder-conform';
+                });
+                rzp1.open();
             }
-        }
-    });
-});
+
+            // Verify payment function
+            async function verifyPayment(payment, order) {
+                try {
+                    console.log("again");
+                    const response = await fetch('/verify-payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ payment, order })
+                    });
+                    const data = await response.json();
+                    if (data.ok) {
+                        // Payment verification success
+                        console.log("Payment verification successful:", data);
+                    } else {
+                        // Payment verification failed
+                        console.error("Payment verification failed:", data);
+                    }
+                } catch (error) {
+                    console.error("Error verifying payment:", error);
+                }
+            }
+
+            document.getElementById('submit-btn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const streetaddress = document.getElementById('street').value;
+                console.log(streetaddress);
+                const city = document.getElementById('city').value;
+                console.log(city);
+                const zipcode = document.getElementById('zipcode').value;
+                const state = document.getElementById('state').value;
+                const House_name = document.getElementById('housename').value;
+                const landmark = document.getElementById('landmark').value;
+                const phone = document.getElementById('number').value;
+
+                if (streetaddress === '' || city === '' || zipcode === '' || state === '' || House_name === '' || landmark === '' || phone === '') {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Please Enter the required fields",
+                        icon: 'error'
+                    });
+                } else {
+                    const formData = {
+                        streetaddress,
+                        city,
+                        zipcode,
+                        state,
+                        House_name,
+                        landmark,
+                        phone
+                    };
+
+                    try {
+                        const response = await fetch('/post-userddress-checkout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+                        if (data.message === "Address saved successfully") {
+                            window.location.href = '/getcheckout';
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message,
+                                icon: 'error'
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                }
+            });
+
+            async function getcoupon() {
+                console.log("blaa");
+                const total = document.querySelector('#total');
+                const value = total.textContent;
+                console.log(value);
+
+                try {
+                    const response = await fetch(`/getcouponcode/${value}`, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    const data = await response.json();
+                    console.log("data");
+                    console.log(data.discount);
+                    if (data.success === true) {
+                        localStorage.setItem('coupon', data.discount);
+                        localStorage.setItem('couponcode1', data.value);
+                        const couponcode2 = localStorage.getItem('couponcode1');
+                        console.log(couponcode2);
+                        document.getElementById('couponcode').value = couponcode2;
+
+                        if (localStorage.getItem('coupon') !== null) {
+                            const couponValue = parseFloat(localStorage.getItem('coupon'));
+                            Actualcoupon1 = localStorage.getItem('couponcode1');
+                            console.log("Coupon value:", Actualcoupon1);
+                            couponcode.value = Actualcoupon1;
+                        }
+
+                        console.log("coupon", Actualcoupon1);
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message,
+                            icon: 'error'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
 
 
-
-
-
-async function RazorpayPayment(order) {
-    console.log("hello");
-    var options = {
-        "key": "rzp_test_NS5BWa3t52AqKK",
-        "amount": order.amount * 100,
-        "currency": "INR",
-        "name": "Plaza Plate",
-        "description": "Your Transaction Working Successfully",
-        "image": "./assets/img/icon/love.png",
-        "order_id": order.id,
-        "handler": function (response) {
-            console.log(response);
-            console.log("Payment successful:", response);
-            verifyPayment(response, order);
-            window.location.href = '/getorder-conform';
-        },
-        "prefill": {
-            "name": "Gaurav Kumar",
-            "email": "gaurav.kumar@example.com",
-            "contact": "9000090000"
-        },
-        "notes": {
-            "address": "Razorpay Corporate Office"
-        },
-        "theme": {
-            "color": "#3399cc"
-        }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-}
-
-// Verify payment function
-async function verifyPayment(payment, order) {
-    try {
-        const response = await fetch('/verify-payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ payment, order })
-        });
-        const data = await response.json();
-        if (data.ok) {
-            // Payment verification success
-            console.log("Payment verification successful:", data);
            
-            // Perform further actions if needed
-        } else {
-            // Payment verification failed
-            console.error("Payment verification failed:", data);
-            // Handle error or display message to user
-        }
-    } catch (error) {
-        console.error("Error verifying payment:", error);
-        // Handle error or display message to user
-    }
-}
 
 
-  
+            const applyCouponButton = document.getElementById('applyCouponButton') // Select by class name
+
+            applyCouponButton.addEventListener('click', async function () {
+                try {
+                    if (localStorage.getItem('coupon') !== null) {
+                        const couponValue = parseFloat(localStorage.getItem('coupon')); // Get the coupon value and parse it to a number
+                        const totalElement = document.querySelector('#total'); // Select by ID using querySelector
+                        console.log("Total element:", totalElement);
+                        const originalTotal = parseFloat(totalElement.textContent);
+                        console.log("Original total:", originalTotal);
+
+                        // Calculate the discounted total
+                        const discountedTotal = originalTotal - couponValue;
+                        console.log("Discounted total:", discountedTotal);
+                        totalElement.textContent = discountedTotal.toFixed(2);
+                        console.log("safar", totalElement);
+                        localStorage.setItem('fullTotal', discountedTotal);
 
 
-document.getElementById('submit-btn').addEventListener('click', async (e) => {
-    e.preventDefault();
-    const streetaddress = document.getElementById('street').value;
-    console.log(streetaddress);
-    const city = document.getElementById('city').value;
-    console.log(city);
-    const zipcode = document.getElementById('zipcode').value;
-    const state = document.getElementById('state').value;
-    const House_name = document.getElementById('housename').value;
-    const landmark = document.getElementById('landmark').value;
-    const phone=document.getElementById('number').value;
+                        // Calculate the discount percentage
+                        const discountPercentage = ((couponValue / originalTotal) * 100).toFixed(2);
+                        const discountSpan = document.createElement('span');
+                        discountSpan.textContent = ` (${discountPercentage}% off)`;
+                        totalElement.appendChild(discountSpan);
 
+                        // Update button to remove coupon
+                        applyCouponButton.innerHTML = `<button style="border: none;"><a class="btn removeCouponButton">Remove Coupon</a></button>`;
 
-    if (streetaddress === '' || city === '' || zipcode === '' || state === '' || House_name === '' || landmark === '' || phone === '') {
-        Swal.fire({
-            title: 'Error!',
-            text: "Please Enter the required fields",
-            icon: 'error' // Corrected property name
-        })
-    } else {
-        const formData = {
-            streetaddress,
-            city,
-            zipcode,
-            state,
-            House_name,
-            landmark,
-            phone
-        };
+                        // Add event listener for the remove button
+                        const data = document.querySelector('.removeCouponButton').addEventListener('click', removeCoupon);
 
-        try {
-            const response = await fetch('/post-userddress-checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An unexpected error occurred',
+                        icon: 'error'
+                    });
+                }
             });
 
-            const data = await response.json();
-            if (data.message === "Address saved successfully") {
-                Swal.fire({
-					title:'Success!',
-					text:data.message,
-					icons:'success'
-				})
-            } else {
-                Swal.fire({
-					title:'Error!',
-					text:data.message,
-					icons:'error'
-				})
-              
+
+
+            async function removeCoupon() {
+                const ActualAmount = document.getElementById('total')
+                console.log("Coupon removal triggered");
+                const coupon = localStorage.getItem('couponcode1'); // Use localStorage instead of an input element
+                console.log("Coupon to remove:", coupon);
+             
+
+                try {
+                    const totalElement = document.querySelector('#total'); // Select by ID using querySelector
+                    console.log("Total element1:", totalElement);
+
+                    // Find the discount span element and remove it
+                    const discountSpan = totalElement.querySelector('span');
+                    if (discountSpan) {
+                        discountSpan.remove();
+                    }
+
+                    // Retrieve original total from localStorage or another source
+                    const totalAmount = localStorage.getItem('totalVal');
+                    console.log("god", totalAmount);
+                    const originalTotal = parseFloat(totalAmount);
+                    console.log("Original total:", originalTotal);
+                    ActualAmount.textContent = originalTotal.toFixed(2);
+
+                    // Revert button to apply coupon
+                    const removeCouponButton = document.querySelector('.removeCouponButton');
+                    removeCouponButton.removeAttribute('id');
+
+
+                    // Remove coupon from localStorage
+                    localStorage.removeItem('coupon');
+                    localStorage.removeItem('couponcode1');
+                
+                } catch (error) {
+                    console.error("Error removing coupon:", error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An unexpected error occurred while removing the coupon',
+                        icon: 'error'
+                    });
+                }
             }
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle error gracefully, e.g., display error message to the user
-        }
-    }
-});
-
-
-async function getcoupon(){
-    const total = document.querySelector('#total');
-const value = total.textContent;
-console.log(value);
-
-try {
-            const response = await fetch(`/getcouponcode/${value}`, {
-              
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            const data = await response.json();
-            console.log(data.value);
-            if (data.success===true) {
-               document.getElementById('couponcode').value=data.value
-            } else {
-                Swal.fire({
-					title:'Error!',
-					text:data.message,
-					icons:'error'
-				})
-              
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle error gracefully, e.g., display error message to the user
-        }
-
-
-}
-async function applycoupon(){
-    const coupon = document.getElementById('couponcode').value;
-    console.log(coupon);
-    try {
-        const response = await fetch(`/applycoupon/${coupon}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        const responseData = await response.json();
-        console.log(responseData);
-        console.log(responseData.data.discount);
-        
-        if (responseData.success === true) {
-            const totalElement = document.getElementById('total');
-            console.log("yyyy", totalElement);
-            const originalTotal = parseFloat(totalElement.textContent);
-            console.log("pppp", originalTotal);
-            const discountedTotal = originalTotal - responseData.data.discount; 
-            console.log("bbb", discountedTotal);
-            totalElement.textContent = discountedTotal.toFixed(2); // Assuming you want to display the total with 2 decimal places
-
-            // Calculate discount percentage
-            const discountPercentage = ((responseData.data.discount / originalTotal) * 100).toFixed(2);
-            const discountSpan = document.createElement('span');
-            discountSpan.textContent = `(${discountPercentage}% off)`;
-            totalElement.appendChild(discountSpan);
-        } else {
-            Swal.fire({
-                title: 'Error!',
-                text: responseData.message,
-                icon: 'error'
-            });
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        // Handle error gracefully, e.g., display error message to the user
-    }
-}
-
-    
 
 
 
 
-</script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="./assets/js/popper.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
 
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/slick.min.js"></script>
-<script src="./assets/js/jquery.slicknav.min.js"></script>
 
-<script src="./assets/js/wow.min.js"></script>
-<script src="./assets/js/animated.headline.js"></script>
-<script src="./assets/js/jquery.magnific-popup.js"></script>
-<script src="./assets/js/gijgo.min.js"></script>
 
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.sticky.js"></script>
-<script src="./assets/js/jquery.barfiller.js"></script>
 
-<script src="./assets/js/jquery.counterup.min.js"></script>
-<script src="./assets/js/waypoints.min.js"></script>
-<script src="./assets/js/jquery.countdown.min.js"></script>
-<script src="./assets/js/hover-direction-snake.min.js"></script>
 
-<script src="./assets/js/contact.js"></script>
-<script src="./assets/js/jquery.form.js"></script>
-<script src="./assets/js/jquery.validate.min.js"></script>
-<script src="./assets/js/mail-script.js"></script>
-<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
 
-<script src="./assets/js/plugins.js"></script>
-<script src="./assets/js/main.js"></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" data-cf-beacon='{"rayId":"85441fba1e8829f3","b":1,"version":"2024.2.0","token":"cd0b4b3a733644fc843ef0b185f98241"}' crossorigin="anonymous"></script>
-</body>
-</html>
+        </script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="./assets/js/popper.min.js"></script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+
+        <script src="./assets/js/owl.carousel.min.js"></script>
+        <script src="./assets/js/slick.min.js"></script>
+        <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+        <script src="./assets/js/wow.min.js"></script>
+        <script src="./assets/js/animated.headline.js"></script>
+        <script src="./assets/js/jquery.magnific-popup.js"></script>
+        <script src="./assets/js/gijgo.min.js"></script>
+
+        <script src="./assets/js/jquery.nice-select.min.js"></script>
+        <script src="./assets/js/jquery.sticky.js"></script>
+        <script src="./assets/js/jquery.barfiller.js"></script>
+
+        <script src="./assets/js/jquery.counterup.min.js"></script>
+        <script src="./assets/js/waypoints.min.js"></script>
+        <script src="./assets/js/jquery.countdown.min.js"></script>
+        <script src="./assets/js/hover-direction-snake.min.js"></script>
+
+        <script src="./assets/js/contact.js"></script>
+        <script src="./assets/js/jquery.form.js"></script>
+        <script src="./assets/js/jquery.validate.min.js"></script>
+        <script src="./assets/js/mail-script.js"></script>
+        <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+        <script src="./assets/js/plugins.js"></script>
+        <script src="./assets/js/main.js"></script>
+        <script defer
+            src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317"
+            integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA=="
+            data-cf-beacon='{"rayId":"85441fba1e8829f3","b":1,"version":"2024.2.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
+            crossorigin="anonymous"></script>
+    </body>
+
+    </html>

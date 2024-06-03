@@ -4,12 +4,23 @@ const Wishlistdb=require('../../models/UserModels/userwishlistSchema');
 
 
 
-userwishlist.getuserwishlist=async(req,res)=>{
-    const data=await Wishlistdb.find()
-    console.log("again",data);
-    res.render('userViews/wishlist',{data:data});
+userwishlist.getuserwishlist = async (req, res) => {
+    try {
+        const data = await Wishlistdb.find();
+        console.log("again", data);
+        
+        if (data && data.length > 0) {
+            res.render('userViews/wishlist', { data, message: null });
+        } else {
+            const message = "No Products in the Wishlist";
+            res.render('userViews/wishlist', { data: [], message });
+        }
+    } catch (error) {
+        console.error('Error fetching wishlist:', error);
+        res.status(500).send("Internal Server Error");
+    }
+};
 
-}
 
 
 
@@ -51,10 +62,10 @@ userwishlist.removewishlist=async(req,res)=>{
 
         if (removedItem) {
             console.log("Item successfully removed:", removedItem);
-            res.status(200).json({message:"Item successfully removed from wishlist.",success:true});
+          res.redirect('/getwishlist')
         } else {
             console.log("Item not found.");
-            res.status(404).json({message:"Item not found in wishlist." ,success:false});
+          
         }
     } catch (error) {
         console.error("Error removing item from wishlist:", error);

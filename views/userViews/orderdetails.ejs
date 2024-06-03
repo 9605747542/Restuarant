@@ -8,11 +8,11 @@
 <div class="row">
 <div class="col-xl-6 col-lg-8 col-md-8">
 <div class="hero__caption hero__caption2">
-<h1 data-animation="fadeInUp" data-delay=".4s">ORDER DETAILS</h1>
+<h1 data-animation="fadeInUp" data-delay=".4s">MY ORDERS</h1>
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-<li class="breadcrumb-item"><a href="#">Order Details</a></li>
+<li class="breadcrumb-item"><a href="#">My Orders</a></li>
 </ol>
 </nav>
 </div>
@@ -21,117 +21,123 @@
 </div>
 </div>
 </div>
-</div>
+</div>    
+<% if (message) { %>
+    <section class="cart_area section-padding40">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table" id="cartTable">
+                        <thead>
+                            <tr>
+                                <th><%= message %></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+<% } else { %>
+    <section class="cart_area section-padding40">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>ORDER DATE</th>
+                                    <th>USER NAME</th>
+                                    <th>PAYMENT</th>
+                                    <th>NO OF PRODUCTS</th>
+                                    <th>STATUS</th>
+                                    <th>COUPONS</th>
+                                    <th class="text-end">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (let i = 0; i < latestOrder.length; i++) { %>
+                                    <% const order = latestOrder[i]; %>
+                                    <% for (let j = 0; j < order.products.length; j++) { %>
+                                        <% const product = order.products[j]; %>
+                                        <tr>
+                                            <td>
+                                                <div class="py-2">
+                                                    <span><%= new Date(order.orderDate).toLocaleDateString() %></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2">
+                                                    <span><%= order.username %></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2">
+                                                    <span><%= order.paymentMethod %></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2">
+                                                    <span><%= product.quantity %></span>
+                                                </div>
+                                            </td>
+                                            <td>  
+                                                <div class="py-2">
+                                                    <h4><%= order.OrderStatus %></h4>
+                                                </div>
+                                            </td>
+                                            <td>  
+                                                <div class="py-2">
+                                                    <h4><%= order.coupon || 'NULL' %></h4>
+                                                </div>
+                                            </td>
+                                            <td>  
+                                                <div class="py-2">
+                                                    <a href="/viewmoredetails?id=<%= order._id %>&pid=<%= product._id %>">
+                                                        <button type="button" class="btn btn-danger">VIEW MORE</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                <% } %>
+                            </tbody>
+                        </table>
 
+                        <!-- pagination -->
+                        <div class="text-center">
+                            <ul class="pagination">
+                                <% if (currentPage > 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                <% } %>
 
-<section class="cart_area section-padding40">
-<div class="container">
-<div class="cart_inner">
-<div class="table-responsive">
-  <div class="payment border-top mt-3 mb-3 border-bottom table-responsive" >
+                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                        <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
 
-    <table class="table table-borderless">
-        <thead>
-            <tr>
-                <th>ORDER DATE</th>
-                <th>USER NAME</th>
-                <th>PAYMENT</th>
-                <th>NO OF PRODUCTS</th>
-                <th>STATUS</th>
-                <th>TOTAL AMOUNT</th>
-                <th>ACTUAL AMOUNT</th>
-               
-                <th>COUPONS</th>
-              
-                <th class="text-end">ACTION</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            <% for (let i = latestOrder.length - 1; i >= 0; i--) { %>
-               
-            
-               
-                           
-            
-            <tr>
-                <td>
-                    <div class="py-2">
-                        
-                        <span><%= new Date(latestOrder[i].orderDate).toLocaleDateString() %></span>
-                    </div>
-                </td>
-        
-                <td>
-                    <div class="py-2">
-                       
-                        <span><%= latestOrder[i].username %></span>
-                    </div>
-                </td>
-        
-                <td>
-                    <div class="py-2">
-                      
-                        <span><%= latestOrder[i].paymentMethod %></span>
-                    </div>
-                </td>
-        
-                <td>
-                    <div class="py-2">
-                       
-                        <span><%= latestOrder[i].products.reduce((acc, curr) => acc + curr.quantity, 0) %></span>
-                    </div>
-                </td>
-                <td>  
-                    <div class="py-2">
-                      
-                        <h4><%=latestOrder[i].OrderStatus%></h4>
-                    </div>
-                </td>
-                <td>  
-                    <div class="py-2">
-                      
-                        <h4>₹<%=latestOrder[i].totalAmount %></h4>
-                    </div>
-                </td>
-        
-                <td>  
-                    <div class="py-2">
-                      
-                        <h4>₹<%=latestOrder[i].ActualAmount %></h4>
-                    </div>
-                </td>
-             
-               
-                    <td>  
-                        <div class="py-2">
-                            <h4><%= latestOrder[i].coupon || 'NULL' %></h4>
+                                <% if (currentPage < totalPages) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                <% } %>
+                            </ul>
                         </div>
-                    </td>
-                    
-        
-                <td>  
-                    <div class="py-2">
-                        <!-- Button for more details, link might need adjustment according to actual URL pattern -->
-                        <a href="/viewmoredetails/<%=latestOrder[i]._id%>"><button type="button" class="btn btn-danger">VIEW MORE</button></a>
                     </div>
-                </td>
-            </tr>
-            <% } %>
-        </tbody>
-        
+                </div>
+            </div>
+        </div>
+    </section>
+<% } %>
 
-</table>
-
-
-
-    
-</div>
-</div>
-
-</div>
-</div>
-</section>
 
 
 

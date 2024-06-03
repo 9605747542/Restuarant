@@ -167,7 +167,8 @@
 								<tr>
 									<th>Coupon Code</th>
 									<th>Discount</th>
-									<th>Date</th>
+                  <th>startDate</th>
+									<th>ExpiryDate</th>
 									<th>Price</th>
 									<th>Status</th>
 									<th>Actions</th>
@@ -180,15 +181,16 @@
 								<tr>
 									<td><%=data[i].couponName%></td>
 									<td><%=data[i].discount%></td>
-									<td><%= new Date(data[i].expiry).toLocaleDateString() %></td>
-									<td><%=data[i].price%></td>
+                  <td><%=new Date(data[i].startDate).toLocaleDateString()%></td>
+                  <td><%= new Date(data[i].expiry).toLocaleDateString() %></td>
+                  <td><%=data[i].price%></td>
 									<td><%= data[i]. isBlocked ? 'Blocked' : 'Active' %></td>
 							<%if(data[i].isBlocked===false){%>
 									<td><button onclick="blockbtn('<%=data[i]._id%>')" style="background-color: red; color: white; border: none; width: 150px;height: 40px;">Block</button></td>
 									<%}else{%>
 										<td><button onclick="unblockbtn('<%=data[i]._id%>')" style="background-color: red; color: white; border: none; width: 150px;height: 40px;">Unblock</button></td>
 										<%}%>
-									<td><button style="background-color: blue; color: white; border: none; width: 150px;height: 40px;"><a href="/geteditcoupon/<%=data[i]._id%>">Edit Coupon</a></button></td>
+									<td><button style="background-color: blue; color: white; border: none; width: 150px;height: 40px;"><a href="/geteditcoupon?id=<%=data[i]._id%>">Edit Coupon</a></button></td>
 								</tr>
 								<%}%>
 							</tbody>
@@ -249,17 +251,17 @@
 });
 swalWithBootstrapButtons.fire({
   title: "Are you sure?",
-  text: "You won't be able to revert this!",
+  text: "You want to Block this!",
   icon: "warning",
   showCancelButton: true,
-  confirmButtonText: "Yes, delete it!",
+  confirmButtonText: "Yes,Block it!",
   cancelButtonText: "No, cancel!",
   reverseButtons: true
 }).then((result) => {
   if (result.isConfirmed) {
     swalWithBootstrapButtons.fire({
-      title: "Deleted!",
-      text: "Your file has been deleted.",
+      title: "Blocked!",
+      text: "Your file has been Blocked.",
       icon: "success"
     });
     fetch(`/blockcoupon/${couponId}`, {

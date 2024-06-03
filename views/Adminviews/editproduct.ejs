@@ -89,66 +89,64 @@
 			<div class="container-fluid">
 				<div class="row">
 					
-						<form enctype="multipart/form-data" id="editproduct" >
-							
-				
-				
-					<div class="col-xl-10 col-md-12">
-						<div class="row">
-							<div class="col-xl-7 col-lg-7 col-md-6">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Edit an item</h4>
-									</div>
-									<div class="card-body">
-										<div class="mb-3 pb-3">
-											<label for="productname" class="form-label font-w600">Food Name</label>
-											<input type="text" class="form-control" id="productname" name="productName"value="<%=data.productName%>" required>
+					<form enctype="multipart/form-data" id="editProductForm">
+						<!-- Form fields go here -->
+						<div class="col-xl-10 col-md-12">
+							<div class="row">
+								<div class="col-xl-7 col-lg-7 col-md-6">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title">Edit an item</h4>
 										</div>
-										<div class="mb-3 pb-3">
-											<label for="price" class="form-label font-w600">Food Price</label>
-											<input type="text" class="form-control" id="price" name="price" value="<%=data.price%>"required>
-										</div>
-										<div class="mb-3 pb-3">
-											<label for="stock" class="form-label font-w600">Stock</label>
-											<input type="number" class="form-control" id="stocks" name="stock" value="<%=data.stock%>"">
-
-										</div>
-
-	
-										
-										<div class="mb-3 pb-3">
-											<label for="description" class="form-label font-w600">Item description</label>
-											<textarea class="form-control" id="description" name="description" rows="5" required><%=data.description%></textarea>
+										<div class="card-body">
+											<div class="mb-3 pb-3">
+												<label for="productname" class="form-label font-w600">Food Name</label>
+												<input type="text" class="form-control" id="productname" name="productName" value="<%=data.productName%>" required>
+											</div>
+											<div class="mb-3 pb-3">
+												<label for="price" class="form-label font-w600">Food Price</label>
+												<input type="text" class="form-control" id="price" name="price" value="<%=data.price%>" required>
+											</div>
+											<div class="mb-3 pb-3">
+												<label for="stock" class="form-label font-w600">Stock</label>
+												<input type="number" class="form-control" id="stocks" name="stock" value="<%=data.stock%>" required>
+											</div>
+											<div class="mb-3 pb-3">
+												<label for="category" class="form-label font-w600">Select Category</label>
+												<select class="form-select" id="category" name="category">
+												
+													<option value="<%= data.category.categoryName %>" selected><%= data.category.categoryName %></option>
+													
+													<% for (let i = 0; i < categoryDetails.length; i++) { %>
+															<option value="<%= categoryDetails[i]._id %>"><%= categoryDetails[i].categoryName %></option>
+													<% } %>
+												</select>
+											</div>
+											<div class="mb-3 pb-3">
+												<label for="description" class="form-label font-w600">Item description</label>
+												<textarea class="form-control" id="description" name="description" rows="5" required><%=data.description%></textarea>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-xl-2 col-md-12" style="margin-left: 450px;">
-						<% data.image.forEach((image, index) => { %>
-							<div id="imageContainer_<%= index %>">
-								<div class="previewContainer">
-									<!-- Use a unique ID for each image element -->
-									<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview" id="imagePreview_<%= index %>">
-									<!-- Ensure the onchange handler passes the right index -->
-									<input type="file" name="ProductImages"  multiple="multiple" onchange="imagechange(event, '<%= index %>')">
+						<div class="col-xl-2 col-md-12" style="margin-left: 450px;">
+							<% data.image.forEach((image, index) => { %>
+								<div id="imageContainer_<%= index %>">
+									<div class="previewContainer">
+										<img src="<%= image %>" style="max-width: 100%;" alt="Image Preview" id="imagePreview_<%= index %>">
+										<input type="file" name="ProductImages" multiple="multiple" onchange="imagechange(event, '<%= index %>')">
+										<button type="button" onclick="deleteImage('<%= index %>')" style="background-color: green;color: white;">Delete</button>
+									</div>
 								</div>
-							</div>
-						<% }) %>
-					</div>
+							<% }) %>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-primary btn-block rounded" type="submit">Upload Items</button>
+						</div>
+					</form>
 					
-					
-					
-
-					
-			
-				<!-- Move the card-footer and button outside the col-xl-10 div -->
-				<div class="card-footer">
-					<button class="btn btn-primary btn-block rounded" onclick="validate()" type="submit">Upload Items</button>
-				</div>
-				</form> 
 			</div>
 		</div>
 			
@@ -176,115 +174,115 @@
     <!-- Required vendors -->
 	<script>
 
-function imagechange(event, index) {
-    const file = event.target.files[0];
-    if (file) {
-        // Create a URL for this file
-        const imageUrl = URL.createObjectURL(file);
-        // Access the image preview element by its unique ID
-        const imagePreview = document.getElementById(`imagePreview_${index}`);
-        if (imagePreview) {
-            imagePreview.src = imageUrl;
+
+
+
+
+
+        function imagechange(event, index) {
+            const file = event.target.files[0];
+            if (file) {
+                const imageUrl = URL.createObjectURL(file);
+                const imagePreview = document.getElementById(`imagePreview_${index}`);
+                if (imagePreview) {
+                    imagePreview.src = imageUrl;
+                }
+            }
         }
-    }
-}
 
+        function deleteImage(index) {
+            const imageContainer = document.getElementById(`imageContainer_${index}`);
+            imageContainer.style.display = 'none';
 
+            const form = document.getElementById('editProductForm');
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'imagesToDelete[]';
+            input.value = index;
+            form.appendChild(input);
+        }
 
-		document.getElementById('editproduct').addEventListener('submit',async function(event){
-			event.preventDefault();
-			validate();
-		})
+        document.getElementById('editProductForm').addEventListener('submit', async function(event) {
+			console.log("heaven villa");
+            event.preventDefault();
+            await validateAndSubmit();
+        });
 
-			async function validate(){
+        async function validateAndSubmit() {
+			console.log("bla");
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const urlId = urlParams.get('id');
+			console.log("id",urlId);
 
-			// Get the query string from the current URL
-					const queryString = window.location.search;
+            const productname = document.getElementById('productname').value;
+            const price = document.getElementById('price').value;
+            const description = document.getElementById('description').value;
+            const stock = document.getElementById('stocks').value;
+            const category = document.getElementById('category').value;
 
- 			// Create a URLSearchParams object from the query string
-			const urlParams = new URLSearchParams(queryString);
+            if (!productname || !price || !description || !stock || !category) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: "Please enter the required fields",
+                    icon: 'error'
+                });
+                return;
+            }
 
-			// Get the value of the 'id' parameter
-			const urlId = urlParams.get('id');
-			console.log(urlId);
-			
-			
-			const productname=document.getElementById('productname').value;
-			const price=document.getElementById('price').value;
-		
-			const description=document.getElementById('description').value;
-			const stock=document.getElementById('stocks').value;
-			console.log(stock);
-			const imageInputs = document.querySelectorAll('input[type="file"]');
-   
-			
-		
-	
+            const formData = new FormData();
+            formData.append('id', urlId);
+            formData.append('productName', productname);
+            formData.append('price', price);
+            formData.append('description', description);
+            formData.append('stock', stock);
+            formData.append('category', category);
 
-			const formData={
-				id:urlId,
-				productName:productname,
-				price:price,
-				description:description,
-				stock:stock,
+			console.log("form",formData);
+            const imageInputs = document.querySelectorAll('input[name="ProductImages"]');
+            imageInputs.forEach((input, index) => {
+                Array.from(input.files).forEach(file => {
+                    formData.append('ProductImages', file);
+                    formData.append('imageIndex', index);
+                });
+            });
 
-				
-			
+            const imagesToDelete = document.querySelectorAll('input[name="imagesToDelete[]"]');
+            imagesToDelete.forEach(input => {
+                formData.append('imagesToDelete[]', input.value);
+            });
 
-			
+            try {
+				console.log("details",formData);
+                const response = await fetch('/posteditproduct', {
+                    method: 'POST',
+                    body: formData
+                });
 
-			}
-			try{
-			console.log(formData);
-			const response=await fetch('/posteditproduct',{
-				method:"POST",
-				headers:{
-					'Content-Type':'application/json'
-				},
-				body:JSON.stringify(formData)
-			
-			})
-			const data = await response.json();
-				console.log(data);
-
-				if (data.success===true) {
-					Swal.fire({
-            title: 'Success!',
-            text: data.message,
-            icon: 'success',
-			})
-			window.location.href='/getproduct';
-				} else {
-					console.log(data.error);
-					Swal.fire({
-            title: 'Error!',
-            text: data.message,
-            icon: 'error',
-          })
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		}
-		
-
-
-
-		
-
-			
-
-		
-
-
-
-	
-
-
-   
-
-
-
+                const data = await response.json();
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success'
+                    });
+                    window.location.href = '/getproduct';
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error'
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while processing the request.',
+                    icon: 'error'
+                });
+                console.error('An error occurred while processing the request:', error);
+            }
+        }
 
 
 	</script>
