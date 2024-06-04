@@ -235,11 +235,12 @@ orderconform.getorderconform = async (req, res) => {
 
         for (let product of productDetails) {
             product.popularity = (product.popularity || 0) + 1;
-        }
-        // await Promise.all(productDetails.map(product => product.save()));
+            await product.save(); // Save each product individually to avoid parallel save error
 
-        await Promise.all([...new Set(productDetails)].map(product => product.save()))
-                const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
+        }
+
+        // await Promise.all(productDetails.map(product => product.save()));
+        const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
 
         // Ensure categories are updated
         const categoryUpdates = [];
