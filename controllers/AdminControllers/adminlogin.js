@@ -34,7 +34,7 @@ const {email1,password1}=req.body;
 console.log(email1);
 try{
     const checkUser=await admin.findOne({email:email1});
-    log
+   
     if(checkUser){
 
 // if(checkUser.email===email1 && checkUser.password===password1)
