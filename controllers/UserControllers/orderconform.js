@@ -236,9 +236,10 @@ orderconform.getorderconform = async (req, res) => {
         for (let product of productDetails) {
             product.popularity = (product.popularity || 0) + 1;
         }
+        // await Promise.all(productDetails.map(product => product.save()));
 
-        await Promise.all(productDetails.map(product => product.save()));
-        const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
+        await Promise.all([...new Set(productDetails)].map(product => product.save()))
+                const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
 
         // Ensure categories are updated
         const categoryUpdates = [];
@@ -538,6 +539,7 @@ orderconform.getmoredetailspage = async (req, res) => {
             return res.status(404).send("Order not found");
         }
         console.log("Order Details:", order);
+        console.log("data",order.address);
 
         const filteredProducts = order.products.filter(product1 => product1._id.toString() === pid);
         console.log("Filtered Products:", filteredProducts);

@@ -405,6 +405,8 @@ userlogin.showHome=async(req,res)=>{
     try{
       const data= await productdb.find();
       console.log(data);
+      console.log("where",req.session.userid);
+     
         res.render('userViews/index',{data});
       
 
