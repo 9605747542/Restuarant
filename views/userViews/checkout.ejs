@@ -720,7 +720,12 @@
 
                         const data = await response.json();
                         if (data.message === "Address saved successfully") {
-                            window.location.href = '/getcheckout';
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success'
+                            });
+                         
                         } else {
                             Swal.fire({
                                 title: 'Error!',

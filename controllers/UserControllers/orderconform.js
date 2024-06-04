@@ -23,12 +23,15 @@ var instance = new Razorpay({
 orderconform.getorderconform = async (req, res) => {
     try {
        
-        const { addressDetails, selectedOption, lastTotal } = req.body;
-    let { coupon1 } = req.body;
+        const { addressDetails, selectedOption } = req.body;
+    let { coupon1 ,lastTotal} = req.body;
     console.log("nourii",coupon1);
         console.log("fffffff",selectedOption,addressDetails,coupon1,lastTotal);
        
-        
+        if(coupon1 ||lastTotal===null ){
+            coupon1=0;
+            lastTotal=0;
+        }
 
         // Fetch user details
         const user = await Userdb.findById(req.session.userid);
