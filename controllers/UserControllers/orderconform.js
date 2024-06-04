@@ -381,23 +381,37 @@ orderconform.getorderconform = async (req, res) => {
         const productDetails = await Productdb.find({ productName: { $in: productNames } });
 
         // Save products sequentially to avoid parallel save errors
-        for (let product of productDetails) {
+        // for (let product of productDetails) {
+        //     product.popularity = (product.popularity || 0) + 1;
+        //     await product.save();
+        // }
+        const productSaves = productDetails.map(product => {
             product.popularity = (product.popularity || 0) + 1;
-            await product.save();
-        }
+            return product.save();
+        });
 
         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
-
-        // Save categories sequentially to avoid parallel save errors
-        for (let product of productsWithCategories) {
+        const categorySaves = productsWithCategories.map(product => {
             if (product.category) {
-                let category = product.category;
-                category.popularity = (category.popularity || 0) + 1;
-                await category.save();
+                product.category.popularity = (product.category.popularity || 0) + 1;
+                return product.category.save();
             } else {
                 console.log("Category is null for a product:", product.productName);
+                return Promise.resolve(); // Return a resolved promise if category is null
             }
-        }
+        });
+        await Promise.all([...productSaves,...categorySaves]);
+
+        // Save categories sequentially to avoid parallel save errors
+        // for (let product of productsWithCategories) {
+        //     if (product.category) {
+        //         let category = product.category;
+        //         category.popularity = (category.popularity || 0) + 1;
+        //         await category.save();
+        //     } else {
+        //         console.log("Category is null for a product:", product.productName);
+        //     }
+        // }
 
         const totalPrice = cart.products.reduce((total, item) => total + item.total, 0);
         let flatRate = totalPrice > 1000 ? 100 : 50;
