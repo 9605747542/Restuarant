@@ -20,17 +20,185 @@ var instance = new Razorpay({
 };
 
 
+// orderconform.getorderconform = async (req, res) => {
+//     try {
+       
+//         const { addressDetails, selectedOption } = req.body;
+//     let { coupon1 ,lastTotal} = req.body;
+//     console.log("nourii",coupon1);
+//         console.log("fffffff",selectedOption,addressDetails,coupon1,lastTotal);
+       
+//         if(coupon1 ||lastTotal===null ){
+//             coupon1=0;
+//             lastTotal=0;
+//         }
+
+//         // Fetch user details
+//         const user = await Userdb.findById(req.session.userid);
+//         const userEmail = user.email;
+
+//         // Fetch address details
+//         const address = await Userdb.findOne({ 'address._id': addressDetails });
+//         const addressObject = address ? address.address.find(a => a._id.toString() === addressDetails) : null;
+
+//         const cart = await Cartdb.findOne({ userid: req.session.userid }).populate('products.product');
+//         const products = cart.products.map(item => {
+//             if (item.product) {
+//                 return {
+//                     product: item.product,
+//                     quantity: item.quantity,
+//                     productName: item.product.productName,
+//                     image: item.product.image,
+//                     price: item.product.price,
+//                     category: item.product.category
+//                 };
+//             } else {
+//                 console.log("Product is null for an item in the cart");
+//                 return null; // or handle this case accordingly
+//             }
+//         }).filter(product => product !== null);
+        
+//         let productNames = products.map(product => product.productName);
+//         req.session.productNames = productNames;
+        
+//         console.log("9090", req.session.productNames);
+  
+        
+//         const productDetails = await Productdb.find({ productName: { $in: productNames } });
+        
+//         for (let product of productDetails) {
+//             product.popularity = (product.popularity || 0) + 1;
+//         }
+        
+//         await Promise.all(productDetails.map(product => product.save()));
+//         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
+
+//         // Ensure categories are updated
+//         const categoryUpdates = [];
+        
+//         for (let product of productsWithCategories) {
+//             if (product.category) {
+//                 let category = product.category;
+//                 category.popularity = (category.popularity || 0) + 1;
+//                 categoryUpdates.push(category.save());
+//             } else {
+//                 console.log("Category is null for a product:", product.name);
+//             }
+//         }
+        
+//         await Promise.all(categoryUpdates);
+        
+        
+//         // Calculate total price of products in cart
+//         const totalPrice = cart.products.reduce((total, item) => total + item.total, 0);
+
+//         // Fetch coupon details
+//         console.log("main  price",totalPrice);
+//          // Define flat rate
+//          let flatRate;
+//          if(totalPrice>1000){
+//              flatRate=100;
+//          }else{
+//              flatRate = 50;
+//          }
+
+//         let ActualAmount;
+//         console.log("safar",lastTotal);
+//         if(!coupon1){
+//             console.log("war");
+//             coupon1=req.session.couponcode;
+//             ActualAmount = calculateTotalAmount(totalPrice, flatRate);
+//             console.log("calculate",ActualAmount);
+
+//         }else{
+//             ActualAmount = lastTotal;
+//         }
+//         console.log("nothing",ActualAmount);
+//         const couponCode = coupon1;
+//         console.log("mind",couponCode);
+//         const coupon = await Coupondb.findOne({ couponName: couponCode });
+
+       
+        
+       
+
+        
+   
+        
+//         await Promise.all([
+//         updateStock(cart.products)
+//     ]);
+
+//         // Create order object
+//         const order = new Orderdb({
+//             customer: cart._id,
+//             address: addressObject,
+//             products,
+//             totalAmount: totalPrice,
+//             shipping: flatRate,
+//              ActualAmount,
+//             OrderStatus: 'Order Placed',
+//             paymentMethod: selectedOption,
+//             orderDate: new Date(),
+//             orderId: generateOrderId(),
+//             useremail: userEmail,
+//             username: user.name,
+//             coupon: coupon ? coupon.couponName : null,
+           
+//         });
+
+   
+//             await order.save();
+//             req.session.orderId=order._id;
+//             req.session.actual=ActualAmount;
+//             req.session.total=totalPrice;
+
+           
+    
+
+//         await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
+
+//         // Handle response based on payment method
+//         if (selectedOption === 'Cash on Delivery') {
+//             res.json({ success: true, message: "Order placed successfully" });
+//         } else if(selectedOption==='Razorpay') {
+//             console.log("check",order.OrderStatus);
+//             order.OrderStatus='Payment Pending';
+//             await order.save();
+//             const orderData = await generateRazorpay(order._id, ActualAmount);
+         
+//             res.status(200).json({  message: "Razorpay working Successfully", orderData });
+//         }else if (selectedOption === 'Wallet') {
+//             console.log("Vazha");
+//             let wallet = await Walletdb.findOne({ userId: req.session.userid });
+//             if (wallet) {
+//                 console.log("ssssssss",wallet.balance);
+//                wallet.balance= wallet.balance - ActualAmount;
+//                wallet.transactionHistory.push({
+//                 transaction: 'Money Deducted',
+//                 amount: ActualAmount
+//               }),
+//                 await wallet.save();
+//             }
+//             res.json({ success: true, message: "Order placed throught Wallet successfully" });
+//         }
+        
+//     } catch (error) {
+//         console.error('Error placing order:', error);
+//         res.status(500).json({ error: 'Failed to place order' });
+//     }
+// };
+
 orderconform.getorderconform = async (req, res) => {
     try {
-       
         const { addressDetails, selectedOption } = req.body;
-    let { coupon1 ,lastTotal} = req.body;
-    console.log("nourii",coupon1);
-        console.log("fffffff",selectedOption,addressDetails,coupon1,lastTotal);
-       
-        if(coupon1 ||lastTotal===null ){
-            coupon1=0;
-            lastTotal=0;
+        let { coupon1, lastTotal } = req.body;
+        console.log("nourii", coupon1);
+        console.log("fffffff", selectedOption, addressDetails, coupon1, lastTotal);
+
+        if (coupon1 === undefined || lastTotal === null) {
+            coupon1 = 0;
+            lastTotal = 0;
         }
 
         // Fetch user details
@@ -57,24 +225,24 @@ orderconform.getorderconform = async (req, res) => {
                 return null; // or handle this case accordingly
             }
         }).filter(product => product !== null);
-        
+
         let productNames = products.map(product => product.productName);
         req.session.productNames = productNames;
-        
+
         console.log("9090", req.session.productNames);
-        
+
         const productDetails = await Productdb.find({ productName: { $in: productNames } });
-        
+
         for (let product of productDetails) {
             product.popularity = (product.popularity || 0) + 1;
         }
-        
+
         await Promise.all(productDetails.map(product => product.save()));
         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
 
         // Ensure categories are updated
         const categoryUpdates = [];
-        
+
         for (let product of productsWithCategories) {
             if (product.category) {
                 let category = product.category;
@@ -84,49 +252,39 @@ orderconform.getorderconform = async (req, res) => {
                 console.log("Category is null for a product:", product.name);
             }
         }
-        
+
         await Promise.all(categoryUpdates);
-        
-        
+
         // Calculate total price of products in cart
         const totalPrice = cart.products.reduce((total, item) => total + item.total, 0);
 
         // Fetch coupon details
-        console.log("main  price",totalPrice);
-         // Define flat rate
-         let flatRate;
-         if(totalPrice>1000){
-             flatRate=100;
-         }else{
-             flatRate = 50;
-         }
+        console.log("main price", totalPrice);
+        // Define flat rate
+        let flatRate;
+        if (totalPrice > 1000) {
+            flatRate = 100;
+        } else {
+            flatRate = 50;
+        }
 
         let ActualAmount;
-        console.log("safar",lastTotal);
-        if(!coupon1){
+        console.log("safar", lastTotal);
+        if (!coupon1) {
             console.log("war");
-            coupon1=req.session.couponcode;
+            coupon1 = req.session.couponcode;
             ActualAmount = calculateTotalAmount(totalPrice, flatRate);
-            console.log("calculate",ActualAmount);
+            console.log("calculate", ActualAmount);
 
-        }else{
+        } else {
             ActualAmount = lastTotal;
         }
-        console.log("nothing",ActualAmount);
+        console.log("nothing", ActualAmount);
         const couponCode = coupon1;
-        console.log("mind",couponCode);
+        console.log("mind", couponCode);
         const coupon = await Coupondb.findOne({ couponName: couponCode });
 
-       
-        
-       
-
-        
-   
-        
-        await Promise.all([
-        updateStock(cart.products)
-    ]);
+        await updateStock(cart.products);
 
         // Create order object
         const order = new Orderdb({
@@ -135,61 +293,56 @@ orderconform.getorderconform = async (req, res) => {
             products,
             totalAmount: totalPrice,
             shipping: flatRate,
-             ActualAmount,
-            OrderStatus: 'Order Placed',
+            ActualAmount,
+            OrderStatus: selectedOption === 'Razorpay' ? 'Payment Pending' : 'Order Placed',
             paymentMethod: selectedOption,
             orderDate: new Date(),
             orderId: generateOrderId(),
             useremail: userEmail,
             username: user.name,
             coupon: coupon ? coupon.couponName : null,
-           
         });
 
-   
-            await order.save();
-            req.session.orderId=order._id;
-            req.session.actual=ActualAmount;
-            req.session.total=totalPrice;
-
-           
-    
+        await order.save();
+        req.session.orderId = order._id;
+        req.session.actual = ActualAmount;
+        req.session.total = totalPrice;
 
         await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
 
         // Handle response based on payment method
         if (selectedOption === 'Cash on Delivery') {
             res.json({ success: true, message: "Order placed successfully" });
-        } else if(selectedOption==='Razorpay') {
-            console.log("check",order.OrderStatus);
-            order.OrderStatus='Payment Pending';
-            await order.save();
+        } else if (selectedOption === 'Razorpay') {
+            console.log("check", order.OrderStatus);
             const orderData = await generateRazorpay(order._id, ActualAmount);
-         
-            res.status(200).json({  message: "Razorpay working Successfully", orderData });
-        }else if (selectedOption === 'Wallet') {
+            res.status(200).json({ message: "Razorpay working Successfully", orderData });
+        } else if (selectedOption === 'Wallet') {
             console.log("Vazha");
             let wallet = await Walletdb.findOne({ userId: req.session.userid });
             if (wallet) {
-                console.log("ssssssss",wallet.balance);
-               wallet.balance= wallet.balance - ActualAmount;
-               wallet.transactionHistory.push({
-                transaction: 'Money Deducted',
-                amount: ActualAmount
-              }),
+                console.log("ssssssss", wallet.balance);
+                wallet.balance = wallet.balance - ActualAmount;
+                wallet.transactionHistory.push({
+                    transaction: 'Money Deducted',
+                    amount: ActualAmount
+                });
                 await wallet.save();
             }
-            res.json({ success: true, message: "Order placed throught Wallet successfully" });
+            res.json({ success: true, message: "Order placed through Wallet successfully" });
         }
-        
+
     } catch (error) {
         console.error('Error placing order:', error);
-        res.status(500).json({ error: 'Failed to place order' });
-    }
+        res.status(500).json({ error: 'Failed to place order' });
+    }
 };
 
 
+
 // Function to update stock for products in the cart
+
+
 async function updateStock(products) {
     const promises = products.map(async item => {
         const stock = item.product.stock;

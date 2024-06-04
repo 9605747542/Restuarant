@@ -36,11 +36,14 @@ async function userisBlocked(req, res, next) {
 async function checkStock(req, res, next) {
     
     const productId = req.body.productId;
-    const quantity=req.body.quantity;
+    let quantity=req.body.quantity;
     console.log("middle",quantity);
     console.log("ID from middleware:", productId);
     console.log("middleware...");
     console.log("User ID:", req.session.userid);
+    if(quantity==null){
+        quantity=1;
+    }
 
     // Check if there's a cart for the user
     const cart = await Cartdb.findOne({ userid: req.session.userid });
