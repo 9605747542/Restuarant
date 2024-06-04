@@ -66,7 +66,7 @@ userprofile.getalladdress=async(req,res)=>{
     const data=result.address;
 
     console.log("Every address",data);
-    res.render('Userviews/showalladdress',{data});
+    res.render('userViews/showalladdress',{data});
 }
 userprofile.addaddress=async (req,res)=>{
     res.render('userViews/addaddress')
@@ -94,7 +94,7 @@ userprofile.geteditaddress=async(req,res)=>{
             
         
         
-            res.render('UserViews/editaddress',{data})
+            res.render('userViews/editaddress',{data})
     
     
 }
