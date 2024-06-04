@@ -26,7 +26,7 @@ userproduct.getproductpage=async(req,res)=>{
      
           console.log(count);
        
-            res.render('Userviews/orginalproduct',{category,data,count,user,results: []});
+            res.render('userViews/orginalproduct',{category,data,count,user,results: []});
 
     }catch{
         console.error('Error occurs during product');

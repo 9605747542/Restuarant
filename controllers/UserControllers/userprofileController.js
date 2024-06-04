@@ -69,7 +69,7 @@ userprofile.getalladdress=async(req,res)=>{
     res.render('Userviews/showalladdress',{data});
 }
 userprofile.addaddress=async (req,res)=>{
-    res.render('Userviews/addaddress')
+    res.render('userViews/addaddress')
 }
 userprofile.getchangepasswordpage=async(req,res)=>{
   const email=req.params.email;
