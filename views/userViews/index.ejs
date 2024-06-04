@@ -42,16 +42,16 @@
        
        
         <div class="row">
-          <% for (let i = 0; i < data.length; i++) { %>
+          <% for (let i = 0; i < 3; i++) { %>
               <% if (data[i].image && data[i].image.length > 0) { %>
                   <div class="col-lg-4 col-md-6 col-sm-6">
                       <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s">
                           <div class="popular-img">
-                              <img src="<%= data[i].image[0] %>" alt="<%= data[i].productName %>">
+                              <a href="/clickproduct/?id=<%=data[i]._id%>"><img src="<%= data[i].image[0] %>" alt="<%= data[i].productName %>"></a>
                           </div>
                           <div class="popular-caption">
                               <h3><%= data[i].productName %></h3>
-                              <span>$<%= data[i].price %></span>
+                              <span>₹<%= data[i].price %></span>
                           </div>
                       </div>
                   </div>
