@@ -45,11 +45,11 @@
 <div class="row">
 <div class="col-xl-6 col-lg-8 col-md-8">
 <div class="hero__caption hero__caption2">
-<h1 data-animation="fadeInUp" data-delay=".4s">wish List</h1>
+<h1 data-animation="fadeInUp" data-delay=".4s">Wallet</h1>
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-<li class="breadcrumb-item"><a href="#">wish List</a></li>
+<li class="breadcrumb-item"><a href="#">Wallet</a></li>
 </ol>
 </nav>
 </div>
@@ -59,6 +59,21 @@
 </div>
 </div>
 </div>
+<% if(message) { %>
+    <section class="cart_area section-padding40">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table" id="cartTable">
+                        <thead>
+                            <tr><th><%= message %></th></tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%}else{%>
     
     
 <section class="cart_area section-padding40">
@@ -82,11 +97,19 @@
                             <span><%= userName %></span>  
                         </div>
                     </td>
+                    <%if(data.balance){%>
                     <td>
                         <div class="py-2"> 
-                            <span><strong><%= data.balance %></strong></span>  
+                            <span><strong><%= data.balance%></strong></span>  
                         </div>
                     </td>
+                    <%}else{%>
+                        <td>
+                            <div class="py-2"> 
+                                <span><strong>0</strong></span>  
+                            </div>
+                        </td>
+                        <%}%>
                 
                 </tr>
                 </tbody>
@@ -127,6 +150,8 @@
     </div>
     </div>
     </section>
+
+    <%}%>
     
     
     
