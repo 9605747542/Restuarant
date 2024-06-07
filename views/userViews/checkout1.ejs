@@ -71,22 +71,21 @@
   
     <div class="address-box">
         <form id="addressForm">
-            <% data.forEach(function(add, index) { %>
+          
             <div class="address-details">
-                <h3>Address <%= index + 1 %></h3>
+             
                 <div class="address-info">
-                    <p><strong>Street Address:</strong> <%= add.streetaddress %></p>
-                    <p><strong>Phone:</strong> <%= add.phone %></p>
-                    <p><strong>City:</strong> <%= add.city %></p>
-                    <p><strong>Zip Code:</strong> <%= add.zipcode %></p>
-                    <p><strong>State:</strong> <%= add.state %></p>
-                    <p><strong>House Name:</strong> <%= add.House_name %></p>
-                    <p><strong>Landmark:</strong> <%= add.landmark %></p>
+                    <p><strong>Street Address:</strong> <%= address1.streetaddress %></p>
+                    <p><strong>Phone:</strong> <%= address1.phone %></p>
+                    <p><strong>City:</strong> <%= address1.city %></p>
+
+                    <p><strong>House Name:</strong> <%= address1.House_name %></p>
+                 
                  
                 </div>
              
             </div>
-            <% }); %>
+     
         </form>
     </div>
 </div>

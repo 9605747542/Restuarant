@@ -9,14 +9,12 @@
             <div class="row">
               <div class="col-xl-6 col-lg-8 col-md-8">
                 <div class="hero__caption">
-                  <span>70% Sale off </span>
-                  <h1 data-animation="fadeInUp" data-delay=".4s">Restuarant at Cost</h1>
-                  <p data-animation="fadeInUp" data-delay=".6s">Suspendisse varius enim in eros elementum
-                    tristique. Duis cursus, mi quis viverra ornare, eros
-                    dolor interdum nulla.</p>
+                  <span>PLAZA PLATE </span>
+                  <h1 data-animation="fadeInUp" data-delay=".4s">Welcome Friend</h1>
+                  <p data-animation="fadeInUp" data-delay=".6s">Discover the perfect blend of flavors and ambiance at Plaza Plate, where culinary excellence meets a cozy, inviting atmosphere. Nestled in the heart of Edappally. </p>
 
                   <div class="hero__btn" data-animation="fadeInUp" data-delay=".7s">
-                    <a href="industries.html" class="btn hero-btn">Discover More</a>
+                    <a  class="btn hero-btn">Discover More</a>
                   </div>
                 </div>
               </div>
@@ -34,8 +32,7 @@
           <div class="col-xl-6 col-lg-8 col-md-10">
             <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
               <h2>Popular products</h2>
-              <P>Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                interdum nulla.</P>
+              <P>Explore our most beloved dishes, crafted to perfection and celebrated by our guests. Each item on our popular menu is a testament to our commitment to quality and flavor.</P>
             </div>
           </div>
         </div> 
@@ -73,46 +70,27 @@
           <div class="col-xl-6 col-lg-8 col-md-10">
             <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
               <h2>Products you may like</h2>
-              <P>Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                interdum nulla.</P>
+              <P>Indulge in a culinary journey with our carefully curated selection that promises to delight your taste buds and leave you craving for more.</P>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s">
-              <div class="popular-img">
-                <img src="assets/img/gallery/popular4.png" alt>
-              </div>
-              <div class="popular-caption">
-                <h3><a href="product_details.html">Bly Microfiber / Microsuede 56" Armless Loveseat</a></h3>
-                <span>$367</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-              <div class="popular-img">
-                <img src="assets/img/gallery/popular5.png" alt>
-              </div>
-              <div class="popular-caption">
-                <h3><a href="product_details.html">Bly Microfiber / Microsuede 56" Armless Loveseat</a></h3>
-                <span>$367</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-              <div class="popular-img">
-                <img src="assets/img/gallery/popular6.png" alt>
-              </div>
-              <div class="popular-caption">
-                <h3><a href="product_details.html">Bly Microfiber / Microsuede 56" Armless Loveseat</a></h3>
-                <span>$367</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          <% for (let i = 0; i < 3; i++) { %>
+              <% if (order[i].image && order[i].image.length > 0) { %>
+                  <div class="col-lg-4 col-md-6 col-sm-6">
+                      <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s">
+                          <div class="popular-img">
+                              <a href="/clickproduct/?id=<%=order[i]._id%>"><img src="<%= order[i].image[0] %>" alt="<%= order[i].productName %>"></a>
+                          </div>
+                          <div class="popular-caption">
+                              <h3><%= order[i].productName %></h3>
+                              <span>₹<%= order[i].price %></span>
+                          </div>
+                      </div>
+                  </div>
+              <% } %>
+          <% } %>
+      </div>
 
         <div class="row justify-content-center">
           <div class="room-btn">
@@ -133,8 +111,7 @@
               <div class="section-tittle">
                 <img src="assets/img/gallery/insta.png" alt>
                 <h2>Get Inspired with Instagram</h2>
-                <P class="mb-35">Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra
-                  ornare, eros dolor interdum nulla.</P>
+                <P class="mb-35">Discover the flavors and experiences that make Plaza Plate a culinary destination. From mouth-watering dishes to cozy ambiance, follow us for a visual feast that will tantalize your taste buds and inspire your next visit. </P>
                 <a href="product.html" class="border-btn">Discover More</a>
               </div>
             </div>
@@ -143,13 +120,13 @@
             <div class="row no-gutters">
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                 <div class="single-instagram">
-                  <img src="assets/img//gallery/instra1.png" alt class="w-100">
+                  <img src="assets/img//gallery/insta1.jpg" alt class="w-100">
                   <a href="#"><i class="ti-instagram"></i></a>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                 <div class="single-instagram">
-                  <img src="assets/img//gallery/instra2.png" alt class="w-100">
+                  <img src="assets/img//gallery/insta2.jpg" alt class="w-100">
                   <a href="#"><i class="ti-instagram"></i></a>
                 </div>
               </div>
@@ -160,25 +137,7 @@
     </div>
 
 
-    <div class="new-arrival new-arrival2">
-      <div class="container">
-
-        <div class="row justify-content-center">
-          <div class="col-xl-7 col-lg-8 col-md-10">
-            <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
-              <h2>Top Pick</h2>
-              <P>Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor
-                interdum nulla.</P>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          
-         
-        </div>
-
-      </div>
-    </div>
+    <br><br><br><br>
 
 
 

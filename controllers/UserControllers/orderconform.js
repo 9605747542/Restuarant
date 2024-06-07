@@ -391,27 +391,27 @@ orderconform.getorderconform = async (req, res) => {
         });
 
         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
-        const categorySaves = productsWithCategories.map(product => {
-            if (product.category) {
-                product.category.popularity = (product.category.popularity || 0) + 1;
-                return product.category.save();
-            } else {
-                console.log("Category is null for a product:", product.productName);
-                return Promise.resolve(); // Return a resolved promise if category is null
-            }
-        });
-        await Promise.all([...productSaves,...categorySaves]);
-
-        // Save categories sequentially to avoid parallel save errors
-        // for (let product of productsWithCategories) {
+        // const categorySaves = productsWithCategories.map(product => {
         //     if (product.category) {
-        //         let category = product.category;
-        //         category.popularity = (category.popularity || 0) + 1;
-        //         await category.save();
+        //         product.category.popularity = (product.category.popularity || 0) + 1;
+        //         return product.category.save();
         //     } else {
         //         console.log("Category is null for a product:", product.productName);
+        //         return Promise.resolve(); // Return a resolved promise if category is null
         //     }
-        // }
+        // });
+        // await Promise.all([...productSaves,...categorySaves]);
+
+        // Save categories sequentially to avoid parallel save errors
+        for (let product of productsWithCategories) {
+            if (product.category) {
+                let category = product.category;
+                category.popularity = (category.popularity || 0) + 1;
+                await category.save();
+            } else {
+                console.log("Category is null for a product:", product.productName);
+            }
+        }
 
         const totalPrice = cart.products.reduce((total, item) => total + item.total, 0);
         let flatRate = totalPrice > 1000 ? 100 : 50;
@@ -422,6 +422,13 @@ orderconform.getorderconform = async (req, res) => {
             ActualAmount = calculateTotalAmount(totalPrice, flatRate);
         } else {
             ActualAmount = lastTotal;
+        }
+        if(selectedOption === 'Wallet'){
+            let wallet = await Walletdb.findOne({ userId: req.session.userid });
+            if(wallet){
+                
+            }
+
         }
 
         const couponCode = coupon1;
@@ -809,7 +816,7 @@ if(usercart){
     
 }
 req.session.checkout=true;
-  res.redirect('/getcheckout1');
+res.redirect(`/getcheckout1?id=${id}`);
 
 }
 
@@ -817,6 +824,11 @@ orderconform.getpaymentpending=async(req,res)=>{
     try {
         const userid = req.session.userid;
         req.session.checkout = true;
+        const orderId=req.query.id;
+        console.log("War",orderId);
+        const Orders=await Orderdb.findOne({_id:orderId})
+    const address1=Orders.address[0];
+    console.log("Is getting",address1);
         
         // Find user by id
         const user = await Userdb.findById(userid);
@@ -849,7 +861,7 @@ orderconform.getpaymentpending=async(req,res)=>{
         
         // Render checkout page with user address and cart products
         if (products && products.length !== 0) {
-            res.render('userViews/checkout1', { data, products });
+            res.render('userViews/checkout1', { address1, products });
         } else {
             res.redirect('/usercart');
         }

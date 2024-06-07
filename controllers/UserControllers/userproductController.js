@@ -1,7 +1,8 @@
 const productdb=require('../../models/AdminModels/ProductSchema')
 const cartdb=require('../../models/UserModels/usercartSchema');
 const userdb = require('../../models/UserModels/UserSignupSchema');
-const Categorydb=require('../../models/AdminModels/categorySchema')
+const Categorydb=require('../../models/AdminModels/categorySchema');
+const Orderdb=require('../../models/UserModels/userorderSchema');
 
 const userproduct={};
 userproduct.getproductpage=async(req,res)=>{
@@ -25,6 +26,7 @@ userproduct.getproductpage=async(req,res)=>{
          }))
      
           console.log(count);
+          
        
             res.render('userViews/orginalproduct',{category,data,count,user,results: []});
 

@@ -44,9 +44,13 @@ try {
     })
     await data.save();
     console.log("SuccessFully created");
+    res.json({message:"SuccessFully Add to Wislist",success:true})
+
 } catch (error) {
     console.log(error);
     console.log("Internal Server Error");
+    res.json({message:"Internal Error",success:false})
+
 }
 
 

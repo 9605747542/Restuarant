@@ -663,7 +663,7 @@
                 const House_name = document.getElementById('housename').value;
                 const phone = document.getElementById('number').value;
 
-                if (streetaddress === '' || city === '' || zipcode === '' || state === '' || House_name === '' || landmark === '' || phone === '') {
+                if (streetaddress === '' || city === '' ||  House_name === '' ||  phone === '') {
                     Swal.fire({
                         title: 'Error!',
                         text: "Please Enter the required fields",
@@ -673,12 +673,9 @@
                     const formData = {
                         streetaddress,
                         city,
-    
                         House_name,
-                 
                         phone
                     };
-
                     try {
                         const response = await fetch('/post-userddress-checkout', {
                             method: 'POST',

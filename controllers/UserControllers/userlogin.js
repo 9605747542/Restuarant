@@ -1,6 +1,7 @@
 
 const userdb = require('../../models/UserModels/UserSignupSchema');
 const Userwalletdb=require('../../models/UserModels/walletSchema');
+const Orderdb=require('../../models/UserModels/userorderSchema');
 const Swal = require('sweetalert2');
 const bcrypt = require('bcrypt');
 const otpgenerator= require('otp-generator');
@@ -9,6 +10,7 @@ const session = require('express-session');
 const productdb = require('../../models/AdminModels/ProductSchema');
 const crypto = require('crypto');
 const userlogin={};
+
 
 userlogin.getforgotpassword=async(req,res)=>{
 
@@ -406,8 +408,10 @@ userlogin.showHome=async(req,res)=>{
       const data= await productdb.find();
       console.log(data);
       console.log("where",req.session.userid);
+      const order = await productdb.find().sort({ popularity: -1 });
+      console.log("vesham",order);
      
-        res.render('userViews/index',{data});
+        res.render('userViews/index',{data,order});
       
 
     }catch (error) {
