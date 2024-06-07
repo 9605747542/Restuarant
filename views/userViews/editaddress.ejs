@@ -96,22 +96,12 @@
             <label for="city">City</label>
             <input type="text" class="form-control" id="city" value="<%=data.city%>">
           </div>
-          <div class="form-group">
-            <label for="zipcode">Zipcode</label>
-            <input type="text" class="form-control" id="zipcode" value="<%=data.zipcode%>">
-          </div>
-          <div class="form-group">
-            <label for="state">State</label>
-            <input type="text" class="form-control" id="state" value="<%=data.state%>">
-          </div>
+         
           <div class="form-group">
             <label for="houseName">House Name</label>
             <input type="text" class="form-control" id="houseName" value="<%=data.House_name%>">
           </div>
-          <div class="form-group">
-            <label for="landmark">Landmark</label>
-            <input type="text" class="form-control" id="landmark" value="<%=data.landmark%>">
-          </div>
+       
         </div>
        
       </div>
@@ -135,20 +125,14 @@
     console.log(streetAddress);
     const city = document.getElementById('city').value;
     console.log(city);
-    const zipcode = document.getElementById('zipcode').value;
-    const state = document.getElementById('state').value;
     const House_name = document.getElementById('houseName').value;
-    const landmark = document.getElementById('landmark').value;
     const phone = document.getElementById('phone').value;
 
 
         const formData = {
             streetaddress,
             city,
-            zipcode,
-            state,
             House_name,
-            landmark,
             phone
         };
 

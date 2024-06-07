@@ -112,20 +112,8 @@ button#savebtn:hover {
             <input type="text" class="form-control" id="city" placeholder="Enter city">
           </div>
           <div class="form-group">
-            <label for="zipcode">Zipcode</label>
-            <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode">
-          </div>
-          <div class="form-group">
-            <label for="state">State</label>
-            <input type="text" class="form-control" id="state" placeholder="Enter state">
-          </div>
-          <div class="form-group">
             <label for="houseName">House Name</label>
             <input type="text" class="form-control" id="houseName" placeholder="Enter house name">
-          </div>
-          <div class="form-group">
-            <label for="landmark">Landmark</label>
-            <input type="text" class="form-control" id="landmark" placeholder="Enter landmark">
           </div>
         </div>
       </div>
@@ -146,14 +134,13 @@ document.getElementById('savebtn').addEventListener('click', async (e) => {
     console.log(streetAddress);
     const city = document.getElementById('city').value;
     console.log(city);
-    const zipcode = document.getElementById('zipcode').value;
-    const state = document.getElementById('state').value;
+
     const House_name = document.getElementById('houseName').value;
-    const landmark = document.getElementById('landmark').value;
+
     const phone=document.getElementById('phone').value;
 
 
-    if (streetAddress === '' || city === '' || zipcode === '' || state === '' || houseName === '' || landmark === '' || phone ==='') {
+    if (streetAddress === '' || city === '' ||  houseName === '' || phone ==='') {
         Swal.fire({
             title: 'Error!',
             text: "Please Enter the required fields",
@@ -163,10 +150,9 @@ document.getElementById('savebtn').addEventListener('click', async (e) => {
         const formData = {
             streetaddress,
             city,
-            zipcode,
-            state,
+           
             House_name,
-            landmark,
+          
             phone
         };
 

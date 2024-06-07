@@ -32,7 +32,7 @@ userprofile.postuserprofile = async (req, res) => {
 }
 
 userprofile.postuseraddress=async(req,res)=>{
-    const {streetaddress,phone,city,zipcode,state,House_name,landmark}=req.body;
+    const {streetaddress,phone,city,House_name}=req.body;
     const userid=req.session.userid;
     console.log(userid);
     try{
@@ -43,10 +43,7 @@ userprofile.postuseraddress=async(req,res)=>{
                 address: {
                     streetaddress,
                     city,
-                    zipcode,
-                    state,
                     House_name,
-                    landmark,
                     phone
                 },
               },
@@ -100,7 +97,7 @@ userprofile.geteditaddress=async(req,res)=>{
 }
 
 userprofile.posteditaddress=async(req,res)=>{
-    const {streetaddress,phone,city,zipcode,state,House_name,landmark}=req.body;
+    const {streetaddress,phone,city,House_name}=req.body;
    
     const userid=req.session.userid;
     console.log("Hai Welcome to ooty nice to meet you");
@@ -111,10 +108,9 @@ userprofile.posteditaddress=async(req,res)=>{
           $set: {
             "address": {
               streetaddress,
-              landmark,
+          
               state,
-              city,
-              zipcode,
+      
               House_name,
               phone
            

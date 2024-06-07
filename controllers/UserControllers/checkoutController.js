@@ -113,7 +113,7 @@ usercheckout.getcheckoutpage=async(req,res)=>{
 usercheckout.postaddresscheckout=async(req,res)=>{
     console.log("blaa");
 
-        const {streetaddress,phone,city,zipcode,state,House_name,landmark}=req.body;
+        const {streetaddress,phone,city,House_name}=req.body;
         const userid=req.session.userid;
         console.log(userid);
         try{
@@ -124,10 +124,7 @@ usercheckout.postaddresscheckout=async(req,res)=>{
                     address: {
                         streetaddress,
                         city,
-                        zipcode,
-                        state,
                         House_name,
-                        landmark,
                         phone
                     },
                   },
@@ -137,10 +134,6 @@ usercheckout.postaddresscheckout=async(req,res)=>{
                 console.error("Error while saving address:", error);
                 res.status(500).send({message:"Failed to save address"}); // Respond with error message
             }
-       
-    
-    
-
         }
 
 

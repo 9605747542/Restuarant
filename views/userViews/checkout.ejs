@@ -74,49 +74,31 @@
                             <div class="col-lg-8">
                                 <h3>Billing Details</h3>
                                 <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                                    <div class="col-md-6 form-group p_star">
-                                        <input type="text" class="form-control" id="first" name="name"
-                                            placeholder="First name" />
-
-                                    </div>
+              
                                     <div class="col-md-6 form-group p_star">
                                         <input type="text" class="form-control" id="street" name="name" />
                                         <span class="placeholder" data-placeholder="Street Address"></span>
                                     </div>
-                                    <div class="col-md-12 form-group">
-                                        <input type="text" class="form-control" id="state" name="state"
-                                            placeholder="State" />
-                                    </div>
+                                
                                     <div class="col-md-6 form-group p_star">
                                         <input type="text" class="form-control" id="number" name="number"
                                             placeholder="Phone number" />
 
                                     </div>
-                                    <div class="col-md-6 form-group p_star">
-                                        <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="Email Address" />
-
-                                    </div>
+                  
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="housename" name="housename"
                                             placeholder="House_name" />
 
                                     </div>
-                                    <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="landmark" name="lankmark"
-                                            placeholder="Landmark" />
-
-                                    </div>
+            
 
                                     <div class="col-md-12 form-group p_star">
                                         <input type="text" class="form-control" id="city" name="city"
                                             placeholder="Town/City" />
 
                                     </div>
-                                    <div class="col-md-12 form-group">
-                                        <input type="text" class="form-control" id="zipcode" name="zipcode"
-                                            placeholder="Postcode/ZIP" />
-                                    </div>
+                                
                                     <div class="col-md-12 form-group">
                                         <div class="checkout-cap">
                                             <button style="border: none;" id="submit-btn"><a
@@ -148,18 +130,10 @@
                                                                 <p><strong>City:</strong>
                                                                     <%= add.city %>
                                                                 </p>
-                                                                <p><strong>Zip Code:</strong>
-                                                                    <%= add.zipcode %>
-                                                                </p>
-                                                                <p><strong>State:</strong>
-                                                                    <%= add.state %>
-                                                                </p>
                                                                 <p><strong>House Name:</strong>
                                                                     <%= add.House_name %>
                                                                 </p>
-                                                                <p><strong>Landmark:</strong>
-                                                                    <%= add.landmark %>
-                                                                </p>
+                                                             
 
                                                             </div>
                                                             <!-- for passing address to backend and stores accordingly  -->
@@ -686,10 +660,7 @@
                 console.log(streetaddress);
                 const city = document.getElementById('city').value;
                 console.log(city);
-                const zipcode = document.getElementById('zipcode').value;
-                const state = document.getElementById('state').value;
                 const House_name = document.getElementById('housename').value;
-                const landmark = document.getElementById('landmark').value;
                 const phone = document.getElementById('number').value;
 
                 if (streetaddress === '' || city === '' || zipcode === '' || state === '' || House_name === '' || landmark === '' || phone === '') {
@@ -702,10 +673,9 @@
                     const formData = {
                         streetaddress,
                         city,
-                        zipcode,
-                        state,
+    
                         House_name,
-                        landmark,
+                 
                         phone
                     };
 
