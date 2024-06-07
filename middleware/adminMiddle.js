@@ -31,13 +31,13 @@ async function getproductlist(req,res,next){
 
 
 
-// async function getadminlogin(req,res,next){
-//     if(!req.session.admin){
-//         res.render('Adminviews/adminlogin');
-//     }else{
-//         res.redirect('/dashboard');
-//     } 
-// }
+async function getadminlogin(req,res,next){
+    if(!req.session.admin){
+        res.render('Adminviews/adminlogin');
+    }else{
+        res.redirect('/dashboard');
+    } 
+}
 
 
 async function getdashboard(req, res, next) {
@@ -102,7 +102,7 @@ async function getdashboard(req, res, next) {
 module.exports={
     isAdminLogged,
     getproductlist,
-    // getadminlogin,
+    getadminlogin,
     getdashboard
 
 

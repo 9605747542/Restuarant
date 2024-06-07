@@ -19,9 +19,9 @@ const excelreport=require('../controllers/AdminControllers/excelsalesreportContr
 
 
 
-// AdminRouter.get('/adminlogin',getadminlogin)
+AdminRouter.get('/adminlogin',getadminlogin)
 AdminRouter.post('/adminlogin',adminlogin.adminregister)
-AdminRouter.post('/adminlogin',adminlogin.getlogin)
+// AdminRouter.post('/adminlogin',adminlogin.getlogin)
 AdminRouter.get('/dashboard',getdashboard);
 AdminRouter.get('/adminlogout',adminlogin.adminlogout);
 
