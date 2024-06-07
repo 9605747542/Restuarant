@@ -18,13 +18,10 @@ address: {
     type: [{
        
         phone: Number,
-        email: String,
         streetaddress: String,
         city: String,
-        zipcode: String,
-        state: String,
         House_name: String,
-        landmark: String
+     
 }]},
 
 isBlocked:{
