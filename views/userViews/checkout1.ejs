@@ -112,17 +112,14 @@
             <a href="#" style="color: black;">
                 <%= product1.productName %>
                 <span class="middle" id="quantity<%=product1._id %>">x <%= product1.quantity %></span>
-                <span id="price<%= product1._id %>" class="last"><%= product1.total %></span>
+                <span id="price<%= product1._id %>" class="last"><%= total %></span>
             </a>
            
         </li>
         <% }) %>
     
 <a  style="color: black;">Delivery
-    <% var total = 0; %>
-    <% products.forEach(product1 => { %>
-            <% total += product1.total; %>
-        <% }) %>
+   
         <%if(total>1000){%>
 
 <span>rate: ₹100.00</span>
@@ -374,6 +371,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage1 = document.getElementById("errorMessage1"); // Make sure this ID exists in HTML
     const CODButton = document.getElementById('CODButton');
 
+//     const parsedUrl = new URL(url);
+
+// const ID = parsedUrl.searchParams.get('id');
+
+
+
+function getQueryParams(url) {
+    const parsedUrl = new URL(url);
+    const params = {};
+    parsedUrl.searchParams.forEach((value, key) => {
+        params[key] = value;
+    });
+    return params;
+}
+
+// Example usage
+const currentUrl = window.location.href;
+const queryParams = getQueryParams(currentUrl);
+
+console.log(queryParams); // Outputs an object with the query parameters
+
+// Access individual parameters
+const ID = queryParams['id'];
+
+
+console.log("Data id:",ID);
+
+
     // Function to check if any address is selected
   
 
@@ -412,19 +437,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMessage1.style.display = "block";
             }
         } else {
-            const response = await fetch(`/postorderconformdetails`, {
+            const response = await fetch(`/postorderconformdetails1`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ selectedOption: selectedOption}),
+                body: JSON.stringify({ selectedOption: selectedOption,ID:ID}),
             });
 
             const data = await response.json();
             console.log("mad",data);
             if (data.success) {
                 console.log("everytime");
-                window.location.href = '/getorder-conform';
+                window.location.href = '/getorder-conform1';
             } else if (data.message==='Razorpay working Successfully'){
                 console.log("data from function");
                 console.log("data",data.orderData);
@@ -432,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 
             }else if(data.message==='Order placed throught Wallet successfully'){
-                window.location.href = '/getorder-conform';
+                window.location.href = '/getorder-conform1';
             }
             else {
                 Swal.fire({
@@ -468,7 +493,7 @@ let amountInteger = parseInt(amountString);
             console.log(response);
             console.log("Payment successful:", response);
             verifyPayment(response, order);
-            window.location.href = '/getorder-conform';
+            window.location.href = '/getorder-conform1';
         },
         "prefill": {
             "name": "Gaurav Kumar",
@@ -489,7 +514,7 @@ let amountInteger = parseInt(amountString);
 // Verify payment function
 async function verifyPayment(payment, order) {
     try {
-        const response = await fetch('/verify-payment', {
+        const response = await fetch('/verify-payment1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

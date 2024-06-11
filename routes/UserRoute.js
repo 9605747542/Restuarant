@@ -14,6 +14,7 @@ const { isLogged, userisBlocked, checkStock,checkStock1 } = require('../middlewa
 const usercoupon=require('../controllers/UserControllers/userCouponController');
 const userwallet=require('../controllers/UserControllers/walletController');
 const userinvoice=require('../controllers/UserControllers/invoiceDownnloadController');
+const paymentPending = require('../controllers/UserControllers/checkoutController1');
 
 
 userRoute.get('/', userlogin.showLogin);
@@ -91,6 +92,10 @@ userRoute.get('/getcouponcode/:value',isLogged,usercoupon.getcouponcode);
 userRoute.get('/getuserwallet',isLogged,userwallet.getwalletpage);
 userRoute.get('/continuepayment/:id',isLogged,orderconform.continuePaymentFailed);
 userRoute.get('/getcheckout1',isLogged,orderconform.getpaymentpending);
+userRoute.post('/postorderconformdetails1', isLogged, paymentPending.getorderconform1);
+userRoute.post('/verify-payment1',isLogged,orderconform.checkrazorpay);
+userRoute.get('/getorder-conform1', isLogged, orderconform.getorderconformpage);
+
 
 userRoute.get('/downloadinvoice/:id',isLogged,userinvoice.downloadDeliveredInvoice);
 userRoute.get('/returnorder/:id',isLogged,userinvoice.getreturnorder);

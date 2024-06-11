@@ -393,15 +393,6 @@ userlogin.verifyOtp = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
 userlogin.showHome=async(req,res)=>{
   
     try{

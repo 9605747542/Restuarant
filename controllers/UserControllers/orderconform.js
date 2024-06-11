@@ -423,13 +423,7 @@ orderconform.getorderconform = async (req, res) => {
         } else {
             ActualAmount = lastTotal;
         }
-        if(selectedOption === 'Wallet'){
-            let wallet = await Walletdb.findOne({ userId: req.session.userid });
-            if(wallet){
-                
-            }
-
-        }
+        
 
         const couponCode = coupon1;
         const coupon = await Coupondb.findOne({ couponName: couponCode });
@@ -457,12 +451,13 @@ orderconform.getorderconform = async (req, res) => {
         req.session.actual = ActualAmount;
         req.session.total = totalPrice;
 
-        await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
+      
 
         if (selectedOption === 'Cash on Delivery') {
             res.json({ success: true, message: "Order placed successfully" });
         } else if (selectedOption === 'Razorpay') {
-            const orderData = await generateRazorpay(order._id, ActualAmount);
+            const orderData = await generateRazorpay(order._id,req.session.actual);
+            // await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
             res.status(200).json({ message: "Razorpay working Successfully", orderData });
         } else if (selectedOption === 'Wallet') {
             let wallet = await Walletdb.findOne({ userId: req.session.userid });
@@ -540,6 +535,7 @@ function generateRandomString(length) {
 // Function to generate Razorpay order
 async function generateRazorpay(orderId, amount) {
     const integerAmount=parseInt(amount);
+    console.log("session actual amount",integerAmount);
     console.log("ggg",typeof(integerAmount));
     console.log(integerAmount);
     const options = {
@@ -565,6 +561,7 @@ orderconform.checkrazorpay=async(req,res)=>{
     console.log("id of payment",paymentDetails.razorpay_payment_id);
     const paymentId=paymentDetails.razorpay_payment_id;
     const razorpaySignature=paymentDetails.razorpay_signature;
+    await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
     const secret = 'GMSqnBq64TOW2XZzruB74jWa';
     try {
 
@@ -834,34 +831,54 @@ orderconform.getpaymentpending=async(req,res)=>{
         const user = await Userdb.findById(userid);
         const data = user.address;
 
-        const cart = await Cartdb.findOne({ userid }).populate('products.product');
+        // const cart = await Cartdb.findOne({ userid }).populate('products.product');
 
-        if (!cart) {
-            console.log("No cart found for the user");
-            return res.status(404).send("No cart found for the user");
-        }
+        // if (!cart) {
+        //     console.log("No cart found for the user");
+        //     return res.status(404).send("No cart found for the user");
+        // }
 
-        console.log("Cart products:", cart.products);
+        // console.log("Cart products:", cart.products);
 
-        let products; 
+        // let products; 
 
-        if (cart.products) {
-            products = cart.products.map(cartItem => {
+        // if (cart.products) {
+        //     products = cart.products.map(cartItem => {
+        //         return {
+        //             quantity: cartItem.quantity,
+        //             productName: cartItem.product ? cartItem.product.productName : "", // Check if product is null
+        //             price: cartItem.product ? cartItem.product.price : 0, // Check if product is null
+        //             total: cartItem.total
+        //         };
+        //     });
+        // } else {
+        //     console.log("Cart products are null");
+        // }
+        let products = [];
+        const order = await Orderdb.findById(orderId).populate('products.product');
+        if (order.products) {
+            products = order.products.map(cartItem => {
                 return {
                     quantity: cartItem.quantity,
                     productName: cartItem.product ? cartItem.product.productName : "", // Check if product is null
                     price: cartItem.product ? cartItem.product.price : 0, // Check if product is null
-                    total: cartItem.total
                 };
             });
         } else {
-            console.log("Cart products are null");
+            console.log("Order products are null");
         }
         
+        console.log("Products from orderDB", products);
+        
+        // Calculate total
+        const total = products.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        console.log("Total in the BACKEND", total);
+        
+
         
         // Render checkout page with user address and cart products
         if (products && products.length !== 0) {
-            res.render('userViews/checkout1', { address1, products });
+            res.render('userViews/checkout1', { address1, products,total });
         } else {
             res.redirect('/usercart');
         }
