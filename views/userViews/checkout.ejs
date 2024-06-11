@@ -570,6 +570,7 @@
                             } else if (data.message === 'Razorpay working Successfully') {
                                 RazorpayPayment(data.orderData);
                             } else if (data.message === 'Order placed through Wallet successfully') {
+                            
                                 window.location.href = '/getorder-conform';
                             } else {
                                 Swal.fire({
