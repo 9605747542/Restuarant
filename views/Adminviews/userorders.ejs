@@ -3,247 +3,287 @@
 
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="DexignZone">
-	<meta name="robots" content="">
-	<meta name="keywords" content="admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard">
-	<meta name="description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
-	<meta property="og:title" content="Davur : Restaurant Admin Dashboard + FrontEnd">
-	<meta property="og:description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
-	<meta property="og:image" content="https://davur.dexignzone.com/xhtml/social-image.png">
-	<meta name="format-detection" content="telephone=no">
-	
-	<!-- Mobile Specific -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<!-- Title -->
-	<title>Davur : Restaurant Admin Dashboard + FrontEnd</title>
-    <!-- Favicon icon -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="DexignZone">
+    <meta name="robots" content="">
+    <meta name="keywords" content="admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard">
+    <meta name="description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+    <meta property="og:title" content="Davur : Restaurant Admin Dashboard + FrontEnd">
+    <meta property="og:description" content="Discover Davur - the ultimate admin dashboard and Bootstrap 5 template. Specially designed for professionals, and for business. Davur provides advanced features and an easy-to-use interface for creating a top-quality website with frontend">
+    <meta property="og:image" content="https://davur.dexignzone.com/xhtml/social-image.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Davur : Restaurant Admin Dashboard + FrontEnd</title>
     <link rel="icon" type="image/png" sizes="16x16" href="admin-assets/images/favicon.png">
     <link href="admin-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-	<link href="admin-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="admin-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="admin-assets/css/style.css" rel="stylesheet">
-	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+    <style>
+        /* Custom styles for better layout */
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        .deznav {
+            width: 250px;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .footer {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .nav-text {
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            text-align: right;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            float: left;
+        }
+
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+            clear: both;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        table.dataTable th,
+        table.dataTable td {
+            white-space: nowrap;
+        }
+    </style>
 </head>
+
 <body>
+  
 
-    <!--*******************
-        Preloader start
-    ********************-->
-    <div id="preloader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-        </div>
-    </div>
-    <!--*******************
-        Preloader end
-    ********************-->
-
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
-    <div id="main-wrapper">
-	
-	
-		
-			
-		
-		
-						
-		
-		<!--**********************************
-            Content body start
-        ***********************************-->
-        <div class="content-wrapper">
-            <!-- row -->
-			<div class="container-fluid">
-				<div class="form-head dashboard-head d-md-flex d-block mb-5 align-items-start">
-					<h2 class="dashboard-title me-auto">Order Details<a href="javascript:void(0);" class="btn btn-success btn-rounded ms-4 text-white d-inline-block flex-grow-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
-							Book New
-							</a></h2>
-							
-					
-				</div>
-				
-				
-				<!-- Modal -->
-				
-				
-				
-				
-				<div class="row">
-					<div class="col-12">
-						<div class="table-responsive">
-							<table id="example5" class="display mb-4 defaultTable dataTablesCard" style="min-width: 845px;">
-								<thead>
-									<tr>
-										<th>CUSTOMER NAME</th>
-										<th>ORDER ID</th>
-										<th>ORDER DATE</th>
-										<th>PAYMENT METHOD</th>
-										<th>ORDER STATUS</th>
-										<th>TOTAL PRICE</th>
-										<th class="text-end">ACTION</th>
-									</tr>
-								</thead>
-								<tbody>
-									<% for (let i = orders.length - 1; i >= 0; i--) { %>
-									<tr>
-										<td><strong><%= orders[i].username %></strong></td>
-									
-										<td><%= orders[i].orderId %></td>
-										<td><strong class="text-primary"><%= orders[i].orderDate.toLocaleDateString() %></strong></td>
-											<td class="paymentMethod" contenteditable="true"><%= orders[i].paymentMethod %></td>
-										<td><%= orders[i].OrderStatus %></td>
-										<td><%= orders[i].ActualAmount %></td>
-										<td>
-											<div class="action-buttons d-flex justify-content-end">
-												<!-- Edit button with SVG icon -->
-												<a href="/editorder?id=<%= orders[i].orderId %>" class="btn btn-primary light me-2">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-														<!-- Replace this comment with the SVG icon for edit -->
-														<path fill="#ffffff" d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10-10-4.48-10-10 4.48-10 10-10zm0 18c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm-1-4.41v-4.18l2.88 2.88c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-4.59-4.59c-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l2.88-2.88v4.18c0 .55.45 1 1 1s1-.45 1-1z"/>
-													</svg>
-												</a>
-												
-												<!-- Delete button with SVG icon -->
-												<button onclick="cancelorder('<%=orders[i].orderId%>')"  class="btn btn-danger light">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-														<!-- Replace this comment with the SVG icon for delete -->
-														<path fill="#ffffff" d="M20 6h-4.18l-1.41-1.41-2.83 2.83 1.41 1.41h4.18c.55 0 1 .45 1 1s-.45 1-1 1h-1.77l-1.41 1.41 2.83 2.83 1.41-1.41v1.77c0 .55.45 1 1 1s1-.45 1-1v-4.18l1.41-1.41 2.83 2.83 1.41-1.41-2.83-2.83 1.41-1.41-1.41-1.41-2.83 2.83-1.41-1.41 1.41-1.41zm-8-4c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1s.45 1 1 1h4c.55 0 1-.45 1-1zm-4 18v-16h4v16h-4z"/>
-													</svg>
-												</button>
-											</div>
-											
-										</td>
-									
-									</tr>
-									<% } %>
-								</tbody>
-							</table>
-							
-						</div>
-					</div>
-				</div>
+    <!-- Main wrapper start -->
+    <div id="main-wrapper" class="main-wrapper">
+        <div class="deznav">
+            <div class="deznav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a class="has-arrow ai-icon" href="/dashboard" aria-expanded="false">
+                            <i class="flaticon-381-controls-3"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="getUser" aria-expanded="false">
+                            <i class="fa-solid fa-gear"></i>
+                            <span class="nav-text">User-Details</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/getcategory" aria-expanded="false">
+                            <i class="flaticon-381-television"></i>
+                            <span class="nav-text">Category</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/getproduct" aria-expanded="false">
+                            <i class="flaticon-381-controls-3"></i>
+                            <span class="nav-text">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/getorders" aria-expanded="false">
+                            <i class="flaticon-381-television"></i>
+                            <span class="nav-text">User-Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/getcoupon" aria-expanded="false">
+                            <i class="flaticon-381-television"></i>
+                            <span class="nav-text">User-Coupon</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/getoffer" aria-expanded="false">
+                            <i class="flaticon-381-television"></i>
+                            <span class="nav-text">Offer-Module</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-arrow ai-icon" href="/adminlogout" aria-expanded="false">
+                            <i class="flaticon-381-controls-3"></i>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-		
-	
 
+        <!-- Content body start -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <br><br><br><br><br><br><br><br>
 
-        <!--**********************************
-            Footer start
-        ***********************************-->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="example5" class="display mb-4 defaultTable dataTablesCard" style="min-width: 845px;">
+                                <thead>
+                                    <tr>
+                                        <th>CUSTOMER NAME</th>
+                                        <th>ORDER ID</th>
+                                        <th>ORDER DATE</th>
+                                        <th>PAYMENT METHOD</th>
+                                        <th>ORDER STATUS</th>
+                                        <th>TOTAL PRICE</th>
+                                        <th>ADDRESS-DETAILS</th>
+                                        <th class="text-end">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let i = orders.length - 1; i >= 0; i--) { %>
+                                    <tr>
+                                        <td><strong><%= orders[i].username %></strong></td>
+                                        <td><%= orders[i].orderId %></td>
+                                        <td><strong class="text-primary"><%= orders[i].orderDate.toLocaleDateString() %></strong></td>
+                                        <td class="paymentMethod" contenteditable="true"><%= orders[i].paymentMethod %></td>
+                                        <td><%= orders[i].OrderStatus %></td>
+                                        <td><%= orders[i].ActualAmount %></td>
+                                        <td>
+                                            <% for (let j = 0; j < orders[i].orderAddress.length; j++) { %>
+                                                <div>
+                                                    <strong>Phone:</strong> <%= orders[i].orderAddress[j].phone %><br>
+                                                    <strong>Street Address:</strong> <%= orders[i].orderAddress[j].streetaddress %><br>
+                                                    <strong>City:</strong> <%= orders[i].orderAddress[j].city %><br>
+                                                    <strong>House Name:</strong> <%= orders[i].orderAddress[j].House_name %>
+                                                </div>
+                                                <% if (j < orders[i].orderAddress.length - 1) { %>
+                                                    <hr>
+                                                <% } %>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons d-flex justify-content-end">
+                                                <a href="/editorder?id=<%= orders[i].orderId %>" class="btn btn-primary light me-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path fill="#ffffff" d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10-10-4.48-10-10 4.48-10 10-10zm0 18c4.41 0 8-3.59 8-8s-3.59-8-8-8-8 3.59-8 8 3.59 8 8 8zm-1-4.41v-4.18l2.88 2.88c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-4.59-4.59c-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l2.88-2.88v4.18c0 .55.45 1 1 1s1-.45 1-1z"/>
+                                                    </svg>
+                                                </a>
+                                                <button class="btn btn-danger light" onclick="cancelorder('<%= orders[i].orderId %>')">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path fill="#ffffff" d="M14.59 4.58l-4.59 4.58-4.58-4.58c-.39-.39-1.02-.39-1.41 0s-.39 1.02 0 1.41l4.58 4.59-4.58 4.59c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l4.58-4.59 4.59 4.59c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-4.59-4.59 4.59-4.59c.39-.39.39-1.02 0-1.41s-1.02-.39-1.41 0z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content body end -->
+
+        <!-- Footer start -->
         <div class="footer p-0">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2023</p>
+                <p>Copyright © Designed & Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2023</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-		<!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
+        <!-- Footer end -->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+    <!-- Main wrapper end -->
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
     <!-- Required vendors -->
-	<script>
-		async function cancelorder(orderid) {
-    console.log("Hai");
-    console.log(orderid);
-    if (orderid) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const response = await fetch(`/cancelOrder/${orderid}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    const data = await response.json();
-                    console.log(data);
-                    if (data.success === true) {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: data.message,
-                            icon: 'success',
-                        }).then(() => {
-                            window.location.href = '/getorders';
-                        });
-                    } else {
-                        console.log(data.error);
-                        Swal.fire({
-                            title: 'Error!',
-                            text: data.message,
-                            icon: 'error',
-                        });
-                    }
-               
-                   
-           
-            }
-        });
-    }
-}
-
-   
-
-		
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="/admin-assets/vendor/global/global.min.js"></script>
-	<script src="/admin-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<!-- Datatable -->
+    <script src="/admin-assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="/admin-assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="/admin-assets/js/custom.min.js"></script>
-	<script src="/admin-assets/js/deznav-init.js"></script>
-	
-	<script>
-	(function($) {
-	 
-		var table = $('#example5').DataTable({
-			searching: false,
-			paging:true,
-			select: false,
-			//info: false,         
-			lengthChange:false 
-			
-		});
-		$('#example tbody').on('click', 'tr', function () {
-			var data = table.row( this ).data();
-			
-		});
-	   
-	})(jQuery);
-	</script>
-	
+    <script src="/admin-assets/js/deznav-init.js"></script>
+    <script>
+        (function($) {
+            var table = $('#example5').DataTable({
+                searching: false,
+                paging: true,
+                select: false,
+                lengthChange: false
+            });
+            $('#example tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+            });
+        })(jQuery);
+
+        async function cancelorder(orderid) {
+            console.log("Hai");
+            console.log(orderid);
+            if (orderid) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        const response = await fetch(`/cancelOrder/${orderid}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        const data = await response.json();
+                        console.log(data);
+                        if (data.success === true) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success',
+                            }).then(() => {
+                                window.location.href = '/getorders';
+                            });
+                        } else {
+                            console.log(data.error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message,
+                                icon: 'error',
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </body>
+
 </html>

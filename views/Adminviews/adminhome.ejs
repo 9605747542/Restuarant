@@ -300,18 +300,20 @@
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="returnedCounter" class="fs-32 font-w600 counter">25</h2>
-												<p class="fs-16 mb-0">Returned</p>
+												<p class="fs-16 mb-0">Order Placed</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="deliveredCounter" class="fs-32 font-w600 counter">60</h2>
+												<br>
 												<p class="fs-16 mb-0">Delivered</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="cancelledCounter" class="fs-32 font-w600 counter">7</h2>
+												<br>
 												<p class="fs-16 mb-0">Cancelled</p>
 											</div>
 										</div>
@@ -367,18 +369,20 @@
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="returnedCounter1" class="fs-32 font-w600 counter">25</h2>
-												<p class="fs-16 mb-0">On Delivery</p>
+												<p class="fs-16 mb-0">order Placed</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="deliveredCounter1" class="fs-32 font-w600 counter">60</h2>
+												<br>
 												<p class="fs-16 mb-0">Delivered</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="cancelledCounter1" class="fs-32 font-w600 counter">7</h2>
+												<br>
 												<p class="fs-16 mb-0">Cancelled</p>
 											</div>
 										</div>
@@ -396,18 +400,20 @@
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="returnedCounter2" class="fs-32 font-w600 counter">25</h2>
-												<p class="fs-16 mb-0">On Delivery</p>
+												<p class="fs-16 mb-0">Order Placed</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="deliveredCounter2" class="fs-32 font-w600 counter">60</h2>
+												<br>
 												<p class="fs-16 mb-0">Delivered</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="cancelledCounter2" class="fs-32 font-w600 counter">7</h2>
+												<br>
 												<p class="fs-16 mb-0">Cancelled</p>
 											</div>
 										</div>
@@ -435,18 +441,20 @@
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="returnedCounter3" class="fs-32 font-w600 counter">25</h2>
-												<p class="fs-16 mb-0">On Delivery</p>
+												<p class="fs-16 mb-0">Order Placed</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="deliveredCounter3" class="fs-32 font-w600 counter">60</h2>
+												<br>
 												<p class="fs-16 mb-0">Delivered</p>
 											</div>
 										</div>
 										<div class="col-sm-4 mb-4">
 											<div class="border px-3 py-3 rounded-xl">
 												<h2 id="cancelledCounter3" class="fs-32 font-w600 counter">7</h2>
+												<br>
 												<p class="fs-16 mb-0">Cancelled</p>
 											</div>
 										</div>
@@ -462,18 +470,20 @@
 											<div class="col-sm-4 mb-4">
 												<div class="border px-3 py-3 rounded-xl">
 													<h2 id="returnedCounter4" class="fs-32 font-w600 counter">25</h2>
-													<p class="fs-16 mb-0">On Delivery</p>
+													<p class="fs-16 mb-0">Order Placed</p>
 												</div>
 											</div>
 											<div class="col-sm-4 mb-4">
 												<div class="border px-3 py-3 rounded-xl">
 													<h2 id="deliveredCounter4" class="fs-32 font-w600 counter">60</h2>
+													<br>
 													<p class="fs-16 mb-0">Delivered</p>
 												</div>
 											</div>
 											<div class="col-sm-4 mb-4">
 												<div class="border px-3 py-3 rounded-xl">
 													<h2 id="cancelledCounter4" class="fs-32 font-w600 counter">7</h2>
+													<br>
 													<p class="fs-16 mb-0">Cancelled</p>
 												</div>
 											</div>
@@ -492,12 +502,12 @@
 								<div class="card">
 									<div class="card-header border-0 pb-0 d-sm-flex d-block">
 										<div class="me-3">
-											<h4 class="card-title mb-1">Trending Items</h4>
+											<h4 class="card-title mb-1">Most Trending Product Items</h4>
 										
 										</div>
 									
 									</div>
-									<%for(let i=0 ;i< productDetails.length;i++){%>
+									<%for(let i=0 ;i< 3;i++){%>
 									<div class="card-body p-0 pt-3">
 										<div class="media items-list-1">
 											<span class="number col-1 px-0 align-self-center">#<%=i+1%>></span>
@@ -515,286 +525,14 @@
 												</div>
 											</div>
 										</div>
-										<%}%>
+								
 										
 										
 									</div>
+									<%}%>
 								</div>
-							</div>
-							<div class="col-xl-12">
-								<div class="card">
-									<div class="card-header border-0 pb-0 d-sm-flex flex-wrap d-block">
-										<div class="mb-3">
-											<h4 class="card-title mb-1">Most Selling Items</h4>
-											<small class="mb-0">Lorem ipsum dolor sit amet, consectetur</small>
-										</div>
-										
-									</div>
-									<div class="card-body tab-content pt-3">
-										<div class="tab-pane fade show active" id="monthly">
-											<div class="height500 dz-scroll loadmore-content" id="sellingItemsContent">
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic5.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Meidum Spicy Spagethi Italiano</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> BURGER</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$12.56</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic4.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Pizza Meal for Kids (Small size)</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> PIZZA</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$5.67</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic3.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Medium Spicy Pizza with Kemangi Leaf</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> JUICE</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$11.21</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic2.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Tuna soup spinach with himalaya salt</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> PIZZA</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$8.15</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic1.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Watermelon juice with ice</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);">BURGER</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$5.67</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="text-center bg-white pt-3">
-												<a href="javascript:void(0);" class="btn-link dz-load-more"  rel="ajax/selling-items.html" id="sellingItems">View more <i class="fa fa-angle-down ms-2 scale-2"></i></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="weekly">
-											<div class="height500 dz-scroll loadmore-content" id="sellingItems2Content">
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic3.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Pizza Meal for Kids (Small size)</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);">BURGER</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$11.21</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic2.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Meidum Spicy Spagethi Italiano</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);">PIZZA</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$8.15</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic1.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Tuna soup spinach with himalaya salt</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> JUICE</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$5.67</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="text-center bg-white pt-3">
-												<a href="javascript:void(0);" class="btn-link dz-load-more"  rel="ajax/selling-items.html" id="sellingItems2">View more <i class="fa fa-angle-down ms-2 scale-2"></i></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="today">
-											<div class="height500 dz-scroll loadmore-content" id="sellingItems3Content">
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic2.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Tuna soup spinach with himalaya salt</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);"> JUICE</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$8.15</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="media mb-4 items-list-2">
-													<a href="ecom-product-detail.html"><img class="img-fluid rounded me-3" width="85" src="./images/dish/pic1.jpg" alt="DexignZone"></a>
-													<div class="media-body col-6 px-0">
-														<h5 class="mt-0 mb-1"><a class="text-black" href="ecom-product-detail.html">Watermelon juice with ice</a></h5>
-														<small class="font-w500 mb-3"><a class="text-primary" href="javascript:void(0);">PIZZA</a></small>
-														<span class="text-secondary me-2 fo"></span>
-														<ul class="fs-14 list-inline">
-															<li class="me-3">Serves for 4 Person</li>
-															<li>24mins</li>
-														</ul>
-													</div>
-													<div class="media-footer align-self-center ms-auto d-block align-items-center d-sm-flex">
-														<h4	class="mb-0 font-w600 text-primary">$5.67</h4>
-														<div class="dropdown ms-3 ">
-															<button type="button" class="btn btn-secondary sharp tp-btn-light " data-bs-toggle="dropdown">
-																<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-																<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+						
+					
 					
 					<!-- <div class="col-xl-6 col-xxl-6 col-lg-12 col-md-12">
 						<div class="card">
@@ -923,7 +661,7 @@ async function fetchMonthlyData(month, year) {
         const data = await response.json();
         console.log(`Successfully received data: `, data);
 
-        const downloadLink = createDownloadLink('PDF  Report', `/downloadmonthlyReport/${month}`);
+        const downloadLink = createDownloadLink('PDF Report', `/downloadmonthlyReport/${month}`);
         const downloadLink1 = createDownloadLink('EXCEL Report', `/downloadmonthlyReportinExcel/${month}`);
 
         const selectContainer = document.querySelector('.order-manage');
@@ -960,35 +698,40 @@ function setupDownloadLink(link) {
 }
 
 //for doing weekly report
-const weekSelect1=document.getElementById('weeks1');
-const monthSelect1=document.getElementById('month1');
-const yearSelect1=document.getElementById('year1');
-weekSelect1.addEventListener('change',function(event){
-	event.preventDefault();
-        const selectedWeek = this.value;
-		console.log("fffffffffff",selectedWeek);
-        const selectedMonth = monthSelect1.value;
-		const selectedYear=yearSelect1.value;
-        fetchWeeklyData(selectedMonth, selectedWeek,selectedYear);
-    });
+const weekSelect1 = document.getElementById('weeks1');
+const monthSelect1 = document.getElementById('month1');
+const yearSelect1 = document.getElementById('year1');
 
-yearSelect1.addEventListener('change',function(event){
-	event.preventDefault();
-	const selectedMonth=monthSelect1.value;
-		const selectedWeek=weekSelect1.value;
-		console.log("hhhhh",selectedWeek);
-		const selectedYear=this.value;
-		fetchWeeklyData(selectedMonth,selectedWeek,selectedYear);
+weekSelect1.addEventListener('change', function(event) {
+    event.preventDefault();
+    const selectedWeek = this.value;
+    const selectedMonth = monthSelect1.value;
+    const selectedYear = yearSelect1.value;
+    fetchWeeklyData(selectedMonth, selectedWeek, selectedYear);
+});
 
-})
-async function fetchWeeklyData(Month,Week,Year){
+yearSelect1.addEventListener('change', function(event) {
+    event.preventDefault();
+    const selectedMonth = monthSelect1.value;
+    const selectedWeek = weekSelect1.value;
+    const selectedYear = this.value;
+    fetchWeeklyData(selectedMonth, selectedWeek, selectedYear);
+});
 
+monthSelect1.addEventListener('change', function(event) {
+    event.preventDefault();
+    const selectedMonth = this.value;
+    const selectedWeek = weekSelect1.value;
+    const selectedYear = yearSelect1.value;
+    fetchWeeklyData(selectedMonth, selectedWeek, selectedYear);
+});
 
-	console.log(Month,Week,Year);
+async function fetchWeeklyData(Month, Week, Year) {
+    console.log(Month, Week, Year);
     try {
         const response = await fetch(`/getWeeklySalesReport/${Month}/${Week}/${Year}`, {
             method: 'GET',
-			headers: {
+            headers: {
                 'Content-Type': 'application/json'
             },
         });
@@ -996,91 +739,118 @@ async function fetchWeeklyData(Month,Week,Year){
             throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        console.log(`Successfully received data: `, data);
-		const downloadLink = document.createElement('a');
-downloadLink.textContent = 'Download Weekly Sales Report';
+        console.log('Successfully received data:', data);
 
-// Replace single quotes with backticks (`) to use template literals
-downloadLink.href = `/downloadweeklyReport/${Month}/${Week}/${Year}`; // Assuming month is a variable containing the month value
+        // Create download links
+			const downloadLink = document.createElement('a');
+			const downloadLink1 = document.createElement('a');
+			downloadLink.textContent = 'PDF REPORT';
+			downloadLink1.textContent = 'EXCEL REPORT';
 
-console.log(downloadLink.href);
+			downloadLink.href = `/downloadweeklyReport/${Month}/${Week}/${Year}`;
+			downloadLink1.href = `/downloadweeklysalesReportinExcel/${Month}/${Week}/${Year}`;
 
-downloadLink.classList.add('btn', 'btn-lg', 'mb-6');
-downloadLink.style.color = 'white';
-downloadLink.style.textDecoration = 'none'; 
-downloadLink.style.padding = '10px 20px';
-downloadLink.style.borderRadius = '5px'; 
-downloadLink.style.backgroundColor = '#3d4465';
-downloadLink.style.transition = 'background-color 0.3s ease';
+			// Style download links
+			const downloadLinkStyles = {
+				color: 'white',
+				textDecoration: 'none',
+				padding: '10px 20px',
+				borderRadius: '5px',
+				backgroundColor: '#3d4465',
+				transition: 'background-color 0.3s ease',
+				marginRight: '10px' // Add some space between the buttons
+			};
+			
+			Object.assign(downloadLink.style, downloadLinkStyles);
+			Object.assign(downloadLink1.style, downloadLinkStyles);
 
-downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#3d4465'; }; 
-downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+			downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#5a5f7a'; };
+			downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+			downloadLink1.onmouseover = () => { downloadLink1.style.backgroundColor = '#5a5f7a'; };
+			downloadLink1.onmouseout = () => { downloadLink1.style.backgroundColor = '#3d4465'; };
 
-// Append the link to the document or any other element
-document.body.appendChild(downloadLink);
+			// Replace the select elements with the download links
+			const selectContainer = document.querySelector('.order-manage1');
+			selectContainer.innerHTML = ''; // Clear the container
+			selectContainer.appendChild(downloadLink);
+			selectContainer.appendChild(downloadLink1);
 
-        // Replace the select elements with the download link
-        const selectContainer = document.querySelector('.order-manage1');
-        selectContainer.innerHTML = ''; // Clear the container
-        selectContainer.appendChild(downloadLink);
-		
-		document.getElementById('returnedCounter1').innerText = data.returned;
-        document.getElementById('deliveredCounter1').innerText = data.delivered;
-        document.getElementById('cancelledCounter1').innerText = data.cancelled;
-        
-     
-       
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+			// Update counters
+			document.getElementById('returnedCounter1').innerText = data.returned;
+			document.getElementById('deliveredCounter1').innerText = data.delivered;
+			document.getElementById('cancelledCounter1').innerText = data.cancelled;
+
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
 }
 
 
 // for doing todays report
-document.getElementById('todayDate').addEventListener('click',async (e)=>{
-	e.preventDefault();
-	const response = await fetch(`/gettodaySalesReport`, {
+
+
+document.getElementById('todayDate').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await fetch(`/gettodaySalesReport`, {
             headers: {
                 'Content-Type': 'application/json'
             },
         });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch today\'s sales report');
+        }
+
         const data = await response.json();
-        console.log(`Successfully received data: `, data);
-		const downloadLink = document.createElement('a');
-downloadLink.textContent = "Download Today's Sales Report";
+        console.log('Successfully received data:', data);
 
+        // Create download links
+        const downloadLink = document.createElement('a');
+        const downloadLink1 = document.createElement('a');
 
-downloadLink.href = `/downloadtodaysReport`; 
+        downloadLink.textContent = 'PDF REPORT';
+        downloadLink1.textContent = 'EXCEL REPORT';
 
-console.log(downloadLink.href);
+        downloadLink.href = '/downloadtodaysReport';
+        downloadLink1.href = '/downloadtodaysReportInExcel'; // Ensure this is the correct endpoint for Excel report
 
-downloadLink.classList.add('btn', 'btn-lg', 'mb-6');
-downloadLink.style.color = 'white';
-downloadLink.style.textDecoration = 'none'; 
-downloadLink.style.padding = '10px 20px';
-downloadLink.style.borderRadius = '5px'; 
-downloadLink.style.backgroundColor = '#3d4465';
-downloadLink.style.transition = 'background-color 0.3s ease';
+        // Style download links
+        const downloadLinkStyles = {
+            color: 'white',
+            textDecoration: 'none',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            backgroundColor: '#3d4465',
+            transition: 'background-color 0.3s ease',
+            marginRight: '10px' // Add some space between the buttons
+        };
 
-downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#3d4465'; }; 
-downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+        Object.assign(downloadLink.style, downloadLinkStyles);
+        Object.assign(downloadLink1.style, downloadLinkStyles);
 
+        downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#5a5f7a'; };
+        downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+        downloadLink1.onmouseover = () => { downloadLink1.style.backgroundColor = '#5a5f7a'; };
+        downloadLink1.onmouseout = () => { downloadLink1.style.backgroundColor = '#3d4465'; };
 
-document.body.appendChild(downloadLink);
-
-   
+        // Replace the select elements with the download links
         const selectContainer = document.querySelector('.order-manage2');
-        selectContainer.innerHTML = ''; 
+        selectContainer.innerHTML = ''; // Clear the container
         selectContainer.appendChild(downloadLink);
-		console.log("download",data.cancelled);
-		document.getElementById('returnedCounter2').innerText = data.returned;
+        selectContainer.appendChild(downloadLink1);
+
+        // Update counters
+        document.getElementById('returnedCounter2').innerText = data.returned;
         document.getElementById('deliveredCounter2').innerText = data.delivered;
         document.getElementById('cancelledCounter2').innerText = data.cancelled;
-        
-     
-       
-		
-	})
+
+    } catch (error) {
+        console.error('Error fetching today\'s sales report:', error);
+    }
+});
+
 
 	// for doing yearly report
 	const year0=document.getElementById('year2');
@@ -1093,6 +863,7 @@ document.body.appendChild(downloadLink);
 	})
 	async function fetchYearlyData(year){
 		console.log("from function",year);
+		try{
 
 		const response = await fetch(`/getyearlySalesReport/${year}`, {
             headers: {
@@ -1102,38 +873,46 @@ document.body.appendChild(downloadLink);
         const data = await response.json();
         console.log(`Successfully received data: `, data);
 		const downloadLink = document.createElement('a');
-downloadLink.textContent = "Download Yearly's Sales Report";
+			const downloadLink1 = document.createElement('a');
+			downloadLink.textContent = 'PDF REPORT';
+			downloadLink1.textContent = 'EXCEL REPORT';
 
+			downloadLink.href = `/downloadyearlyReport/${year}`;
+			downloadLink1.href = `/downloadyearlysalesReportinExcel/${year}`;
 
-downloadLink.href = `/downloadyearlyReport/${year}`; 
+			// Style download links
+			const downloadLinkStyles = {
+				color: 'white',
+				textDecoration: 'none',
+				padding: '10px 20px',
+				borderRadius: '5px',
+				backgroundColor: '#3d4465',
+				transition: 'background-color 0.3s ease',
+				marginRight: '10px' // Add some space between the buttons
+			};
+			
+			Object.assign(downloadLink.style, downloadLinkStyles);
+			Object.assign(downloadLink1.style, downloadLinkStyles);
 
-console.log(downloadLink.href);
+			downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#5a5f7a'; };
+			downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+			downloadLink1.onmouseover = () => { downloadLink1.style.backgroundColor = '#5a5f7a'; };
+			downloadLink1.onmouseout = () => { downloadLink1.style.backgroundColor = '#3d4465'; };
 
-downloadLink.classList.add('btn', 'btn-lg', 'mb-6');
-downloadLink.style.color = 'white';
-downloadLink.style.textDecoration = 'none'; 
-downloadLink.style.padding = '10px 20px';
-downloadLink.style.borderRadius = '5px'; 
-downloadLink.style.backgroundColor = '#3d4465';
-downloadLink.style.transition = 'background-color 0.3s ease';
+			// Replace the select elements with the download links
+			const selectContainer = document.querySelector('.order-manage3');
+			selectContainer.innerHTML = ''; // Clear the container
+			selectContainer.appendChild(downloadLink);
+			selectContainer.appendChild(downloadLink1);
 
-downloadLink.onmouseover = () => { downloadLink.style.backgroundColor = '#3d4465'; }; 
-downloadLink.onmouseout = () => { downloadLink.style.backgroundColor = '#3d4465'; };
+			// Update counters
+			document.getElementById('returnedCounter3').innerText = data.returned;
+			document.getElementById('deliveredCounter3').innerText = data.delivered;
+			document.getElementById('cancelledCounter3').innerText = data.cancelled;
 
-
-document.body.appendChild(downloadLink);
-
-   
-        const selectContainer = document.querySelector('.order-manage3');
-        selectContainer.innerHTML = ''; 
-        selectContainer.appendChild(downloadLink);
-		console.log("download",data.cancelled);
-		document.getElementById('returnedCounter3').innerText = data.returned;
-        document.getElementById('deliveredCounter3').innerText = data.delivered;
-        document.getElementById('cancelledCounter3').innerText = data.cancelled;
-        
-     
-       
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
 		
 	
 }

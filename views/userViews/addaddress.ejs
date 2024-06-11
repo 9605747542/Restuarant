@@ -150,11 +150,10 @@ document.getElementById('savebtn').addEventListener('click', async (e) => {
         const formData = {
             streetaddress,
             city,
-           
             House_name,
-          
             phone
         };
+        console.log("form dat in the froontend",formData);
 
         try {
             const response = await fetch('/postuseraddress', {
@@ -172,6 +171,7 @@ document.getElementById('savebtn').addEventListener('click', async (e) => {
 					text:data.message,
 					icons:'success'
 				})
+        window.location.href='/getalladdress'
             } else {
                 window.location.href = '/clickproduct';
             }

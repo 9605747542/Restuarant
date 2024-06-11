@@ -7,22 +7,37 @@ userorder.getuserorderpage=async(req,res)=>{
 
 
    
-    const data=await Orderdb.find();
+    const data = await Orderdb.find();
     console.log(data);
+
     const orders = data.map(cartItem => {
-        return {
+        const order = {
             orderId: cartItem.orderId,
             customer: cartItem.customer,
             orderDate: cartItem.orderDate,
             OrderStatus: cartItem.OrderStatus,
             paymentMethod: cartItem.paymentMethod,
-       ActualAmount: cartItem.ActualAmount,
-        username:cartItem.username
-
+            ActualAmount: cartItem.ActualAmount,
+            username: cartItem.username,
+            orderAddress: []
         };
+
+        // Extract address details one by one
+        cartItem.address.forEach(address => {
+            const formattedAddress = {
+                phone: address.phone,
+                streetaddress: address.streetaddress,
+                city: address.city,
+                House_name: address.House_name
+            };
+            order.orderAddress.push(formattedAddress);
+        });
+
+        return order;
     });
-  
-    console.log("checking",orders);
+
+    console.log("checking", orders);
+
    
     res.render('Adminviews/userorders',{orders})
 }

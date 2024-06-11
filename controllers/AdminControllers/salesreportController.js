@@ -42,7 +42,7 @@ salesReport.getmonthlysalesReport = async (req, res) => {
         const endDate = new Date(year, month, 1);
         const returnedOrders = await OrderDB.countDocuments({
          orderDate: { $gte: startDate, $lt: endDate },
-         OrderStatus: "Returned"
+         OrderStatus: "Order Placed"
      });
 
      const deliveredOrders = await OrderDB.countDocuments({
@@ -173,7 +173,7 @@ salesReport.getweeklysalesReport = async (req, res) => {
 
         const returnedOrders = await OrderDB.countDocuments({
             orderDate: { $gte: startDate, $lt: endDate },
-            OrderStatus: "Returned"
+            OrderStatus: "Order Placed"
         });
 
         const deliveredOrders = await OrderDB.countDocuments({
@@ -293,7 +293,7 @@ salesReport.gettodaysalesReport = async (req, res) => {
         let cancelledOrders = 0;
 
         todayOrders.forEach(order => {
-            if (order.OrderStatus === "Returned") {
+            if (order.OrderStatus === "Order Placed") {
                 returnedOrders++;
             } else if (order.OrderStatus === "Delivered") {
                 deliveredOrders++;
@@ -404,7 +404,7 @@ salesReport.getyearlysalesReport = async (req, res) => {
         let deliveredOrders = 0;
         let cancelledOrders = 0;
         yearlyOrders.forEach(order => {
-            if (order.OrderStatus === "Returned") {
+            if (order.OrderStatus === "Order Placed") {
                 returnedOrders++;
             } else if (order.OrderStatus === "Delivered") {
                 deliveredOrders++;
@@ -515,7 +515,7 @@ salesReport.getcustomsalesReport = async (req, res) => {
         let cancelledOrders = 0;
         
         customOrders.forEach(order => {
-            if (order.OrderStatus === "Returned") {
+            if (order.OrderStatus === "order Placed") {
                 returnedOrders++;
             } else if (order.OrderStatus === "Delivered") {
                 deliveredOrders++;

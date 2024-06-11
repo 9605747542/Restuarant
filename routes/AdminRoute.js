@@ -95,6 +95,9 @@ AdminRouter.get('/downloadcustomReport/:custom',isAdminLogged,usersales.download
 
 //for getting excel format sales Report
 AdminRouter.get('/downloadmonthlyReportinExcel/:month',isAdminLogged,excelreport.getmonthlysalesReport);
+AdminRouter.get('/downloadweeklysalesReportinExcel/:month/:week/:year',isAdminLogged,excelreport.getweeklysalesReport);
+AdminRouter.get('/downloadtodaysReportInExcel',isAdminLogged,excelreport.getTodaysalesReport)
+AdminRouter.get('/downloadyearlysalesReportinExcel/:year',isAdminLogged,excelreport.getYearlysalesReport)
 AdminRouter.get('/downloadcustomReportinExcel/:custom',isAdminLogged,excelreport.getcustomsalesReport);
 
 

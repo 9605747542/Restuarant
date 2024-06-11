@@ -120,7 +120,7 @@
                                                         <div class="address-details">
                                                             <h3>Address <%= index + 1 %>
                                                             </h3>
-                                                            <div class="address-info">
+                                                            <div class="">
                                                                 <p><strong>Street Address:</strong>
                                                                     <%= add.streetaddress %>
                                                                 </p>
@@ -625,7 +625,7 @@
                 var rzp1 = new Razorpay(options);
                 rzp1.on('payment.failed', function (response) {
                     console.error("Payment failed:", response);
-                    window.location.href = '/getorder-conform';
+                    // window.location.href = '/getorder-conform';
                 });
                 rzp1.open();
             }
@@ -692,6 +692,7 @@
                                 text: data.message,
                                 icon: 'success'
                             });
+                            window.location.href='/getcheckoutpage';
                          
                         } else {
                             Swal.fire({

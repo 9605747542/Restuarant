@@ -338,6 +338,149 @@ var instance = new Razorpay({
 //     }
 // };
 
+// orderconform.getorderconform = async (req, res) => {
+//     try {
+//         const { addressDetails, selectedOption } = req.body;
+//         let { coupon1, lastTotal } = req.body;
+
+//         console.log("Coupon:", coupon1);
+//         console.log("Details:", selectedOption, addressDetails, coupon1, lastTotal);
+
+//         if (coupon1 === undefined || lastTotal === null) {
+//             coupon1 = 0;
+//             lastTotal = 0;
+//         }
+
+//         const user = await Userdb.findById(req.session.userid);
+//         const userEmail = user.email;
+
+//         const address = await Userdb.findOne({ 'address._id': addressDetails });
+//         const addressObject = address ? address.address.find(a => a._id.toString() === addressDetails) : null;
+
+//         const cart = await Cartdb.findOne({ userid: req.session.userid }).populate('products.product');
+//         const products = cart.products.map(item => {
+//             if (item.product) {
+//                 return {
+//                     product: item.product,
+//                     quantity: item.quantity,
+//                     productName: item.product.productName,
+//                     image: item.product.image,
+//                     price: item.product.price,
+//                     category: item.product.category
+//                 };
+//             } else {
+//                 console.log("Product is null for an item in the cart");
+//                 return null;
+//             }
+//         }).filter(product => product !== null);
+
+//         let productNames = products.map(product => product.productName);
+//         req.session.productNames = productNames;
+//         console.log("Product Names:", req.session.productNames);
+
+//         const productDetails = await Productdb.find({ productName: { $in: productNames } });
+
+//         // Save products sequentially to avoid parallel save errors
+//         // for (let product of productDetails) {
+//         //     product.popularity = (product.popularity || 0) + 1;
+//         //     await product.save();
+//         // }
+//         const productSaves = productDetails.map(product => {
+//             product.popularity = (product.popularity || 0) + 1;
+//             return product.save();
+//         });
+
+//         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
+//         // const categorySaves = productsWithCategories.map(product => {
+//         //     if (product.category) {
+//         //         product.category.popularity = (product.category.popularity || 0) + 1;
+//         //         return product.category.save();
+//         //     } else {
+//         //         console.log("Category is null for a product:", product.productName);
+//         //         return Promise.resolve(); // Return a resolved promise if category is null
+//         //     }
+//         // });
+//         // await Promise.all([...productSaves,...categorySaves]);
+
+//         // Save categories sequentially to avoid parallel save errors
+//         for (let product of productsWithCategories) {
+//             if (product.category) {
+//                 let category = product.category;
+//                 category.popularity = (category.popularity || 0) + 1;
+//                 await category.save();
+//             } else {
+//                 console.log("Category is null for a product:", product.productName);
+//             }
+//         }
+
+//         const totalPrice = cart.products.reduce((total, item) => total + item.total, 0);
+//         let flatRate = totalPrice > 1000 ? 100 : 50;
+
+//         let ActualAmount;
+//         if (!coupon1) {
+//             coupon1 = req.session.couponcode;
+//             ActualAmount = calculateTotalAmount(totalPrice, flatRate);
+//         } else {
+//             ActualAmount = lastTotal;
+//         }
+        
+
+//         const couponCode = coupon1;
+//         const coupon = await Coupondb.findOne({ couponName: couponCode });
+
+//         await updateStock(cart.products);
+
+//         const order = new Orderdb({
+//             customer: cart._id,
+//             address: addressObject,
+//             products,
+//             totalAmount: totalPrice,
+//             shipping: flatRate,
+//             ActualAmount,
+//             OrderStatus: selectedOption === 'Razorpay' ? 'Payment Pending' : 'Order Placed',
+//             paymentMethod: selectedOption,
+//             orderDate: new Date(),
+//             orderId: generateOrderId(),
+//             useremail: userEmail,
+//             username: user.name,
+//             coupon: coupon ? coupon.couponName : null,
+//         });
+
+//         await order.save();
+//         req.session.orderId = order._id;
+//         req.session.actual = ActualAmount;
+//         req.session.total = totalPrice;
+
+      
+
+//         if (selectedOption === 'Cash on Delivery') {
+//             res.json({ success: true, message: "Order placed successfully" });
+//         } else if (selectedOption === 'Razorpay') {
+//             const orderData = await generateRazorpay(order._id,req.session.actual);
+//             // await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
+//             res.status(200).json({ message: "Razorpay working Successfully", orderData });
+//         } else if (selectedOption === 'Wallet') {
+//             let wallet = await Walletdb.findOne({ userId: req.session.userid });
+//             if(wallet){
+//            if(wallet.balance>actual){
+       
+//                 wallet.balance -= ActualAmount;
+//                 wallet.transactionHistory.push({
+//                     transaction: 'Money Deducted',
+//                     amount: ActualAmount
+//                 });
+//                 await wallet.save();
+//             }}else{
+//                 res.json({ success: false, message: "Out of money in Your Wallet" });
+//             }
+//             res.json({ success: true, message: "Order placed through Wallet successfully" });
+//         }
+
+//     } catch (error) {
+//         console.error('Error placing order:', error);
+//         res.status(500).json({ error: 'Failed to place order' });
+//     }
+// };
 orderconform.getorderconform = async (req, res) => {
     try {
         const { addressDetails, selectedOption } = req.body;
@@ -380,29 +523,13 @@ orderconform.getorderconform = async (req, res) => {
 
         const productDetails = await Productdb.find({ productName: { $in: productNames } });
 
-        // Save products sequentially to avoid parallel save errors
-        // for (let product of productDetails) {
-        //     product.popularity = (product.popularity || 0) + 1;
-        //     await product.save();
-        // }
         const productSaves = productDetails.map(product => {
             product.popularity = (product.popularity || 0) + 1;
             return product.save();
         });
 
         const productsWithCategories = await Productdb.find({ productName: { $in: productNames } }).populate('category').exec();
-        // const categorySaves = productsWithCategories.map(product => {
-        //     if (product.category) {
-        //         product.category.popularity = (product.category.popularity || 0) + 1;
-        //         return product.category.save();
-        //     } else {
-        //         console.log("Category is null for a product:", product.productName);
-        //         return Promise.resolve(); // Return a resolved promise if category is null
-        //     }
-        // });
-        // await Promise.all([...productSaves,...categorySaves]);
 
-        // Save categories sequentially to avoid parallel save errors
         for (let product of productsWithCategories) {
             if (product.category) {
                 let category = product.category;
@@ -423,7 +550,6 @@ orderconform.getorderconform = async (req, res) => {
         } else {
             ActualAmount = lastTotal;
         }
-        
 
         const couponCode = coupon1;
         const coupon = await Coupondb.findOne({ couponName: couponCode });
@@ -451,25 +577,28 @@ orderconform.getorderconform = async (req, res) => {
         req.session.actual = ActualAmount;
         req.session.total = totalPrice;
 
-      
-
         if (selectedOption === 'Cash on Delivery') {
             res.json({ success: true, message: "Order placed successfully" });
         } else if (selectedOption === 'Razorpay') {
-            const orderData = await generateRazorpay(order._id,req.session.actual);
-            // await Cartdb.findOneAndUpdate({ userid: req.session.userid }, { $set: { products: [] } });
+            const orderData = await generateRazorpay(order._id, req.session.actual);
             res.status(200).json({ message: "Razorpay working Successfully", orderData });
         } else if (selectedOption === 'Wallet') {
             let wallet = await Walletdb.findOne({ userId: req.session.userid });
             if (wallet) {
-                wallet.balance -= ActualAmount;
-                wallet.transactionHistory.push({
-                    transaction: 'Money Deducted',
-                    amount: ActualAmount
-                });
-                await wallet.save();
+                if (wallet.balance >= ActualAmount) {
+                    wallet.balance -= ActualAmount;
+                    wallet.transactionHistory.push({
+                        transaction: 'Money Deducted',
+                        amount: ActualAmount
+                    });
+                    await wallet.save();
+                    res.json({ success: true, message: "Order placed through Wallet successfully" });
+                } else {
+                    res.json({ success: false, message: "Out of money in Your Wallet" });
+                }
+            } else {
+                res.json({ success: false, message: "Wallet not found" });
             }
-            res.json({ success: true, message: "Order placed through Wallet successfully" });
         }
 
     } catch (error) {
@@ -477,6 +606,7 @@ orderconform.getorderconform = async (req, res) => {
         res.status(500).json({ error: 'Failed to place order' });
     }
 };
+
 
 
 
@@ -558,6 +688,7 @@ orderconform.checkrazorpay=async(req,res)=>{
     
     console.log("checking",req.body.payment);
     const paymentDetails=req.body.payment;
+   
     console.log("id of payment",paymentDetails.razorpay_payment_id);
     const paymentId=paymentDetails.razorpay_payment_id;
     const razorpaySignature=paymentDetails.razorpay_signature;
@@ -878,7 +1009,7 @@ orderconform.getpaymentpending=async(req,res)=>{
         
         // Render checkout page with user address and cart products
         if (products && products.length !== 0) {
-            res.render('userViews/checkout1', { address1, products,total });
+            res.render('userViews/checkout1', { address1, products,total});
         } else {
             res.redirect('/usercart');
         }

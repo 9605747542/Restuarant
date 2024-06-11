@@ -31,31 +31,59 @@ userprofile.postuserprofile = async (req, res) => {
   }
 }
 
-userprofile.postuseraddress=async(req,res)=>{
-    const {streetaddress,phone,city,House_name}=req.body;
-    const userid=req.session.userid;
-    console.log(userid);
-    try{
-        await userdb.findByIdAndUpdate(
-            userid,
-            {
-            $push: {
-                address: {
-                    streetaddress,
-                    city,
-                    House_name,
-                    phone
-                },
-              },
-            })
-            res.status(200).send({ message:"Address saved successfully"}); // Respond with success message
-        } catch (error) {
-            console.error("Error while saving address:", error);
-            res.status(500).send({message:"Failed to save address"}); // Respond with error message
-        }
+// userprofile.postuseraddress=async(req,res)=>{
+//     const {streetaddress,phone,city,House_name}=req.body;
+//     const userid=req.session.userid;
+
+//     console.log("check the user",userid);
+//     try{
+//         await userdb.findByIdAndUpdate(
+//             userid,
+//             {
+//             $push: {
+//                 address: {
+//                     streetaddress,
+//                     city,
+//                     House_name,
+//                     phone
+//                 },
+//               },
+//             })
+//             res.status(200).send({ message:"Address saved successfully"}); // Respond with success message
+//         } catch (error) {
+//             console.error("Error while saving address:", error);
+//             res.status(500).send({message:"Failed to save address"}); // Respond with error message
+//         }
    
 
+// }
+userprofile.postuseraddress = async (req, res) => {
+  const { streetaddress, phone, city, House_name } = req.body;
+  const userid = req.session.userid;
+
+  console.log("check the user", userid);
+  try {
+      await userdb.findByIdAndUpdate(
+          userid,
+          {
+              $push: {
+                  address: {
+                      streetaddress,
+                      city,
+                      House_name,
+                      phone: parseInt(phone, 10) // Ensuring the phone number is an integer
+                  }
+              }
+          },
+          { new: true, useFindAndModify: false } // Options to return the updated document
+      );
+      res.status(200).send({ message: "Address saved successfully" }); // Respond with success message
+  } catch (error) {
+      console.error("Error while saving address:", error);
+      res.status(500).send({ message: "Failed to save address" }); // Respond with error message
+  }
 }
+
 
 userprofile.getalladdress=async(req,res)=>{
     const userid=req.session.userid;
@@ -109,7 +137,7 @@ userprofile.posteditaddress=async(req,res)=>{
             "address": {
               streetaddress,
           
-              state,
+              city,
       
               House_name,
               phone
@@ -133,8 +161,9 @@ userprofile.posteditaddress=async(req,res)=>{
     
 }
 userprofile.deleteaddress=async(req,res)=>{
-  const id=req.body.addressid;
-  console.log(id);
+  const id = req.body.addressid.trim();
+ 
+  console.log("review",id);
   try{
 
   
@@ -144,13 +173,14 @@ userprofile.deleteaddress=async(req,res)=>{
     },{new:true}
   );
   if(result){
+    console.log("inside");
     res.json({success:true,message:"SuccessFully deleted"})
   }else{
     res.json({success:false,message:"Can't deleted"})
     
   }
-}catch{
-  console.error("Error while saving address:", error);
+}catch(error){
+  console.error("Error while saving address:",error);
   res.status(500).json({ success: false, message: "Failed to save address" });
 }
  

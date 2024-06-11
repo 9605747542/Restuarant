@@ -114,7 +114,7 @@
       <p><%=add.House_name%></p>
       <button style="background-color: #FFAC5C; border-color: #FFAC5C;"><a href="/geteditaddress/<%= add._id %>" style="color: white;">Edit Address</a></button>
 
-      <button style="background-color: #FFAC5C;border-color: #FFAC5C; "onclick="postdltaddress('<%= add._id %>')">Delete Address</button>
+      <button style="background-color: #FFAC5C;border-color: #FFAC5C; "onclick="postdltaddress(event,' <%= add._id %>')">Delete Address</button>
 
     <% }); %>
 
@@ -132,8 +132,150 @@
   </div>
 </div>
 <script>
- async function postdltaddress(addressid) {
+  
+  // async function postdltaddress(event, addressid) {
+//     event.preventDefault();
+//     console.log(addressid);
+//     const swalWithBootstrapButtons = Swal.mixin({
+//         customClass: {
+//             confirmButton: 'custom-btn-success',
+//             cancelButton: 'custom-btn-danger'
+//         },
+//         buttonsStyling: false
+//     });
+
+//     swalWithBootstrapButtons.fire({
+//         title: "Are you sure?",
+//         text: "You won't be able to revert this!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Yes, delete it!",
+//         cancelButtonText: "No, cancel!",
+//         reverseButtons: true
+//     }).then( (result) => {
+//         if (result.isConfirmed) {
+//             swalWithBootstrapButtons.fire({
+//                 title: "Deleted!",
+//                 text: "Your file has been deleted.",
+//                 icon: "success"
+//             });
+//             try {
+//                  const response=await fetch('/postdltaddress', {
+//                     method: 'POST',
+//                     headers: {
+//                         'Content-Type': 'application/json'
+//                     },
+//                     body: JSON.stringify({ addressid }) // Ensure proper formatting of the object
+//                 });
+//                 const data =await response.json();
+//                 if (data.success===true) {
+//                   console.log("masss");
+//                     Swal.fire({
+//                         title: 'Success!',
+//                         text: data.message,
+//                         icon: 'success'
+//                     });
+//                 } else {
+//                     Swal.fire({
+//                         title: 'Error!',
+//                         text: data.message,
+//                         icon: 'error'
+//                     });
+//                 }
+//             } catch (error) {
+//                 console.error('Error:', error);
+//                 Swal.fire({
+//                     title: 'Error!',
+//                     text: 'An error occurred while processing your request.',
+//                     icon: 'error'
+//                 });
+//             }
+//         } else if (result.dismiss === Swal.DismissReason.cancel) {
+//             swalWithBootstrapButtons.fire({
+//                 title: "Cancelled",
+//                 text: "Your imaginary file is safe :)",
+//                 icon: "error"
+//             });
+//         }
+//     });
+// }
+
+//   async function postdltaddress(event, addressid) {
+//     event.preventDefault();
+//     console.log(addressid);
+
+//     const swalWithBootstrapButtons = Swal.mixin({
+//         customClass: {
+//             confirmButton: 'custom-btn-success',
+//             cancelButton: 'custom-btn-danger'
+//         },
+//         buttonsStyling: false
+//     });
+
+//     const result = await swalWithBootstrapButtons.fire({
+//         title: "Are you sure?",
+//         text: "You won't be able to revert this!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Yes, delete it!",
+//         cancelButtonText: "No, cancel!",
+//         reverseButtons: true
+//     });
+
+//     if (result.isConfirmed) {
+//         await swalWithBootstrapButtons.fire({
+//             title: "Deleted!",
+//             text: "Your file has been deleted.",
+//             icon: "success"
+//         });
+
+//         try {
+//             const response = await fetch('/postdltaddress', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({ addressid }) // Ensure proper formatting of the object
+//             });
+
+//             const data = await response.json();
+
+//             if (data.success) {
+//                 console.log("masss");
+//                 Swal.fire({
+//                     title: 'Success!',
+//                     text: data.message,
+//                     icon: 'success'
+//                 });
+//             } else {
+//                 Swal.fire({
+//                     title: 'Error!',
+//                     text: data.message,
+//                     icon: 'error'
+//                 });
+//             }
+//         } catch (error) {
+//             console.error('Error:', error);
+//             Swal.fire({
+//                 title: 'Error!',
+//                 text: 'An error occurred while processing your request.',
+//                 icon: 'error'
+//             });
+//         }
+//     } else if (result.dismiss === Swal.DismissReason.cancel) {
+//         swalWithBootstrapButtons.fire({
+//             title: "Cancelled",
+//             text: "Your imaginary file is safe :)",
+//             icon: "error"
+//         });
+//     }
+// }
+
+
+async function postdltaddress(event, addressid) {
+    event.preventDefault();
     console.log(addressid);
+
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'custom-btn-success',
@@ -142,7 +284,7 @@
         buttonsStyling: false
     });
 
-    swalWithBootstrapButtons.fire({
+    const result = await swalWithBootstrapButtons.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
         icon: "warning",
@@ -150,54 +292,59 @@
         confirmButtonText: "Yes, delete it!",
         cancelButtonText: "No, cancel!",
         reverseButtons: true
-    }).then( (result) => {
-        if (result.isConfirmed) {
-            swalWithBootstrapButtons.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
+    });
+
+    if (result.isConfirmed) {
+        await swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+        });
+
+        try {
+            const response = await fetch('/postdltaddress', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ addressid }) // Ensure proper formatting of the object
             });
-            try {
-                 const response=fetch('/postdltaddress', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ addressid }) // Ensure proper formatting of the object
+
+            const data = await response.json();
+
+            if (data.success) {
+                console.log("masss");
+                Swal.fire({
+                    title: 'Success!',
+                    text: data.message,
+                    icon: 'success'
                 });
-                const data = response.json();
-                if (data.success === true) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.message,
-                        icon: 'success'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.message,
-                        icon: 'error'
-                    });
-                }
-            } catch (error) {
-                console.error('Error:', error);
+                window.location.href='/getalladdress'
+            } else {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'An error occurred while processing your request.',
+                    text: data.message,
                     icon: 'error'
                 });
             }
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire({
-                title: "Cancelled",
-                text: "Your imaginary file is safe :)",
-                icon: "error"
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while processing your request.',
+                icon: 'error'
             });
         }
-    });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+        });
+    }
 }
 
-  
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

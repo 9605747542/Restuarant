@@ -3,6 +3,7 @@ const Userdb=require('../models/UserModels/UserSignupSchema');
 const Cartdb=require('../models/UserModels/usercartSchema');
 const Productdb=require('../models/AdminModels/ProductSchema');
 const Orderdb=require('../models/UserModels/userorderSchema');
+const Categorydb=require('../models/AdminModels/categorySchema');
 
 
 const isAdminLogged=(req,res,next)=>{
@@ -72,6 +73,7 @@ async function getdashboard(req, res, next) {
             console.log("Discount amount:", discountAmount);
             const productDetails=await Productdb.find().sort({popularity:-1}).populate('category','categoryName').exec();
             console.log("master",productDetails);
+
             
            
             // Render the admin dashboard view with the data
